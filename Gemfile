@@ -29,9 +29,6 @@ gem 'sentry-raven'
 # http://stackoverflow.com/questions/15520151/rails-4-authentication
 gem 'protected_attributes'
 
-# Use sqlite3 as the database for Active Record
-gem 'sqlite3'
-
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 4.0.0'
 
