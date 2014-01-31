@@ -25,6 +25,7 @@ gem "backbone-support"
 gem 'ejs'
 gem 'newrelic_rpm'
 gem 'sentry-raven'
+gem 'delayed_job_active_record'
 
 # http://stackoverflow.com/questions/15520151/rails-4-authentication
 gem 'protected_attributes'
