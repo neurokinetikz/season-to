@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140131012534) do
+ActiveRecord::Schema.define(version: 20140131183555) do
 
   create_table "addresses", force: true do |t|
     t.string   "type"
@@ -79,6 +79,20 @@ ActiveRecord::Schema.define(version: 20140131012534) do
 
   add_index "credit_cards", ["user_id"], name: "index_credit_cards_on_user_id", using: :btree
 
+  create_table "omniauths", force: true do |t|
+    t.integer  "user_id"
+    t.string   "provider"
+    t.string   "uid"
+    t.string   "image"
+    t.string   "name"
+    t.string   "nickname"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "omniauths", ["provider", "uid"], name: "index_omniauths_on_provider_and_uid", using: :btree
+  add_index "omniauths", ["user_id"], name: "index_omniauths_on_user_id", using: :btree
+
   create_table "plans", force: true do |t|
     t.string   "code"
     t.string   "name"
@@ -113,9 +127,6 @@ ActiveRecord::Schema.define(version: 20140131012534) do
   add_index "subscriptions", ["user_id"], name: "index_subscriptions_on_user_id", using: :btree
 
   create_table "users", force: true do |t|
-    t.string   "omniauth_provider"
-    t.string   "omniauth_uid"
-    t.string   "omniauth_image"
     t.string   "customer_id"
     t.string   "first_name"
     t.string   "last_name"
@@ -149,7 +160,6 @@ ActiveRecord::Schema.define(version: 20140131012534) do
   add_index "users", ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true, using: :btree
   add_index "users", ["customer_id"], name: "index_users_on_customer_id", using: :btree
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
-  add_index "users", ["omniauth_provider", "omniauth_uid"], name: "index_users_on_omniauth_provider_and_omniauth_uid", using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
   add_index "users", ["unlock_token"], name: "index_users_on_unlock_token", unique: true, using: :btree
 

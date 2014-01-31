@@ -15,9 +15,6 @@ class User < ActiveRecord::Base
   has_many :credit_cards
   has_many :credit_card_transactions
   
-  has_many :list_users
-  has_many :lists
-  
   has_many :omniauths
   
   has_attached_file :image, 
