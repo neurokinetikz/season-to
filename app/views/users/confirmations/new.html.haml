@@ -1,0 +1,25 @@
+%div.span2
+
+%div.span8
+  = form_for(resource, :as => resource_name, :url => confirmation_path(resource_name), :html => { :method => :post, :id => 'confirmation-form', :class => 'form-horizontal' }) do |f|
+    = devise_error_messages!
+    %fieldset
+      %legend Resend Confirmation Instructions
+      %div.control-group
+        %label.control-label{:for => 'user_email'} Email
+        %div.controls
+          %input#user_email.required.email{:type => 'text', :name => 'user[email]', :placeholder => 'Email', :autofocus => 'true'}
+          
+      %div.control-group
+        %div.controls
+          %button.btn{:type => 'submit'} Resend confirmation instructions
+          
+      %div.control-group
+        %div.controls
+          = render "devise/shared/links"
+          
+%div.span2
+
+= content_for :javascript do
+  $("#confirmation-form").validate();
+

@@ -1,0 +1,15 @@
+%tr{:id => "credit_card_#{credit_card.id}", :style => 'cursor:pointer;'}
+  %td
+    %div.control-group
+      %div.controls.text-center
+        - h = {:type => "radio", :class=> 'default-credit-card', :name => "default_credit_card", :id => credit_card.id, :value => credit_card.id}
+        - h[:checked] = true if credit_card.is_default
+        %input{ h }
+  %td
+    = credit_card.card_type
+  %td
+    = "xxxx-xxxx-xxxx-#{credit_card.last4}"
+  %td
+    = "#{credit_card.expiration_month}/#{credit_card.expiration_year}"
+  %td
+    = link_to '', credit_card_path(credit_card), :method => :delete, :confirm => 'Are you sure?', :remote => true, :class => 'icon-remove'

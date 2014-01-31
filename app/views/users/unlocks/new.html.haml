@@ -1,0 +1,25 @@
+%div.span2
+
+%div.span8
+  = form_for(resource, :as => resource_name, :url => unlock_path(resource_name), :html => { :method => :post, :id => 'unlock-form', :class => 'form-horizontal' }) do |f|
+    = devise_error_messages!
+    %fieldset
+      %legend Resend Unlock Instructions
+      %div.control-group
+        %label.control-label{:for => 'user_email'} Email
+        %div.controls
+          %input#user_email.required.email{:type => 'text', :name => 'user[email]', :placeholder => 'Email', :autofocus => 'true'}
+          
+      %div.control-group
+        %div.controls
+          %button.btn{:type => 'submit'} Resend unlock instructions
+          
+      %div.control-group
+        %div.controls
+          = render "devise/shared/links"
+          
+%div.span2
+
+= content_for :javascript do
+  $("#unlock-form").validate();
+

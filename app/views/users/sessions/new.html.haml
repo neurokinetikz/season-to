@@ -1,0 +1,14 @@
+%div.container
+  = form_for(resource, :as => resource_name, :url => session_path(resource_name), :html => { :method => :post, :id => 'login-form', :class => 'form-signin' }) do |f|
+    %h2.form-signin-heading Login Now!
+    
+    
+    = f.text_field :email, :class => 'form-control required email', :placeholder => 'Email', :autofocus => 'true'
+    %input#user_password.form-control.required{:type => 'password', :name => 'user[password]', :placeholder => 'Password'}
+    %label.checkbox
+      = f.check_box :remember_me
+      Remember me
+    %button.btn.btn-lg.btn-primary.btn-block{:type => 'submit'} Login
+
+= content_for :javascript do
+  $("#login-form").validate();

@@ -1,0 +1,11 @@
+%tr{:id => "credit_card_transaction#{credit_card_transaction.id}"}
+  %td
+    = credit_card_transaction.credit_card_description
+  %td
+    = credit_card_transaction.transaction_type
+  %td
+    = "$#{credit_card_transaction.amount}"
+  %td
+    = credit_card_transaction.status
+  %td
+    = credit_card_transaction.created_at.in_time_zone('Eastern Time (US & Canada)').strftime("%b %-d, %Y at %l:%M %p %Z")

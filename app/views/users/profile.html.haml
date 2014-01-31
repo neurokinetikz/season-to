@@ -1,0 +1,23 @@
+%div.container
+  = form_for(current_user, :url => user_path(current_user), :html => { :method => :put, :id => 'user-form', :class => 'form-horizontal' }) do |f|
+    %h2.form-signin-heading Update Your Profile
+    %div.fileupload.fileupload-new{'data-provides' => 'fileupload'}
+      %div.input-append
+        %div.uneditable-input.span3
+          %i.icon-file.fileupload-exists
+          %span.fileupload-preview
+        %span.btn.btn-file
+          %span.fileupload-new Select file
+          %span.fileupload-exists Change
+        = f.file_field :image
+      %a.btn.fileupload-exists{:href => '#', 'data-dismiss' => 'fileupload'} Remove
+    = image_tag(current_user.image.url(:medium))
+    = f.text_field :first_name, :placeholder => 'First Name'
+    = f.text_field :last_name, :placeholder => 'Last Name'
+    %button.btn.btn-lg.btn-primary.btn-block{:type => 'submit'} Save
+ 
+          
+
+
+= content_for :javascript do
+  $("#user-form").validate();

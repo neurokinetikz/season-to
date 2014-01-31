@@ -1,0 +1,8 @@
+<% if @result.success? %>
+$('#account-tabs a[href="#transactions"]').tab('show');
+$("#credit-card-transactions-table tbody tr:first").after("<%= escape_javascript(render(:partial => 'credit_card_transactions/row', :locals => { :credit_card_transaction => @credit_card_transaction })) %>");
+$("#credit-card-transactions-table tr:nth-child(2)").effect('highlight', {}, 1000);
+$(".transaction-alerts").html("<%=escape_javascript(render(:partial => 'layouts/alerts'))%>");
+<% else %>
+$(".payment-alerts").html("<%=escape_javascript(render(:partial => 'layouts/alerts'))%>");
+<% end %>

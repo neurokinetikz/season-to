@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<head>
+  <title>neurokinetikz</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
+  <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
+  <%= csrf_meta_tags %>
+</head>
+
+<body>
+
+<div class="site-wrapper">
+  <div class="site-wrapper-inner">
+    <div class="cover-container">
+      <div class="masthead clearfix">
+        <div class="inner">
+          <h3 class="masthead-brand"><%= link_to 'Season To', root_path %></h3>
+          <ul class="nav masthead-nav">
+            <li class="">
+              <a href="#">About Us</a>
+            </li>
+            <li>
+              <a href="#">Blog</a>
+            </li>
+            <li>
+              <a href="#">FAQ</a>
+            </li>
+            <li>
+              <% unless user_signed_in? %>
+                <%= link_to 'Login', new_user_session_path %>
+              <% else %>
+                <%= link_to 'Logout', destroy_user_session_path, method: :delete %>
+              <% end %>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <%= yield %>
+    </div>
+  </div>
+</div>
+
+  
+<% if false %>
+<div id="wrap">
+
+<%= render :partial => 'layouts/nav_bar' %>
+<%= yield %>
+</div>
+<%= render :partial => 'layouts/footer' if false %>
+<% end %>
+
+<%= render :partial => 'layouts/facebook' %>
+<%= render :partial => 'layouts/javascript' %>
+</body>
+</html>

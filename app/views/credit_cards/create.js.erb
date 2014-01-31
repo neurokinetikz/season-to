@@ -1,0 +1,9 @@
+<% if @result.success? %>
+$('#account-tabs a[href="#cards"]').tab('show');
+$("#credit-cards-table tbody tr:first").after("<%= escape_javascript(render(:partial => 'credit_cards/row', :locals => { :credit_card => @credit_card })) %>");
+$("#credit-cards-table tr:nth-child(2)").effect('highlight', {}, 2000);
+$("#select-credit-card").prepend("<option value='<%=@credit_card.id%>'><%=@credit_card.to_s%></option>");
+$(".credit-cards-alerts").html("<%=escape_javascript(render(:partial => 'layouts/alerts'))%>");
+<% else %>
+$(".credit-card-alerts").html("<%=escape_javascript(render(:partial => 'layouts/alerts'))%>");
+<% end %>

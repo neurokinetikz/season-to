@@ -1,0 +1,42 @@
+%h1{:style => 'margin-bottom:20px;'} Your Account
+
+
+
+%div.tabbable.tabs-left
+  %ul.nav.nav-tabs#account-tabs
+    %li.active
+      %a{:href => '#add-card', 'data-toggle' => 'tab'} Add A Credit Card
+    %li
+      %a{:href => '#cards', 'data-toggle' => 'tab'} Your Credit Cards
+    %li
+      %a{:href => '#transactions', 'data-toggle' => 'tab'} Payment History
+    %li
+      %a{:href => '#payment', 'data-toggle' => 'tab'} Make a Payment
+  %div.tab-content
+    %div.tab-pane.active#add-card
+      = render :partial => 'credit_cards/form'
+    %div.tab-pane#cards
+      = render :partial => 'credit_cards/index'
+    %div.tab-pane#transactions
+      = render :partial => 'credit_card_transactions/index'
+    %div.tab-pane#payment
+      %div.payment-alerts
+      %div.control-group.text-center
+        = form_for(CreditCard.new, :url => charge_credit_cards_path, :html => { :method => :post, :id => 'credit-card-charge-form', :class => 'form-horizontal' }) do |f|
+          %select.span4{:name => 'id', :id => "select-credit-card"}
+            = options_for_select(current_user.credit_cards.order('id desc').collect{|cc| [cc.to_s, cc.id]}, (current_user.default_credit_card.nil? ? nil : current_user.default_credit_card.id))
+
+          %div.input-prepend.input-append
+            %span.add-on $
+            %input.span2.required#appendedPrependedInput{:type => 'text', :name => 'amount'}
+            %button.btn.btn-primary{:type => 'submit', :id => 'charge-button', "data-loading-text" => "Charging..."} Charge
+      
+
+
+= content_for :javascript do
+  :plain
+    $("#credit-card-charge-form").validate();
+    $('#credit-card-charge-form').bind('ajax:beforeSend', function(xhr, settings) {$('#charge-button').button('loading');$('.errors').html('');})
+     .bind('ajax:success', function(xhr, data, status) {})
+     .bind('ajax:complete', function(xhr, status) {$('#charge-button').button('reset');})
+     .bind('ajax:error', function(xhr, data, status) {});

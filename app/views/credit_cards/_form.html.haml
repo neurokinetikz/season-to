@@ -1,0 +1,36 @@
+= form_for(CreditCard.new, :url => credit_cards_path, :html => { :method => :post, :id => 'credit-card-form', :class => 'form-horizontal' }) do |f|
+  %fieldset
+    %div.credit-card-alerts
+    
+    %div.control-group    
+      %label.control-label{:for => 'credit_card_number'} Credit Card #
+      %div.controls
+        = f.text_field :number, :placeholder => 'Number', :class => 'required'
+        
+    %div.control-group
+      %label.control-label{:for => 'credit_card_cvv'} CVV
+      %div.controls
+        = f.text_field :cvv, :placeholder => 'CVV', :class => 'required'
+
+    %div.control-group
+      %label.control-label{:for => 'credit_card_expires_at'} Expiration Date
+      %div.controls
+        = date_select :credit_card, :expires_at, {:discard_day => true, :user_short_month => true, :add_month_numbers => true, :start_year => Time.now.year, :end_year => Time.now.year + 10, :order => [:month, :year], :include_blank => true, :prompt => [:year => 'Expiration Year', :month => 'Expiration Month']}, {:class => 'span2 required'}
+    
+    %div.control-group
+      %div.controls
+        %label.checkbox
+          = f.check_box :is_default
+          Is default    
+    
+    %div.control-group
+      %div.controls
+        %button.btn{:type => 'submit', :id => 'save-button', "data-loading-text" => "Saving..."} Save
+ 
+= content_for :javascript do
+  :plain
+    $("#credit-card-form").validate();
+    $('#credit-card-form').bind('ajax:beforeSend', function(xhr, settings) {$('#save-button').button('loading');$('.errors').html('');})
+     .bind('ajax:success', function(xhr, data, status) {})
+     .bind('ajax:complete', function(xhr, status) {$('#save-button').button('reset');})
+     .bind('ajax:error', function(xhr, data, status) {});
