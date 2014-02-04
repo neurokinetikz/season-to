@@ -18,12 +18,14 @@
     #{subscription.billing_day_of_month.ordinalize}
 
 
-
     %h4 Next Billing Date
     #{subscription.next_billing_date.strftime('%B %-d, %Y')}
 
     %h4 Next Billing Amount
     $#{subscription.next_billing_period_amount}
+    
+    %h4 Credit Card
+    #{subscription.credit_card.to_s}
   %div.col-xs-8
     %div.col-xs-12
       %h4 Shipping To

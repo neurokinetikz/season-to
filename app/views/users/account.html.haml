@@ -10,6 +10,8 @@
       %a{:href => '#shipments', 'data-toggle' => 'tab'} Past Shipments
     %li
       %a{:href => '#payments', 'data-toggle' => 'tab'} Payment History
+    %li
+      %a{:href => '#cards', 'data-toggle' => 'tab'} Credit Cards
     -# %li
     -#   %a{:href => '#add-card', 'data-toggle' => 'tab'} Add A Credit Card
     -# %li
@@ -30,8 +32,8 @@
       = render :partial => 'credit_card_transactions/index'
     -# %div.tab-pane#add-card
     -#   = render :partial => 'credit_cards/form'
-    -# %div.tab-pane#cards
-    -#   = render :partial => 'credit_cards/index'
+    %div.tab-pane#cards
+      = render :partial => 'credit_cards/index'
     -# %div.tab-pane#transactions
     -#   = render :partial => 'credit_card_transactions/index'
     -# %div.tab-pane#payment
