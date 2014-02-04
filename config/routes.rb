@@ -1,7 +1,8 @@
 SubscriptionService::Application.routes.draw do
-  devise_for :users, :controllers => { :omniauth_callbacks => "users/omniauth_callbacks" }
+  devise_for :users, :controllers => { :omniauth_callbacks => "users/omniauth_callbacks", registrations: "users/registrations" }
   
   resources :users
+  resources :subscriptions
   
   resources :credit_cards do
     collection do
@@ -16,6 +17,7 @@ SubscriptionService::Application.routes.draw do
   get 'terms' => 'home#terms'
   get 'privacy' => 'home#privacy'
   get 'contact' => 'home#contact'
+  get 'how' => 'home#how'
   
   root :to => "home#index"
   

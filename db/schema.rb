@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140131185134) do
+ActiveRecord::Schema.define(version: 20140204151748) do
 
   create_table "addresses", force: true do |t|
     t.string   "type"
@@ -35,7 +35,6 @@ ActiveRecord::Schema.define(version: 20140131185134) do
   create_table "credit_card_transactions", force: true do |t|
     t.integer  "user_id"
     t.integer  "credit_card_id"
-    t.string   "credit_card_description"
     t.string   "source_type"
     t.integer  "source_id"
     t.string   "subject_type"
@@ -95,6 +94,39 @@ ActiveRecord::Schema.define(version: 20140131185134) do
 
   add_index "delayed_jobs", ["priority", "run_at"], name: "delayed_jobs_priority", using: :btree
 
+  create_table "invoices", force: true do |t|
+    t.integer  "order_id"
+    t.integer  "user_id"
+    t.string   "state"
+    t.integer  "subtotal_cents"
+    t.integer  "tax_cents"
+    t.integer  "shipping_cents"
+    t.integer  "discount_cents"
+    t.integer  "total_cents"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.datetime "due_at"
+    t.datetime "paid_at"
+  end
+
+  add_index "invoices", ["order_id"], name: "index_invoices_on_order_id", using: :btree
+  add_index "invoices", ["state"], name: "index_invoices_on_state", using: :btree
+  add_index "invoices", ["user_id"], name: "index_invoices_on_user_id", using: :btree
+
+  create_table "line_items", force: true do |t|
+    t.string   "itemizable_type"
+    t.integer  "itemizable_id"
+    t.integer  "sku_id"
+    t.integer  "sku_qty"
+    t.integer  "unit_price_cents"
+    t.integer  "unit_discount_cents"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "line_items", ["itemizable_type", "itemizable_id"], name: "index_line_items_on_itemizable_type_and_itemizable_id", using: :btree
+  add_index "line_items", ["sku_id"], name: "index_line_items_on_sku_id", using: :btree
+
   create_table "omniauths", force: true do |t|
     t.integer  "user_id"
     t.string   "provider"
@@ -109,7 +141,24 @@ ActiveRecord::Schema.define(version: 20140131185134) do
   add_index "omniauths", ["provider", "uid"], name: "index_omniauths_on_provider_and_uid", using: :btree
   add_index "omniauths", ["user_id"], name: "index_omniauths_on_user_id", using: :btree
 
+  create_table "orders", force: true do |t|
+    t.integer  "user_id"
+    t.integer  "address_id"
+    t.integer  "invoice_id"
+    t.integer  "subscription_id"
+    t.string   "state"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "orders", ["address_id"], name: "index_orders_on_address_id", using: :btree
+  add_index "orders", ["invoice_id"], name: "index_orders_on_invoice_id", using: :btree
+  add_index "orders", ["state"], name: "index_orders_on_state", using: :btree
+  add_index "orders", ["subscription_id"], name: "index_orders_on_subscription_id", using: :btree
+  add_index "orders", ["user_id"], name: "index_orders_on_user_id", using: :btree
+
   create_table "plans", force: true do |t|
+    t.integer  "sku_id"
     t.string   "code"
     t.string   "name"
     t.text     "description"
@@ -120,11 +169,58 @@ ActiveRecord::Schema.define(version: 20140131185134) do
   end
 
   add_index "plans", ["code"], name: "index_plans_on_code", using: :btree
+  add_index "plans", ["sku_id"], name: "index_plans_on_sku_id", using: :btree
+
+  create_table "products", force: true do |t|
+    t.integer  "vendor_id"
+    t.string   "name"
+    t.text     "description"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "products", ["vendor_id"], name: "index_products_on_vendor_id", using: :btree
+
+  create_table "shipments", force: true do |t|
+    t.string   "state"
+    t.integer  "user_id"
+    t.integer  "subscription_id"
+    t.integer  "order_id"
+    t.integer  "address_id"
+    t.string   "carrier"
+    t.string   "tracking_number"
+    t.date     "scheduled_at"
+    t.datetime "shipped_at"
+    t.datetime "delivered_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "shipments", ["address_id"], name: "index_shipments_on_address_id", using: :btree
+  add_index "shipments", ["order_id"], name: "index_shipments_on_order_id", using: :btree
+  add_index "shipments", ["scheduled_at"], name: "index_shipments_on_scheduled_at", using: :btree
+  add_index "shipments", ["state"], name: "index_shipments_on_state", using: :btree
+  add_index "shipments", ["subscription_id"], name: "index_shipments_on_subscription_id", using: :btree
+  add_index "shipments", ["user_id"], name: "index_shipments_on_user_id", using: :btree
+
+  create_table "skus", force: true do |t|
+    t.integer  "product_id"
+    t.string   "code"
+    t.string   "name"
+    t.text     "description"
+    t.integer  "unit_price_cents"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "skus", ["code"], name: "index_skus_on_code", using: :btree
+  add_index "skus", ["product_id"], name: "index_skus_on_product_id", using: :btree
 
   create_table "subscriptions", force: true do |t|
     t.integer  "user_id"
     t.integer  "plan_id"
-    t.string   "state"
+    t.string   "token"
+    t.string   "status"
     t.integer  "billing_day_of_month"
     t.datetime "first_billing_date"
     t.datetime "billing_period_start_date"
@@ -139,7 +235,8 @@ ActiveRecord::Schema.define(version: 20140131185134) do
 
   add_index "subscriptions", ["billing_day_of_month"], name: "index_subscriptions_on_billing_day_of_month", using: :btree
   add_index "subscriptions", ["plan_id"], name: "index_subscriptions_on_plan_id", using: :btree
-  add_index "subscriptions", ["state"], name: "index_subscriptions_on_state", using: :btree
+  add_index "subscriptions", ["status"], name: "index_subscriptions_on_status", using: :btree
+  add_index "subscriptions", ["token"], name: "index_subscriptions_on_token", using: :btree
   add_index "subscriptions", ["user_id"], name: "index_subscriptions_on_user_id", using: :btree
 
   create_table "users", force: true do |t|
@@ -178,5 +275,12 @@ ActiveRecord::Schema.define(version: 20140131185134) do
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
   add_index "users", ["unlock_token"], name: "index_users_on_unlock_token", unique: true, using: :btree
+
+  create_table "vendors", force: true do |t|
+    t.string   "name"
+    t.text     "description"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
 end

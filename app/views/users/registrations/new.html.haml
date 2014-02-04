@@ -1,19 +1,36 @@
+%h1 Let's Get Started!
 
 
 %div.container
-  = form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :method => :post, :id => 'registration-form', :class => 'form-signin' }) do |f|
-    = devise_error_messages!
-    - unless user_signed_in?
-      = form_for(User.new, :as => 'user', :url => session_path('user'), :html => { :method => :post, :id => 'login-form', :class => 'navbar-form navbar-right' }) do |f|
+  
       
-        %a.btn.btn-primary{href: user_omniauth_authorize_path(:facebook)} 
-          %span{style: 'font-weight:bold;background-color:#3B5998;padding:1px 15px;font-size:28px;'} f |
-          %span{style: 'font-size:24px;padding:0px 10px;'} Sign up with Facebook
-    %h2.form-signin-heading Sign up for an account today!
+  = form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :method => :post, :id => 'registration-form', :class => 'form-signin' }) do |f|
+    
+    - unless user_signed_in?
+      %a.btn.btn-primary{href: user_omniauth_authorize_path(:facebook)} 
+        %span{style: 'font-weight:bold;background-color:#3B5998;padding:1px 15px;font-size:28px;'} f |
+        %span{style: 'font-size:22px;padding:0px 10px;'} Sign up with Facebook
+      %div{style: 'text-align:center;'}
+        %h3 or
+    
+    = devise_error_messages!
     
     
-    = f.text_field :email, :class => 'form-control required email', :placeholder => 'Email', :autofocus => 'true'
-    %input#user_password_enter.form-control.required{:type => 'password', :name => 'user[password]', :placeholder => 'Password'}
+    
+    
+    %div.row
+      %div.col-xs-12
+        = f.text_field :first_name, :class => 'form-control required first_name', :placeholder => 'First Name', :autofocus => 'true'
+      %div.col-xs-12
+        = f.text_field :last_name, :class => 'form-control required last_name', :placeholder => 'Last Name'
+    %div.row
+      %div.col-xs-12
+        = f.text_field :email, :class => 'form-control required email', :placeholder => 'Email'
+    %div.row
+      %div.col-xs-12
+        %input#user_password_enter.form-control.required{:type => 'password', :name => 'user[password]', :placeholder => 'Password'}
+    
+    
     %input#user_password_confirmation.form-control.required{:type => 'password', :name => 'user[password_confirmation]', :placeholder => 'Confirm Passsword'}
     %label.checkbox
       = f.check_box :remember_me, :class => 'required'

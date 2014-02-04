@@ -1,11 +1,13 @@
 %tr{:id => "credit_card_transaction#{credit_card_transaction.id}"}
   %td
-    = credit_card_transaction.credit_card_description
+    = credit_card_transaction.credit_card.to_s
   %td
     = credit_card_transaction.transaction_type
   %td
-    = "$#{credit_card_transaction.amount}"
+    = credit_card_transaction.source.order.subscription.plan.name unless credit_card_transaction.source.nil?
   %td
-    = credit_card_transaction.status
+    = "$#{credit_card_transaction.amount}"
+  -# %td
+  -#   = credit_card_transaction.processor_response_text
   %td
     = credit_card_transaction.created_at.in_time_zone('Eastern Time (US & Canada)').strftime("%b %-d, %Y at %l:%M %p %Z")

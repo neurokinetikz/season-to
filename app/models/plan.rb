@@ -1,5 +1,6 @@
 class Plan < ActiveRecord::Base
-  attr_accessible :code, :name, :description
+  belongs_to :sku
+  attr_accessible :sku, :code, :name, :description
   attr_accessible :price, :billing_cycle
   
   monetize :price_cents

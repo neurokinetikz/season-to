@@ -1,0 +1,79 @@
+%div.header
+  %ul.nav.nav-pills.pull-right
+    %li.active
+      %a{href: '/'} Home
+    %li
+      %a{href: '/about'} About
+    %li
+      %a{href: '/about'} Contact
+    - unless user_signed_in?
+      %li
+        = link_to 'Login', new_user_session_path
+    - else
+      %li
+        = link_to 'Login', destroy_user_session_path, method: :delete
+    - end
+  %h3.text-muted
+    = link_to 'Season To', root_path
+
+
+- if false
+  %div.navbar-wrapper
+    %div.navbar.navbar-inverse
+      %div.navbar-header
+        %button.navbar-toggle{:type => 'button', 'data-toggle' => 'collapse', 'data-target' => '.navbar-collapse' }
+          %span.icon-bar
+          %span.icon-bar
+          %span.icon-bar
+        -# %a.navbar-brand{:href => '/' } Home
+      
+      %div.navbar-collapse.collapse
+        %div.col-md-9{style: 'margin:0;padding:0;'}
+          = yield :list_nav
+      
+        %div.col-md-3
+          - unless user_signed_in?
+            = form_for(User.new, :as => 'user', :url => session_path('user'), :html => { :method => :post, :id => 'login-form', :class => 'navbar-form navbar-right' }) do |f|
+          
+              %a.btn.btn-primary{href: user_omniauth_authorize_path(:facebook)} 
+                %span{style: 'font-weight:bold;background-color:#3B5998;padding:1px 10px;'} f |
+                Sign in with Facebook
+              -# %div.form-group
+              -#               = f.text_field :email, :class => 'form-control required email', :placeholder => 'Email', :autofocus => 'true'
+              -#             %div.form-group
+              -#               %input#user_password.form-control.required{:type => 'password', :name => 'user[password]', :placeholder => 'Password'}
+              -#             %button.btn.btn-success{:type => 'submit'} Login
+          
+          %ul.nav.navbar-nav.pull-right
+            - unless user_signed_in?
+          
+            - else
+              %li.dropdown
+                %a.dropdown-toggle{:href => '#', "data-toggle" => 'dropdown', style: 'padding:0px;'}
+                  -# = image_tag(current_user.image.url(:thumb), :width => '20px')
+                  = image_tag(current_user.omniauth_image, width: '50px')
+                  -# = current_user.name
+                  %b.caret
+                %ul.dropdown-menu
+                  %li.dropdown-header{role: 'presentation'} My Lists
+                  - current_user.lists.each do |list|
+                    %li
+                      %a{:href => list_path(list)}
+                        %strong
+                          = list.name
+                  %li
+                    %a{:href => "#{new_list_path}"}
+                      %em create a new list
+                  %li.divider{role: 'presentation'}
+                  -# %li
+                  -#   %a{:href => profile_path} Profile
+                  %li
+                    %a{:href => account_path} Account
+                  %li.divider{role: 'presentation'}
+                  %li
+                    = link_to 'Logout', destroy_user_session_path, :method => :delete
+
+        %div.subnav.container
+          = yield :subnav if false
+                      
+      = render 'layouts/alerts' if false

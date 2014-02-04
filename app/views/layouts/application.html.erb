@@ -1,46 +1,48 @@
 <!DOCTYPE html>
 <head>
-  <title>neurokinetikz</title>
+  <title>Season To</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
   <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
+  <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!--[if lt IE 9]>
+  <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+  <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+  <![endif]-->
   <%= csrf_meta_tags %>
 </head>
 
 <body>
 
-<div class="site-wrapper">
-  <div class="site-wrapper-inner">
-    <div class="cover-container">
-      <div class="masthead clearfix">
-        <div class="inner">
-          <h3 class="masthead-brand"><%= link_to 'Season To', root_path %></h3>
-          <ul class="nav masthead-nav">
-            <li class="">
-              <a href="#">About Us</a>
-            </li>
-            <li>
-              <a href="#">Blog</a>
-            </li>
-            <li>
-              <a href="#">FAQ</a>
-            </li>
-            <li>
-              <% unless user_signed_in? %>
-                <%= link_to 'Login', new_user_session_path %>
-              <% else %>
-                <%= link_to 'Logout', destroy_user_session_path, method: :delete %>
-              <% end %>
-            </li>
-          </ul>
-        </div>
-      </div>
-      <%= yield %>
-    </div>
+<div class="container">
+  <div class="header">
+    <ul class="nav nav-pills pull-right">
+      <li class=""><%= link_to 'How it Works', how_path %></li>
+      <li class=""><a href="/">Buy a Gift</a></li>
+      <% unless user_signed_in? %>
+      <li><%= link_to 'Sign Up', new_user_registration_path %>
+      <li><%= link_to 'Login', new_user_session_path %></li>
+      <% else %>
+      <li><%= link_to 'Account', account_path %></li>
+      <li><%= link_to 'Logout', destroy_user_session_path, method: :delete %></li>
+      <% end %>
+    </ul>
+    <h3 class="text-muted"><%= link_to 'Season To', root_path %></h3>
+  </div>
+  
+  <%= yield %>
+  
+  <div class="footer">
+    <p class='pull-left'>&copy; neurokinetikz, inc. 2014</p>
+    <p class='pull-right'>
+      <%= link_to 'about us', '#' %>
+      | <%= link_to 'terms of service', '#' %>
+      | <%= link_to 'privacy policy', '#' %>
+      | <%= link_to 'contact', '#' %>
+    </p>
   </div>
 </div>
 
-  
 <% if false %>
 <div id="wrap">
 

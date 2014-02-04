@@ -14,6 +14,8 @@ class User < ActiveRecord::Base
   has_one :default_credit_card,  -> {where is_default: true}, :class_name => 'CreditCard'
   has_many :credit_cards
   has_many :credit_card_transactions
+  has_many :subscriptions
+  has_many :addresses, as: :addressable
   
   has_many :omniauths
   

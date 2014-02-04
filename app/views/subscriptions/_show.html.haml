@@ -1,0 +1,46 @@
+%div.row
+  %div.col-xs-4
+    
+
+    %h4 Created
+    #{subscription.first_billing_date.strftime('%B %-d, %Y')}
+
+    %h4 Plan
+    #{subscription.plan.name}
+  
+    %h4 Price
+    $#{subscription.plan.price} / #{subscription.plan.billing_cycle} month(s)
+
+    %h4 Status
+    #{subscription.status}
+
+    %h4 Billing Day of Month
+    #{subscription.billing_day_of_month.ordinalize}
+
+
+
+    %h4 Next Billing Date
+    #{subscription.next_billing_date.strftime('%B %-d, %Y')}
+
+    %h4 Next Billing Amount
+    $#{subscription.next_billing_period_amount}
+  %div.col-xs-8
+    %div.col-xs-12
+      %h4 Shipping To
+      %address
+        %strong #{subscription.shipments.last.address.first_name} #{subscription.shipments.last.address.last_name}<br/>
+        #{subscription.shipments.last.address.address1} #{subscription.shipments.last.address.address2}<br/>
+        #{subscription.shipments.last.address.city}, #{subscription.shipments.last.address.state} #{subscription.shipments.last.address.zip}
+  
+    %div.col-xs-6
+      %h4 Last Shipment
+      - subscription.shipments.each do |shipment|
+        = render partial: 'shipments/show', locals: {shipment: shipment}
+  
+    %div.col-xs-6
+      %h4 Next Shipment
+      - subscription.shipments.each do |shipment|
+        %div{style: 'border:1px solid gray;padding:10px;'}
+          %h4 TBD
+          #{image_tag 'holder.js/191x191', class: 'img-thumbnail'}
+          %h5 Shipping on #{shipment.scheduled_at.advance(months: 1).strftime('%B %-d, %Y')}
