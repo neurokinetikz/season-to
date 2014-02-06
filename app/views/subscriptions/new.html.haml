@@ -1,19 +1,20 @@
-
-
-%h1 Hi #{current_user.first_name}, let's get started ...
-
-%h2 Select a plan
-
-%div.plan-select
-  %div.btn-group
-    %button.btn.btn-default{type: 'button'} <p>Monthly</p>$15
-    %button.btn.btn-default{type: 'button'} <p>3 Months</p>$40
-    %button.btn.btn-default{type: 'button'} <p>6 Months</p>$70
-    %button.btn.btn-default{type: 'button'} <p>12 Months</p>$100
-
-%h2 Enter shipping address
-
 = form_for @subscription, url: {action: "create"}, html: {id: "new_subscription_form"} do |f|
+
+  %h1 Hi #{current_user.first_name}, let's get started ...
+
+  %h2 Select a plan
+
+  %div.plan-select
+    %div.btn-group
+      %button.active.btn.btn-default{type: 'button', value: 'SEASON-TO-1-MONTH'} <p>Monthly</p>$15
+      %button.btn.btn-default{type: 'button', value: 'SEASON-TO-3-MONTH'} <p>3 Months</p>$40
+      %button.btn.btn-default{type: 'button', value: 'SEASON-TO-6-MONTH'} <p>6 Months</p>$70
+      %button.btn.btn-default{type: 'button', value: 'SEASON-TO-12-MONTH'} <p>12 Months</p>$100
+
+  %h2 Enter shipping address
+
+
+  %input{type: 'hidden', id: 'plan_id', name: 'plan[id]', value: 'SEASON-TO-1-MONTH'}
   %div.row
     %div.col-xs-8
       %input.form-control.required.first_name{type: 'text', name: 'address[first_name]', id: 'address_first_name', placeholder: 'First Name', autofocus: true}
@@ -52,3 +53,9 @@
 = content_for :javascript do
   :plain
     $('#new_subscription_form').validate();
+    $('div.plan-select div.btn-group button').click(function(){
+      $('div.plan-select div.btn-group button').removeClass('active');
+      $(this).addClass('active');
+      $('#plan_id').val($(this).val());
+      //event.preventDefault();
+    });

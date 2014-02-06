@@ -8,7 +8,7 @@ class SubscriptionsController < ApplicationController
   def create
     Subscription.transaction do
       # get the plan selected
-      @plan = Plan.first # Plan.find params[:plan_id]
+      @plan = Plan.find_by_code params[:plan][:id]
     
       # get the shipping address, set default
       @address = Address.new params[:address]
@@ -18,7 +18,7 @@ class SubscriptionsController < ApplicationController
       current_user.addresses << @address
     
       # save the credit card to braintree
-      @result = Braintree::CreditCard.create(
+      result = Braintree::CreditCard.create(
         :customer_id => current_user.customer_id, 
         :number => params[:credit_card][:number], 
         :expiration_date => "#{params[:credit_card]['expires_at(2i)']}/#{params[:credit_card]['expires_at(1i)']}", 
@@ -27,19 +27,19 @@ class SubscriptionsController < ApplicationController
       )
     
       # save user credit card
-      if @result.success?
+      if result.success?
         @credit_card = CreditCard.new(
-          :token => @result.credit_card.token, 
-          :card_type => @result.credit_card.card_type, 
-          :last4 => @result.credit_card.last_4, 
-          :expiration_month => @result.credit_card.expiration_month, 
-          :expiration_year => @result.credit_card.expiration_year,
-          :is_default => @result.credit_card.default?
+          :token => result.credit_card.token, 
+          :card_type => result.credit_card.card_type, 
+          :last4 => result.credit_card.last_4, 
+          :expiration_month => result.credit_card.expiration_month, 
+          :expiration_year => result.credit_card.expiration_year,
+          :is_default => result.credit_card.default?
         ) 
         current_user.credit_cards << @credit_card
         flash[:notice] = 'Credit card saved'
       else
-        flash[:alert] = @result.message
+        flash[:alert] = result.message
       end
       
       # create an order
