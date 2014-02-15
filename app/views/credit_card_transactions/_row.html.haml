@@ -1,12 +1,9 @@
 %tr{:id => "credit_card_transaction#{credit_card_transaction.id}"}
+  %td.text-right
+    = "$#{credit_card_transaction.amount}"
   %td
     = credit_card_transaction.credit_card.to_s
-  %td
-    = credit_card_transaction.transaction_type
-  %td
-    = credit_card_transaction.source.order.subscription.plan.name unless credit_card_transaction.source.nil?
-  %td
-    = "$#{credit_card_transaction.amount}"
+  
   -# %td
   -#   = credit_card_transaction.processor_response_text
   %td

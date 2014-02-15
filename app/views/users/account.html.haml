@@ -1,76 +1,77 @@
-%div.tabbable.tabs-left
-  %div.row
-    %div.col-xs-3
-      %ul.nav.nav-pills.nav-stacked#account-tabs
-        %li
-          %a{:href => '#account', 'data-toggle' => 'tab'} Account Info
-        %li.active
-          %a{:href => '#subscription', 'data-toggle' => 'tab'} Your Subscription
-        %li
-          %a{:href => '#shipments', 'data-toggle' => 'tab'} Past Shipments
-        %li
-          %a{:href => '#payments', 'data-toggle' => 'tab'} Payment History
-        %li
-          %a{:href => '#cards', 'data-toggle' => 'tab'} Credit Cards
+%ul.nav.nav-tabs{style: 'margin:10px 0px 20px;'}
+  %li
+    %a{href: '#account', 'data-toggle' => 'tab'} Account
+  %li.active
+    %a{href: '#subscription', 'data-toggle' => 'tab'} Subscription
+  %li
+    %a{href: '#payments', 'data-toggle' => 'tab'} Payment
 
-    %div.col-xs-9
-      %div.tab-content
-        %div.tab-pane#account
-          %form{role: 'form'}
-            %div.row
-              %div.form-group.col-xs-3
-                -# %label{for: 'user_first_name'} First Name
-                %input.form-control{type: 'text', id: 'user_first_name', placeholder: 'First Name', value: current_user.first_name}
+%div.tab-content
+  %div#account.tab-pane
+    %div.row
+      %div.col-xs-12.col-sm-6
+        %form{role: 'form'}
+          %div.panel.panel-warning
+            %div.panel-heading
+              %h3.panel-title Personal Info
+            %div.panel-body
+              %div.row
+                %div.form-group.col-xs-12
+                  %label{for: 'user_first_name'} First Name
+                  %input.form-control{type: 'text', id: 'user_first_name', placeholder: 'First Name', value: current_user.first_name}
 
-              %div.form-group.col-xs-3
-                -# %label{for: 'user_last_name'} Last Name
-                %input.form-control{type: 'text', id: 'user_last_name', placeholder: 'Last Name', value: current_user.last_name}
-              %div.form-group.col-xs-4
-                -# %label{for: 'user_email'} Email
-                %input.form-control{type: 'text', id: 'user_email', placeholder: 'Email', value: current_user.email}
+                %div.form-group.col-xs-12
+                  %label{for: 'user_last_name'} Last Name
+                  %input.form-control{type: 'text', id: 'user_last_name', placeholder: 'Last Name', value: current_user.last_name}
+                %div.form-group.col-xs-12
+                  %label{for: 'user_email'} Email
+                  %input.form-control{type: 'text', id: 'user_email', placeholder: 'Email', value: current_user.email}
 
-              %div.form-group.col-xs-2
-                %button.btn.btn-primary.pull-right{type: 'submit', style: 'margin-top:0px;'} Update
+                %div.form-group.col-xs-12
+                  %label{for: 'user_email'}
+                  %button.btn.btn-primary.pull-right{type: 'submit', style: 'margin-top:0px;'} Update
 
-          %form{role: 'form'}
-            %div.row
-              %div.form-group.col-xs-3
-                %input.form-control{type: 'password', id: 'user_old_password', placeholder: 'Current Password'}
+      %div.col-xs-12.col-sm-6
+        %form{role: 'form'}
+          %div.panel.panel-warning
+            %div.panel-heading
+              %h3.panel-title Change Password
+            %div.panel-body
+              %div.row
+                %div.form-group.col-xs-12
+                  %label Current Password
+                  %input.form-control{type: 'password', id: 'user_old_password', placeholder: 'Current Password'}
 
-              %div.form-group.col-xs-3
-                %input.form-control{type: 'password', id: 'user_new_password', placeholder: 'New Password'}
-              %div.form-group.col-xs-4
-                %input.form-control{type: 'password', id: 'user_new_password_confirm', placeholder: 'Confirm New Password'}
+                %div.form-group.col-xs-12
+                  %label New Password
+                  %input.form-control{type: 'password', id: 'user_new_password', placeholder: 'New Password'}
+                %div.form-group.col-xs-12
+                  %label Confirm Password
+                  %input.form-control{type: 'password', id: 'user_new_password_confirm', placeholder: 'Confirm New Password'}
 
-              %div.form-group.col-xs-2
-                %button.btn.btn-primary.pull-right{type: 'submit', style: 'margin-top:0px;'} Update
-                
-        %div.tab-pane.active#subscription
-          - current_user.subscriptions.each do |s|
-            = render :partial => 'subscriptions/show', locals: {subscription: s}
-        %div.tab-pane#shipments
-          - current_user.subscriptions.each do |s|
-            - s.shipments.each do |shipment|
-              = render :partial => 'shipments/show', locals: {shipment: shipment}
-        %div.tab-pane#payments
-          = render :partial => 'credit_card_transactions/index'
-        -# %div.tab-pane#add-card
-        -#   = render :partial => 'credit_cards/form'
-        %div.tab-pane#cards
-          = render :partial => 'credit_cards/index'
-        -# %div.tab-pane#transactions
-        -#   = render :partial => 'credit_card_transactions/index'
-        -# %div.tab-pane#payment
-        -#   %div.payment-alerts
-        -#   %div.control-group.text-center
-        -#     = form_for(CreditCard.new, :url => charge_credit_cards_path, :html => { :method => :post, :id => 'credit-card-charge-form', :class => 'form-horizontal' }) do |f|
-        -#       %select.span4{:name => 'id', :id => "select-credit-card"}
-        -#         = options_for_select(current_user.credit_cards.order('id desc').collect{|cc| [cc.to_s, cc.id]}, (current_user.default_credit_card.nil? ? nil : current_user.default_credit_card.id))
-        -# 
-        -#       %div.input-prepend.input-append
-        -#         %span.add-on $
-        -#         %input.span2.required#appendedPrependedInput{:type => 'text', :name => 'amount'}
-        -#         %button.btn.btn-primary{:type => 'submit', :id => 'charge-button', "data-loading-text" => "Charging..."} Charge
+                %div.form-group.col-xs-12
+                  %button.btn.btn-primary.pull-right{type: 'submit', style: 'margin-top:0px;'} Update
+  %div#subscription.active.tab-pane
+    - current_user.subscriptions.each do |s|
+      = render :partial => 'subscriptions/show', locals: {subscription: s}
+  %div#payments.tab-pane
+    
+    %form{role: 'form'}
+      %div.panel.panel-warning
+        %div.panel-heading
+          %h3.panel-title Add A Card
+        %div.panel-body
+          = render :partial => 'credit_cards/form'
+    %div.panel.panel-warning
+      %div.panel-heading
+        %h3.panel-title Credit Cards
+      %div.panel-body
+        = render :partial => 'credit_cards/index'
+    %div.panel.panel-warning
+      %div.panel-heading
+        %h3.panel-title Transactions
+      %div.panel-body
+        = render :partial => 'credit_card_transactions/index'
       
 
 

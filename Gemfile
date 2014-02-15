@@ -5,6 +5,9 @@ ruby "2.0.0"
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.0.0'
 
+# http://stackoverflow.com/questions/15520151/rails-4-authentication
+gem 'protected_attributes'
+
 gem 'unicorn'
 gem 'mysql2'
 gem 'devise'
@@ -26,9 +29,11 @@ gem 'ejs'
 gem 'newrelic_rpm'
 gem 'sentry-raven'
 gem 'delayed_job_active_record'
+gem "mailchimp-api", "~> 2.0.4"
+gem 'mandrill-api'
+# gem 'zendesk_api'
 
-# http://stackoverflow.com/questions/15520151/rails-4-authentication
-gem 'protected_attributes'
+
 
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 4.0.0'

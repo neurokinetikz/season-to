@@ -39,7 +39,7 @@ class SubscriptionsController < ApplicationController
         current_user.credit_cards << @credit_card
         flash[:notice] = 'Credit card saved'
       else
-        flash[:alert] = result.message
+        throw Exception.new result.message
       end
       
       # create an order
@@ -86,6 +86,7 @@ class SubscriptionsController < ApplicationController
         @subscription = Subscription.create(
           user: current_user,
           plan: @plan,
+          credit_card: @credit_card,
           token: result.subscription.id,
           status: result.subscription.status,
           billing_day_of_month: result.subscription.billing_day_of_month,

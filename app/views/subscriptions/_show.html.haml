@@ -1,68 +1,82 @@
-%div.row
-  %div.col-xs-12{style: 'border-bottom:1px dotted #eee;margin-bottom:20px;'}
-    %h1 
-      #{subscription.plan.name} Plan 
-      %button.btn.btn-success{type: 'button'}  #{subscription.status}
-      %button.btn.btn-info{type: 'button'}  Upgrade
-      
-    
-
-%div.row
-  %div.col-xs-6
-    %div.col-xs-12
-      %div.panel.panel-warning
-        %div.panel-heading
-          %h3.panel-title Created On
-        %div.panel-body
-          #{subscription.first_billing_date.strftime('%B %-d, %Y')}
-    %div.col-xs-12
-      %div.panel.panel-warning
-        %div.panel-heading
-          %h3.panel-title Shipping To
-        %div.panel-body
-          %address
+%div.panel.panel-success
+  %div.panel-heading
+    %h1.panel-title{style: 'overflow:auto'}
+      %div.row
+        %div.col-xs-8
+          %button.btn.btn-xs.btn-success{type: 'button'}  #{subscription.status}
+          #{subscription.plan.name} Plan
+        %div.col-xs-4.text-right
+          
+          %button.btn.btn-xs.btn-primary{type: 'button'} Upgrade
+  %div.panel-body
+    %div.row
+      %div.col-xs-12{}
+        
+    %div.row
+      %div.col-xs-12.col-sm-6
+        %div.panel.panel-warning
+          %div.panel-heading
+            %h3.panel-title Last Shipment
+          %div.panel-body
+            = render partial: 'shipments/show', locals: {shipment: subscription.shipments.first}
+     
+      %div.col-xs-12.col-sm-6
+        %div.panel.panel-warning
+          %div.panel-heading
+            %h3.panel-title Next Delivery On
+          %div.panel-body
+            %strong #{subscription.shipments.first.scheduled_at.advance(months: 1).strftime('%B %-d, %Y')}
+        
+        %div.panel.panel-warning
+          %div.panel-heading
+            %div.row
+              %div.col-xs-9
+                %h3.panel-title Shipping To
+              %div.row.col-xs-3.text-right
+                %button.btn.btn-xs.btn-warning change
+            
+          %div.panel-body
             %strong #{subscription.shipments.last.address.first_name} #{subscription.shipments.last.address.last_name}<br/>
             #{subscription.shipments.last.address.address1} #{subscription.shipments.last.address.address2}<br/>
             #{subscription.shipments.last.address.city}, #{subscription.shipments.last.address.state} #{subscription.shipments.last.address.zip}
-  %div.col-xs-6
-    %div.panel.panel-warning
-      %div.panel-heading
-        %h3.panel-title Billing Info
-      %div.panel-body
-        %strong Billing Day of Month<br/>
-        #{subscription.billing_day_of_month.ordinalize}<br/>
 
+        %div.panel.panel-warning
+          %div.panel-heading
+            %div.row
+              %div.col-xs-9
+                %h3.panel-title Subscription Renewal
+              %div.row.col-xs-3.text-right
+                %button.btn.btn-xs.btn-warning change
+          %div.panel-body
+            $#{money_without_cents subscription.next_billing_period_amount} will be charged to your
+            #{subscription.credit_card.to_s} on #{subscription.next_billing_date.strftime('%B %-d, %Y')}
+        %div.panel.panel-warning
+          %div.panel-heading
+            %h3.panel-title Past Shipments
+          %div.panel-body
+            %table.table.table-hover
+              %thead
+                %tr
+                  %th Image
+                  %th Name
+                  %th Shipped On
+              %tbody
+                %tr
+                  %td
+                    %img{src: 'http://www.techvert.com/wp-content/uploads/2010/09/16/salt-and-pepper-robots/saltandpepperrobots.jpg', width: '75px'}
+                  %td Robots
+                  %td January 14, 2014
+                %tr
+                  %td
+                    %img{src: 'http://www.photo-dictionary.com/photofiles/list/1589/2124salt_and_pepper.jpg', width: '75px'}
+                  %td Table Salt
+                  %td December 14, 2013
+                %tr
+                  %td
+                    %img{src: 'http://static.planetminecraft.com/files/resource_media/screenshot/1151/salt%20and%20pepper_1064747.jpg', width: '75px'}
+                  %td Naughty & Nice
+                  %td November 14, 2013
 
-        %strong Next Billing Date<br/>
-        #{subscription.next_billing_date.strftime('%B %-d, %Y')}<br/>
-
-        %strong Next Billing Amount<br/>
-        $#{subscription.next_billing_period_amount}<br/>
-
-        %strong Credit Card<br/>
-        #{subscription.credit_card.to_s}<br/>
-
-
-    
-    
-    
-  
-%div.row  
-  %div.col-xs-6
-    - subscription.shipments.each do |shipment|
-      = render partial: 'shipments/show', locals: {shipment: shipment}
-
-  %div.col-xs-6
-    - subscription.shipments.each do |shipment|
-      %div{style: 'padding:10px;'}
-        %h5 TBD
-        #{image_tag 'http://i.c-b.co/is/image/Crate/BiscayneSaltPepperMills/$web_zoom$%26/1308302307/biscayne-salt-and-pepper-mills.jpg', class: 'img-thumbnail'}
-        %p Scheduled for #{shipment.scheduled_at.advance(months: 1).strftime('%B %-d, %Y')}
-        
-        
-%div.row
-  %div.col-xs-7
-  %div.col-xs-2
-    
-  %div.col-xs-3
-    %button.btn.btn-danger{type: 'button'}  Cancel Subscription
+    %div.row
+      %div.col-xs-12.text-right
+        %button.btn.btn-xs.btn-danger{type: 'button'}  Cancel Subscription

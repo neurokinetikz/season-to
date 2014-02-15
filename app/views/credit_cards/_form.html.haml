@@ -1,36 +1,31 @@
-= form_for(CreditCard.new, :url => credit_cards_path, :html => { :method => :post, :id => 'credit-card-form', :class => 'form-horizontal' }) do |f|
-  %fieldset
-    %div.credit-card-alerts
-    
-    %div.control-group    
-      %label.control-label{:for => 'credit_card_number'} Credit Card #
-      %div.controls
-        = f.text_field :number, :placeholder => 'Number', :class => 'required'
-        
-    %div.control-group
-      %label.control-label{:for => 'credit_card_cvv'} CVV
-      %div.controls
-        = f.text_field :cvv, :placeholder => 'CVV', :class => 'required'
+%div.row
+  %div.form-group.col-xs-12.col-sm-6.col-md-3.col-lg-3
+    %label Credit Card #
+    %input.required.form-control{type: 'text', placeholder: 'Number', id: 'credit_card_number', name: 'credit_card[number]'}
+  %div.form-group.col-xs-12.col-sm-6.col-md-2.col-lg-2
+    %label CVV
+    %input.required.form-control{type: 'text', placeholder: 'CVV', id: 'credit_card_cvv', name: 'credit_card[cvv]'}
+  %div.form-group.col-xs-12.col-md-4.col-lg-4
+    %label Expiration Date
+    %div.clearfix
+    = date_select :credit_card, :expires_at, {:discard_day => true, :user_short_month => true, :add_month_numbers => true, :start_year => Time.now.year, :end_year => Time.now.year + 10, :order => [:month, :year], :include_blank => false, :prompt => [:year => 'Expiration Year', :month => 'Expiration Month']}, {:class => 'form-control required col-xs-3', style: 'width:50%;float:left;'} 
+  %div.form-group.col-xs-12.col-md-2.col-lg-2
+    %label
+    %div.checkbox
+      %label
+        %input{type: 'checkbox', id: 'credit_card_is_default', name: 'credit_card[is_default]'}
+          Is Default
+  %div.form-group.col-xs-12.col-md-1.col-lg-1
+    %label
+    %input.btn.btn-success.btn-block{type: 'submit', value: 'Add'}
+    / %button.btn.btn-success.btn-block{:type => 'submit', :id => 'save-button', "data-loading-text" => "Saving..."} Add Card
 
-    %div.control-group
-      %label.control-label{:for => 'credit_card_expires_at'} Expiration Date
-      %div.controls
-        = date_select :credit_card, :expires_at, {:discard_day => true, :user_short_month => true, :add_month_numbers => true, :start_year => Time.now.year, :end_year => Time.now.year + 10, :order => [:month, :year], :include_blank => true, :prompt => [:year => 'Expiration Year', :month => 'Expiration Month']}, {:class => 'span2 required'}
-    
-    %div.control-group
-      %div.controls
-        %label.checkbox
-          = f.check_box :is_default
-          Is default    
-    
-    %div.control-group
-      %div.controls
-        %button.btn{:type => 'submit', :id => 'save-button', "data-loading-text" => "Saving..."} Save
- 
-= content_for :javascript do
-  :plain
-    $("#credit-card-form").validate();
-    $('#credit-card-form').bind('ajax:beforeSend', function(xhr, settings) {$('#save-button').button('loading');$('.errors').html('');})
-     .bind('ajax:success', function(xhr, data, status) {})
-     .bind('ajax:complete', function(xhr, status) {$('#save-button').button('reset');})
-     .bind('ajax:error', function(xhr, data, status) {});
+
+-if false
+  = content_for :javascript do
+    :plain
+      $("#credit-card-form").validate();
+      $('#credit-card-form').bind('ajax:beforeSend', function(xhr, settings) {$('#save-button').button('loading');$('.errors').html('');})
+       .bind('ajax:success', function(xhr, data, status) {})
+       .bind('ajax:complete', function(xhr, status) {$('#save-button').button('reset');})
+       .bind('ajax:error', function(xhr, data, status) {});

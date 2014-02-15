@@ -33,13 +33,81 @@ label.error {
 
 /* Custom page footer */
 .footer {
+	margin-top:20px;
   padding-top: 19px;
   color: #777;
   border-top: 1px solid #e5e5e5;
 }
 
+body {
+  font-family: "Lato", Helvetica, Arial, sans-serif;
+  font-size: 18px;
+  line-height: 1.72222;
+/*  color: #34495e;*/
+	color: #000000;
+  background-color: #ffffff;
+}
+
+a {
+/*  color: #16a085;*/
+	color:#CC5455;
+  text-decoration: none;
+  -webkit-transition: 0.25s;
+  transition: 0.25s;
+}
+a:hover,
+a:focus {
+  color: #1abc9c;
+  text-decoration: none;
+}
+
+.panel-warning > .panel-heading {
+/*color: #c09853;*/
+color: #353b40;
+background-color: #fcf8e3;
+/*background-color:#FFFD83;*/
+/*border-color: #fbeed5;*/
+border-color: #d9f0d3;
+}
+
+.panel-warning {
+border-color: #d9f0d3;
+}
+
+
+.nav-pills > li.active > a, .nav-pills > li.active > a:hover, .nav-pills > li.active > a:focus {
+color: #ffffff;
+/*background-color: #428bca;*/
+background-color:#5CC1FF;
+}
+
+
+.btn-success:hover, .btn-success:focus, .btn-success:active, .btn-success.active, .open .dropdown-toggle.btn-success {
+color: #ffffff;
+background-color: #58d68d;
+border-color: #58d68d;
+}
+
 /* Customize container */
 @media (min-width: 768px) {
+	h1,
+	h2,
+	h3,
+	h4,
+	h5,
+	h6,
+	.h1,
+	.h2,
+	.h3,
+	.h4,
+	.h5,
+	.h6 {
+	  font-family: "Lato", Helvetica, Arial, sans-serif;
+	  font-weight: 700;
+	  line-height: 1.1;
+	  color: inherit;
+	}
+	
   .container {
     max-width: 1024px;
   }

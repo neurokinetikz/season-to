@@ -1,3 +1,5 @@
+require 'mandrill'
+
 class User < ActiveRecord::Base
   # Include default devise modules. Others available are:
   # :token_authenticatable, :confirmable,
@@ -28,8 +30,9 @@ class User < ActiveRecord::Base
       :thumb => ["64x64#", :png]
     }, 
     :default_url => "/images/:style/missing.png"
-    
+  
   after_create :create_braintree_customer
+  after_create :send_welcome_email
   
   def name
     if first_name.nil? && last_name.nil?
@@ -98,4 +101,12 @@ class User < ActiveRecord::Base
       throw Exception.new "Error creating Braintree customer"
     end
   end
+  handle_asynchronously :create_braintree_customer
+  
+  def send_welcome_email
+    mandrill = Mandrill::API.new 'wiogzUeHpLTaZz9vSORNxw'
+    mandrill.messages.send_template 'welcome-email', nil, 
+      {to: [name: self.name, email: self.email, type: 'to'], global_merge_vars: [{name: 'FIRSTNAME', content: self.first_name}]}
+  end
+  handle_asynchronously :send_welcome_email
 end

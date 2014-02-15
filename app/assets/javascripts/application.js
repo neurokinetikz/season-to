@@ -18,3 +18,9 @@
 //= require backbone-relational
 //= require_tree .
 //= require turbolinks
+//= stub flatui-checkbox
+//= stub flatui-fileinput
+//= stub flatui-radio
+
+// Some general UI pack related JS
+// Extend JS String with repeat method

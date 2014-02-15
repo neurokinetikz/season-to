@@ -1,14 +1,17 @@
-%div.container
-  = form_for(resource, :as => resource_name, :url => session_path(resource_name), :html => { :method => :post, :id => 'login-form', :class => 'form-signin' }) do |f|
-    %h2.form-signin-heading Login Now!
-    
-    
-    = f.text_field :email, :class => 'form-control required email', :placeholder => 'Email', :autofocus => 'true'
-    %input#user_password.form-control.required{:type => 'password', :name => 'user[password]', :placeholder => 'Password'}
-    %label.checkbox
-      = f.check_box :remember_me
-      Remember me
-    %button.btn.btn-lg.btn-primary.btn-block{:type => 'submit'} Login
+%div.row{style: 'margin-top:30px;'}
+	%div.col-xs-12.col-sm-3
+	%div.col-xs-12.col-sm-6
+		= form_for(resource, :as => resource_name, :url => session_path(resource_name), :html => { :method => :post, :id => 'login-form', :class => 'form-signin' }) do |f|
+			%div.panel.panel-success
+				%div.panel-heading
+					%h3.panel-title Login Now!
+				%div.panel-body
+					%div.form-group
+						= f.text_field :email, :class => 'form-control required email', :placeholder => 'Email', :autofocus => 'true'
+					%div.form-group
+						%input#user_password.form-control.required{:type => 'password', :name => 'user[password]', :placeholder => 'Password'}
+					%div.form-group
+						%button.btn.btn-lg.btn-success.btn-block{:type => 'submit'} Login
 
 = content_for :javascript do
-  $("#login-form").validate();
+	$("#login-form").validate();

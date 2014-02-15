@@ -1,8 +1,27 @@
 <!DOCTYPE html>
+<html>
 <head>
   <title>Season To</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="description" content="Season To - A gourmet salt and pepper subscription service">
+  
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href='<%= asset_path("ico/apple-touch-icon-144-precomposed.png")%>'>
+  <link rel="apple-touch-icon-precomposed" sizes="114x114" href='<%= asset_path("ico/apple-touch-icon-114-precomposed.png")%>'>
+  <link rel="apple-touch-icon-precomposed" sizes="72x72" href='<%= asset_path("ico/apple-touch-icon-72-precomposed.png")%>'>
+  <link rel="apple-touch-icon-precomposed" href='<%= asset_path("ico/apple-touch-icon-57-precomposed.png") %>'>
+  <link rel="shortcut icon" href='<%= asset_path("ico/favicon.png")%>'>
+  
+  <!-- GOOGLE WEB FONTS -->
+  <link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,700,600,300,800' rel='stylesheet' type='text/css'>
+  
+  <% if params[:controller] == 'home' and params[:action] == 'index' %>
+    <%= stylesheet_link_tag    "treble", media: "all", "data-turbolinks-track" => true %>
+  <% else %>
+    <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
+  <% end %>
   <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
   <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!--[if lt IE 9]>
@@ -13,35 +32,26 @@
 </head>
 
 <body>
+  <% if params[:controller] == 'home' and params[:action] == 'index' %>
+    <%= yield %>
+  <% else %>
+    <div class="container">
+      <%= render :partial => 'layouts/header' %>
 
-<div class="container">
-  <div class="header">
-    <ul class="nav nav-pills pull-right">
-      <li class=""><%= link_to 'How it Works', how_path %></li>
-      <li class=""><a href="/">Buy a Gift</a></li>
-      <% unless user_signed_in? %>
-      <li><%= link_to 'Sign Up', new_user_registration_path %>
-      <li><%= link_to 'Login', new_user_session_path %></li>
-      <% else %>
-      <li><%= link_to 'Account', account_path %></li>
-      <li><%= link_to 'Logout', destroy_user_session_path, method: :delete %></li>
-      <% end %>
-    </ul>
-    <h3 class="text-muted"><%= link_to 'season.to', root_path %></h3>
-  </div>
-  
-  <%= yield %>
-  
-  <div class="footer">
-    <p class='pull-left'>&copy; neurokinetikz, inc. 2014</p>
-    <p class='pull-right'>
-      <%= link_to 'about us', '#' %>
-      | <%= link_to 'terms of service', '#' %>
-      | <%= link_to 'privacy policy', '#' %>
-      | <%= link_to 'contact', '#' %>
-    </p>
-  </div>
-</div>
+      <%= yield %>
+
+      <div class="footer">
+        <p class='pull-left'>&copy; neurokinetikz, inc. 2014</p>
+        <p class='pull-right'>
+          <%= link_to 'about us', '#' %>
+          | <%= link_to 'terms of service', '#' %>
+          | <%= link_to 'privacy policy', '#' %>
+          | <%= link_to 'contact', '#' %>
+        </p>
+      </div>
+    </div>
+  <% end %>
+
 
 <% if false %>
 <div id="wrap">

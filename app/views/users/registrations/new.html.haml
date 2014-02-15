@@ -1,41 +1,46 @@
-%h1 Let's Get Started!
+%div.panel.panel-default
+  %div.panel-body
 
-
-%div.container
+    = form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :method => :post, :id => 'registration-form', role: 'form' }) do |f|
+      %div.container
+        / %div.row.text-center
+        /   %h1 Let's Get Started
+        %div.row
+          %div.col-sm-1
+          %div.col-sm-4
+            - unless user_signed_in?
+              %a.btn.btn-primary{href: user_omniauth_authorize_path(:facebook), style: 'display:block'} 
+                %span{style: 'font-size:24px;font-weight:bold;background-color:#3B5998;padding:1px 10px;'} f |
+                %strong{style: 'padding:0px 1px;'} Connect with Facebook
+          %div.col-sm-1.text-center
+            or
+          %div.col-sm-5
+            -# %div.panel.panel-default
+            -#           %div.panel-body
+            = devise_error_messages!
+            %div.form-group
+              = f.text_field :first_name, :class => 'form-control required first_name', :placeholder => 'First Name', :autofocus => 'true'
+            %div.form-group
+              = f.text_field :last_name, :class => 'form-control required last_name', :placeholder => 'Last Name'
+            %div.form-group
+              = f.text_field :email, :class => 'form-control required email', :placeholder => 'Email'
+            %div.form-group
+              %input#user_password_enter.form-control.required.user_password{:type => 'password', :name => 'user[password]', :placeholder => 'Password'}
+            %div.form-group
+              %input#user_password_confirmation.form-control.required.user_password_confirmation{:type => 'password', :name => 'user[password_confirmation]', :placeholder => 'Confirm Passsword'}
+    
+            %div.checkbox
+              %input.required.terms{'type' => 'checkbox', id: 'terms', name: 'terms'} I agree to the #{link_to 'terms & conditions', terms_path}
+        
+            %button.btn.btn-lg.btn-primary.btn-block{:type => 'submit'} Sign Up
+    
   
-      
-  = form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :method => :post, :id => 'registration-form', :class => 'form-signin' }) do |f|
-    
-    - unless user_signed_in?
-      %a.btn.btn-primary{href: user_omniauth_authorize_path(:facebook)} 
-        %span{style: 'font-weight:bold;background-color:#3B5998;padding:1px 15px;font-size:28px;'} f |
-        %span{style: 'font-size:22px;padding:0px 10px;'} Sign up with Facebook
-      %div{style: 'text-align:center;'}
-        %h3 or
-    
-    = devise_error_messages!
     
     
     
     
-    %div.row
-      %div.col-xs-12
-        = f.text_field :first_name, :class => 'form-control required first_name', :placeholder => 'First Name', :autofocus => 'true'
-      %div.col-xs-12
-        = f.text_field :last_name, :class => 'form-control required last_name', :placeholder => 'Last Name'
-    %div.row
-      %div.col-xs-12
-        = f.text_field :email, :class => 'form-control required email', :placeholder => 'Email'
-    %div.row
-      %div.col-xs-12
-        %input#user_password_enter.form-control.required{:type => 'password', :name => 'user[password]', :placeholder => 'Password'}
     
-    
-    %input#user_password_confirmation.form-control.required{:type => 'password', :name => 'user[password_confirmation]', :placeholder => 'Confirm Passsword'}
-    %label.checkbox
-      = f.check_box :remember_me, :class => 'required'
-      I agree to the #{link_to 'terms & conditions', terms_path}
-    %button.btn.btn-lg.btn-primary.btn-block{:type => 'submit'} Sign Up          
+              
 
 
     

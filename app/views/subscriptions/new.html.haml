@@ -1,60 +1,217 @@
-= form_for @subscription, url: {action: "create"}, html: {id: "new_subscription_form"} do |f|
+%style
+  th { text-align:center;width:25%;}
+  td { margin:auto;}
+
+= form_for @subscription, url: {action: "create"}, html: {id: "new_subscription_form", role: 'form'} do |f|
 
   %h1 Hi #{current_user.first_name}, let's get started ...
-
-  %h2 Select a plan
-
-  %div.plan-select
-    %div.btn-group
-      %button.active.btn.btn-default{type: 'button', value: 'SEASON-TO-1-MONTH'} <p>Monthly</p>$15
-      %button.btn.btn-default{type: 'button', value: 'SEASON-TO-3-MONTH'} <p>3 Months</p>$40
-      %button.btn.btn-default{type: 'button', value: 'SEASON-TO-6-MONTH'} <p>6 Months</p>$70
-      %button.btn.btn-default{type: 'button', value: 'SEASON-TO-12-MONTH'} <p>12 Months</p>$100
-
-  %h2 Enter shipping address
-
-
+  %div.panel.panel-warning
+    %div.panel-heading
+      %h3.panel-title Select a Product and Plan
+    %div.panel-body
+      %table.table.plan-select
+        %tr
+          %th
+          %th 
+            Artisan<br/>
+            %img.img-responsive{src: asset_path('artisan.jpg'), style: 'width:140px;'}
+          %th
+            Flip Top<br/>
+            %img.img-responsive{src: asset_path('flip.jpg'), style: 'width:140px;'}
+          %th
+            Pouch<br/>
+            %img.img-responsive{src: asset_path('pouch.png'), style: 'width:140px;'}
+        %tr
+          %td 1 Month
+          %td
+            %div.plan-select
+              %div.btn-group.btn-block
+                %button.btn.btn-default.btn-block.active{type: 'button', value: 'SEASON-TO-1-MONTH-GOURMET', plan: 'Artisan', duration: 1, price: 29} $29
+          %td
+            %div.plan-select
+              %div.btn-group.btn-block
+                %button.btn.btn-default.btn-block{type: 'button', value: 'SEASON-TO-1-MONTH-FLIP', plan: 'Flip Top', duration: 1, price: 23} $23
+          %td
+            %div.plan-select
+              %div.btn-group.btn-block
+                %button.btn.btn-default.btn-block{type: 'button', value: 'SEASON-TO-1-MONTH-POUCH', plan: 'Pouch', duration: 1, price: 19} $19
+                
+        %tr
+          %td 3 Month
+          %td
+            %div.plan-select
+              %div.btn-group.btn-block
+                %button.btn.btn-default.btn-block{type: 'button', value: 'SEASON-TO-3-MONTH-GOURMET', plan: 'Gourmet', duration: 3, price: 84} $28
+          %td
+            %div.plan-select
+              %div.btn-group.btn-block
+                %button.btn.btn-default.btn-block{type: 'button', value: 'SEASON-TO-3-MONTH-FLIP', plan: 'Flip Top', duration: 3, price: 66} $22
+          %td
+            %div.plan-select
+              %div.btn-group.btn-block
+                %button.btn.btn-default.btn-block{type: 'button', value: 'SEASON-TO-3-MONTH-POUCH', plan: 'Pouch', duration: 3, price: 54} $18
+                
+        %tr
+          %td 6 Month
+          %td
+            %div.plan-select
+              %div.btn-group.btn-block
+                %button.btn.btn-default.btn-block{type: 'button', value: 'SEASON-TO-6-MONTH-GOURMET', plan: 'Gourmet', duration: 6, price: 162} $27
+          %td
+            %div.plan-select
+              %div.btn-group.btn-block
+                %button.btn.btn-default.btn-block{type: 'button', value: 'SEASON-TO-6-MONTH-FLIP', plan: 'Flip Top', duration: 6, price: 126} $21
+          %td
+            %div.plan-select
+              %div.btn-group.btn-block
+                %button.btn.btn-default.btn-block{type: 'button', value: 'SEASON-TO-6-MONTH-POUCH', plan: 'Pouch', duration: 6, price: 102} $17
+                
+        %tr
+          %td 12 Month
+          %td
+            %div.plan-select
+              %div.btn-group.btn-block
+                %button.btn.btn-default.btn-block{type: 'button', value: 'SEASON-TO-12-MONTH-GOURMET', plan: 'Gourmet', duration: 12, price: 312} $26
+          %td
+            %div.plan-select
+              %div.btn-group.btn-block
+                %button.btn.btn-default.btn-block{type: 'button', value: 'SEASON-TO-12-MONTH-FLIP', plan: 'Flip Top', duration: 12, price: 240} $20
+          %td
+            %div.plan-select
+              %div.btn-group.btn-block
+                %button.btn.btn-default.btn-block{type: 'button', value: 'SEASON-TO-12-MONTH-POUCH', plan: 'Pouch', duration: 12, price: 192} $16
+                
+ 
   %input{type: 'hidden', id: 'plan_id', name: 'plan[id]', value: 'SEASON-TO-1-MONTH'}
-  %div.row
-    %div.col-xs-8
-      %input.form-control.required.first_name{type: 'text', name: 'address[first_name]', id: 'address_first_name', placeholder: 'First Name', autofocus: true}
-    %div.col-xs-4
-      %input.form-control.last_name{type: 'text', name: 'address[last_name]', id: 'address_last_name', placeholder: 'Last Name'}
   
   %div.row
-    %div.col-xs-8
-      %input.form-control.required.address1{type: 'text', name: 'address[address1]', id: 'address_address1', placeholder: 'Address'}
-    %div.col-xs-4
-      %input.form-control.address2{type: 'text', name: 'address[address2]', id: 'address_address2', placeholder: 'Address (cont.)'}
+    %div.col-xs-12.col-sm-8
+      %div.panel.panel-warning
+        %div.panel-heading
+          %h3.panel-title Enter Your Shipping Info
+        %div.panel-body
+          %div.form-group.col-xs-12.col-sm-6
+            %input.form-control.required.first_name{type: 'text', name: 'address[first_name]', id: 'address_first_name', placeholder: 'First Name', autofocus: true}
+          %div.form-group.col-xs-12.col-sm-6
+            %input.form-control.last_name{type: 'text', name: 'address[last_name]', id: 'address_last_name', placeholder: 'Last Name'}
+          %div.form-group.col-xs-12.col-sm-6
+            %input.form-control.required.address1{type: 'text', name: 'address[address1]', id: 'address_address1', placeholder: 'Address'}
+          %div.form-group.col-xs-12.col-sm-6
+            %input.form-control.address2{type: 'text', name: 'address[address2]', id: 'address_address2', placeholder: 'Address (cont.)'}
+          
+          %div.form-group.col-xs-8.col-sm-6
+            %input.form-control.required.city{type: 'text', name: 'address[city]', id: 'address_city', placeholder: 'City'}
+          %div.form-group.col-xs-4.col-sm-2
+            %input.form-control.required.state{type: 'text', name: 'address[state]', id: 'address_state', placeholder: 'State'}
+          %div.form-group.col-xs-12.col-sm-4
+            %input.form-control.required.zip{type: 'text', name: 'address[zip]', id: 'address_zip', placeholder: 'Zip Code'}
+              
+              
+      %div.panel.panel-warning
+        %div.panel-heading
+          %h3.panel-title Enter Your Payment Info
+        %div.panel-body
+          %div.form-group.col-xs-12.col-sm-6
+            %input.form-control.required.credit_card_number{type: 'text', name: 'credit_card[number]', id: 'credit_card_number', placeholder: 'Credit Card Number'}
+          %div.form-group.col-xs-12.col-sm-2
+            %input.form-control.required.credit_card_cvv{type: 'text', name: 'credit_card[cvv]', id: 'credit_card_cvv', placeholder: 'CVV'}
+          %div.form-group.col-xs-12.col-sm-4
+            = date_select :credit_card, :expires_at, {:discard_day => true, :user_short_month => true, :add_month_numbers => true, :start_year => Time.now.year, :end_year => Time.now.year + 10, :order => [:month, :year], :include_blank => false, :prompt => [:year => 'Expiration Year', :month => 'Expiration Month']}, {style: 'width:50%;', :class => 'form-control col-xs-1 required'}
+          
+    %div.col-xs-12.col-sm-4
+      %div.row
+        %div.col-xs-12
+          -# %div.panel.panel-warning
+          -#             %div.panel-heading
+          -#               %h3.panel-title Subscription Details
+          -#             %div.panel-body
+          -#               %div.row
+          -#                 %div.col-xs-7.col-sm-12
+          -#                   %strong Total # Shipments:
+          -#                 %div.col-xs-5.col-sm-12.text-right
+          -#                   %span#duration
+          -#              
+          -#                 
+          -#               %div.row
+          -#                 %div.col-xs-7.col-sm-12
+          -#                   %strong First Shipment On:
+          -#                 %div.col-xs-5.col-sm-12.text-right
+          -#                   %span#first
+          -#                 
+          -#               %div.row
+          -#                 %div.col-xs-7.col-sm-12
+          -#                   %strong Last Shipment On: 
+          -#                 %div.col-xs-5.col-sm-12.text-right
+          -#                   %span#last
+          -#               %div.row
+          -#                 %div.col-xs-7.col-sm-12
+          -#                   %strong Renews On:
+          -#                 %div.col-xs-5.col-sm-12.text-right
+          -#                   %span#renews
+                    
+          %div.panel.panel-warning
+            %div.panel-heading
+              %h3.panel-title Order Summary
+            %div.panel-body
+              %table{style: 'width:100%'}
+                %tr
+                  %td
+                    %span#plan 1 Month Artisan Plan
+                  %td{style: 'text-align:right'}
+                    $
+                    %span#price 29.00
+                %tr
+                  %td Tax (NY only)
+                  %td{style: 'text-align:right'}
+                    $
+                    %span#tax 2.32
+                %tr{style: 'border-top:1px dotted gray'}
+                  %td
+                    %strong Total Due
+                  %td{style: 'text-align:right'}
+                    %strong
+                      $
+                      %span#total 31.32
+              
+      %div.row   
+        %div.col-xs-12
+          %button.btn.btn-lg.btn-success.btn-block{type: 'submit', id: 'purchase_button'} Buy Now!
+
+  -# %h2 Enter payment info
+
   
-  %div.row
-    %div.col-xs-4
-      %input.form-control.required.city{type: 'text', name: 'address[city]', id: 'address_city', placeholder: 'City'}
-    %div.col-xs-4
-      %input.form-control.required.state{type: 'text', name: 'address[state]', id: 'address_state', placeholder: 'State'}
-    %div.col-xs-4
-      %input.form-control.required.zip{type: 'text', name: 'address[zip]', id: 'address_zip', placeholder: 'Zip Code'}
-
-  %h2 Enter payment info
-
-  %div.row
-    %div.col-xs-6
-      %input.form-control.required.credit_card_number{type: 'text', name: 'credit_card[number]', id: 'credit_card_number', placeholder: 'Credit Card Number'}
-    %div.col-xs-2
-      %input.form-control.required.credit_card_cvv{type: 'text', name: 'credit_card[cvv]', id: 'credit_card_cvv', placeholder: 'CVV'}
-    %div.col-xs-4
-      = date_select :credit_card, :expires_at, {:discard_day => true, :user_short_month => true, :add_month_numbers => true, :start_year => Time.now.year, :end_year => Time.now.year + 10, :order => [:month, :year], :include_blank => false, :prompt => [:year => 'Expiration Year', :month => 'Expiration Month']}, {style: 'width:50%;', :class => 'form-control col-xs-1 required'}
-
-  %div.row
-    %div.col-xs-12{style: 'text-align:center;margin:50px 0px;'}
-      %button.btn.btn-lg.btn-success.pull-right{type: 'submit', id: 'purchase_button'} Purchase Now!
+  
   
 
 = content_for :javascript do
   :plain
+    var today = new Date();
+    var last = new Date(today.getFullYear(),today.getMonth(),today.getDate());
+    var renews = new Date(today.getFullYear(),today.getMonth()+1,today.getDate());
+    
+    $('#duration').html('1');
+    $('#first').html($.datepicker.formatDate('M d, yy', today));
+    $('#last').html($.datepicker.formatDate('M d, yy', last));
+    $('#renews').html($.datepicker.formatDate('M d, yy', renews));
+    
+    $('div.plan-select button').click(
+      function(){
+        $('#price').html(($(this).attr('price')*1.0).toFixed(2));
+        $('#tax').html(($(this).attr('price') * 0.08).toFixed(2));
+        $('#total').html( ($(this).attr('price') * 0.08 + ($(this).attr('price')*1.0)).toFixed(2));
+        $('#plan').html($(this).attr('duration') + ' Month ' + $(this).attr('plan'));
+        $('#duration').html($(this).attr('duration'));
+        
+        last = new Date(today.getFullYear(),today.getMonth()+parseInt($(this).attr('duration'))-1,today.getDate());
+        $('#last').html($.datepicker.formatDate('M d, yy', last));
+        
+        renews = new Date(today.getFullYear(),today.getMonth()+parseInt($(this).attr('duration')),today.getDate());
+        $('#renews').html($.datepicker.formatDate('M d, yy', renews));
+      }
+    );
     $('#new_subscription_form').validate();
-    $('div.plan-select div.btn-group button').click(function(){
-      $('div.plan-select div.btn-group button').removeClass('active');
+    $('div.plan-select div.btn-group.btn-block button').click(function(){
+      $('div.plan-select div.btn-group.btn-block button').removeClass('active');
       $(this).addClass('active');
       $('#plan_id').val($(this).val());
       //event.preventDefault();
