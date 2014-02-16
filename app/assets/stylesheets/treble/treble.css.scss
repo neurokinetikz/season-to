@@ -1,18 +1,3 @@
-/*
- * This is a manifest file that'll be compiled into application.css, which will include all the files
- * listed below.
- *
- * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
- * or vendor/assets/stylesheets of plugins, if any, can be referenced here using a relative path.
- *
- * You're free to add application-wide styles to this file and they'll appear at the top of the
- * compiled file, but it's generally better to create a new file per style scope.
- *
- *= require_self
- */
-
-
-
 /*!
  * Bootstrap v1.0.0
  *
@@ -31,7 +16,7 @@
   position: relative;
   overflow: hidden;
   text-align: center;
-  background: #292929 url(sp.jpg) 50% 0 repeat fixed;
+  background: #292929 url(asset-path('sp.jpg', image)) 50% 0 repeat fixed;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
@@ -146,7 +131,7 @@
   position: absolute;
   display: block;
   z-index: 4;
-  background: url(css/thumb_over.png) no-repeat scroll center 42% #4e808e;
+  background: url(asset-path('treble/css/thumb_over.png', image)) no-repeat scroll center 42% #4e808e;
   background-size: auto 20%;
   opacity: 0;
   filter: alpha(opacity=0);
@@ -211,7 +196,7 @@
   transition: all 0.3s ease-in-out;
   cursor: pointer;
   text-indent: -99999px;
-  background: url("css/cls.png") no-repeat center center;
+  background: url(asset-path("/treble/css/cls.png", image)) no-repeat center center;
 }
 .portfolio-item-details .close-portfolio span:hover {
   opacity: 0.5;
@@ -258,7 +243,7 @@
 *   PAGE | FEATURES
 */.page-features {
   position: relative;
-  background: url(pages/features/q_bck.jpg) 50% 0 no-repeat fixed;
+  background: url(asset-path('treble/pages/features/q_bck.jpg', image)) 50% 0 no-repeat fixed;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
@@ -290,7 +275,7 @@
   display: inline-block;
 }
 .page-features .quote {
-  background: url(css/divider_q.png) no-repeat 50% 0;
+  background: url(asset-path('treble/css/divider_q.png', image)) no-repeat 50% 0;
   margin-top: 100px;
   padding-top: 50px;
 }
@@ -350,7 +335,7 @@
 */
 .page-twitter {
   position: relative;
-  background: url(pages/twitter/tw_bck.jpg) 50% 0 no-repeat fixed;
+  background: url(asset-path('treble/pages/twitter/tw_bck.jpg', image)) 50% 0 no-repeat fixed;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
@@ -363,7 +348,7 @@
   position: relative;
 }
 .page-twitter .twitter-devider {
-  background: url(css/divider_tw.png) no-repeat center bottom;
+  background: url(asset-path('treble/css/divider_tw.png', image)) no-repeat center bottom;
   padding-bottom: 60px;
 }
 .page-twitter .twitterfeed {
@@ -799,7 +784,7 @@ footer {
 }
 .bx-wrapper .bx-loading {
   min-height: 50px;
-  background: url(css/plugins/bxslider/bx_loader.gif) center center no-repeat #ffffff;
+  background: url(asset-path('treble/css/plugins/bxslider/bx_loader.gif', image)) center center no-repeat #ffffff;
   height: 100%;
   width: 100%;
   position: absolute;
@@ -839,11 +824,11 @@ footer {
 }
 .bx-wrapper .bx-prev {
   left: 10px;
-  background: url(css/plugins/bxslider/controls.png) no-repeat 0 -32px;
+  background: url(asset-path('treble/css/plugins/bxslider/controls.png', image)) no-repeat 0 -32px;
 }
 .bx-wrapper .bx-next {
   right: 10px;
-  background: url(css/plugins/bxslider/controls.png) no-repeat -43px -32px;
+  background: url(asset-path('treble/css/plugins/bxslider/controls.png', image)) no-repeat -43px -32px;
 }
 .bx-wrapper .bx-prev:hover {
   background-position: 0 0;
@@ -873,7 +858,7 @@ footer {
   width: 10px;
   height: 11px;
   outline: 0;
-  background: url(images/controls.png) -86px -11px no-repeat;
+  background: url(asset-path('treble/images/controls.png' image)) -86px -11px no-repeat;
   margin: 0 3px;
 }
 .bx-wrapper .bx-controls-auto .bx-start:hover,
@@ -886,7 +871,7 @@ footer {
   width: 9px;
   height: 11px;
   outline: 0;
-  background: url(images/controls.png) -86px -44px no-repeat;
+  background: url(asset-path('treble/images/controls.png', image)) -86px -44px no-repeat;
   margin: 0 3px;
 }
 .bx-wrapper .bx-controls-auto .bx-stop:hover,
@@ -933,16 +918,16 @@ footer {
   *margin-right: .3em;
   line-height: 14px;
   vertical-align: text-top;
-  background-image: url("css/sicon-set.png");
+  background-image: url(asset-path("treble/css/sicon-set.png"));
   background-repeat: no-repeat;
   text-indent: -99999px;
   text-align: center;
 }
 .sicon-white i {
-  background-image: url("css/sicon-set-white.png");
+  background-image: url(asset-path("treble/css/sicon-set-white.png", image));
 }
 .sicon-black i {
-  background-image: url("css/sicon-set.png");
+  background-image: url(asset-path("treble/css/sicon-set.png", image));
 }
 /*
 *   Social icons configuration
@@ -996,7 +981,7 @@ footer {
   background-color: #ffffff;
 }
 .social-icons.bordered a:hover i {
-  background-image: url("css/sicon-set.png");
+  background-image: url(asset-path("/treble/css/sicon-set.png", image));
 }
 .social-icons.bordered-black {
   border-right: 2px solid #292929;
@@ -1009,7 +994,7 @@ footer {
   background-color: #292929;
 }
 .social-icons.bordered-black a:hover i {
-  background-image: url("css/sicon-set-white.png");
+  background-image: url(asset-path("/treble/css/sicon-set-white.png", image));
 }
 /*
 *   Big social icons with hover background
@@ -1030,7 +1015,7 @@ footer {
   transition: all 0.3s ease-in-out;
 }
 .social-icons.hover-big a:hover i {
-  background-image: url("css/sicon-set-white.png");
+  background-image: url(asset-path("/treble/css/sicon-set-white.png", image));
 }
 .social-icons.hover-big .sicon-facebook:hover {
   background-color: #3b5998;
@@ -1120,7 +1105,7 @@ footer {
 *   Show more cube
 */
 .show-more-cube {
-  background: url("css/divider_more.png") no-repeat center center;
+  background: url(asset-path("treble/css/divider_more.png", image)) no-repeat center center;
   display: block;
   width: 630px;
   text-align: center;
@@ -1163,7 +1148,7 @@ footer {
 *   Divider for Heading lines
 */
 .line-divider:after {
-  background: url("css/divider.png") no-repeat bottom center;
+  background: url(asset-path("treble/css/divider.png", image)) no-repeat bottom center;
   padding-bottom: 12px;
   display: block;
   height: 10px;
@@ -1174,7 +1159,7 @@ footer {
   margin: auto auto 24px;
 }
 .line-divider-inline:after {
-  background: url("css/divider_more_text.png") no-repeat bottom center;
+  background: url(asset-path("treble/css/divider_more_text.png", image)) no-repeat bottom center;
   padding-bottom: 0px;
   display: block;
   height: 10px;
@@ -1770,8 +1755,8 @@ a:hover {
 }
 @font-face {
   font-family: 'ChunkFiveRegular';
-  src: url('Chunkfive-webfont.eot');
-  src: url('Chunkfive-webfont.eot?#iefix') format('embedded-opentype'), url('Chunkfive-webfont.woff') format('woff'), url('Chunkfive-webfont.ttf') format('truetype'), url('Chunkfive-webfont.svg#ChunkFiveRegular') format('svg');
+  src: url(asset-path('Chunkfive-webfont.eot', image));
+  src: url(asset-path('Chunkfive-webfont.eot?#iefix', image)) format('embedded-opentype'), url(asset-path('Chunkfive-webfont.woff', image)) format('woff'), url(asset-path('Chunkfive-webfont.ttf', image)) format('truetype'), url(asset-path('Chunkfive-webfont.svg#ChunkFiveRegular', image)) format('svg');
   font-weight: normal;
   font-style: normal;
   text-rendering: optimizeLegibility;
@@ -1779,7 +1764,7 @@ a:hover {
 @media screen and (-webkit-min-device-pixel-ratio: 0) {
   @font-face {
     font-family: 'ChunkFiveRegular';
-    src: url('Chunkfive-webfont.svg#ChunkFiveRegular') format('svg');
+    src: url(asset-path('Chunkfive-webfont.svg#ChunkFiveRegular', image)) format('svg');
   }
 }
 p {
@@ -3220,7 +3205,7 @@ table th[class*="span"],
   *margin-right: .3em;
   line-height: 14px;
   vertical-align: text-top;
-  background-image: url("css/glyphicons-halflings.png");
+  background-image: url(asset-path("css/glyphicons-halflings.png", image));
   background-position: 14px 14px;
   background-repeat: no-repeat;
   margin-top: 6px;
@@ -3243,7 +3228,7 @@ table th[class*="span"],
 .dropdown-submenu:focus > a > [class^="icon-"],
 .dropdown-submenu:hover > a > [class*=" icon-"],
 .dropdown-submenu:focus > a > [class*=" icon-"] {
-  background-image: url("/css/glyphicons-halflings-white.png");
+  background-image: url(asset-path("/treble/css/glyphicons-halflings-white.png", image));
 }
 .icon-glass {
   background-position: 0      0;

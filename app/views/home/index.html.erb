@@ -100,12 +100,12 @@
                     <div class="logo">
                         <div class="scrollNormal">
                             <a href="#page-work">
-                                <img src="<%= asset_path 'pages/welcome/logo_welcome.png'%>" width="140" height="140" alt="Treble">
+                                <img src="<%= asset_path 'treble/pages/welcome/logo_welcome.png'%>" width="140" height="140" alt="Treble">
                             </a>
                         </div>
                         <div class="scrollDown">
                             <a href="#page-work">
-                                <img src="<%= asset_path 'pages/welcome/logo2_welcome.png'%>" width="140" height="140" alt="Treble">
+                                <img src="<%= asset_path 'treble/pages/welcome/logo2_welcome.png'%>" width="140" height="140" alt="Treble">
                             </a>
                         </div> 
                     </div>
@@ -355,17 +355,17 @@
             <!-- Features blocks -->
             <div class="row-fluid">
                 <div class="span4 center">
-                    <img src="<%= asset_path 'pages/features/about01.png'%>" alt="Treble">
+                    <img src="<%= asset_path 'treble/pages/features/about01.png'%>" alt="Treble">
                     <h5>Responsive</h5>
                     <p class="smallFontBy08 cutBy10">Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
                 </div>
                 <div class="span4 center">
-                    <img src="<%= asset_path 'pages/features/about02.png'%>" alt="Treble">
+                    <img src="<%= asset_path 'treble/pages/features/about02.png'%>" alt="Treble">
                     <h5>Bootstrap based</h5>
                     <p class="smallFontBy08 cutBy10">Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
                 </div>
                 <div class="span4 center">
-                    <img src="<%= asset_path 'pages/features/about03.png'%>" alt="Treble">
+                    <img src="<%= asset_path 'treble/pages/features/about03.png'%>" alt="Treble">
                     <h5>Easy to customize</h5>
                     <p class="smallFontBy08 cutBy10">Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
                 </div>
@@ -818,7 +818,7 @@
     
     <!-- Background map image -->
     <div id="map-image">
-        <img src="<%= asset_path 'pages/contact/map_bck.jpg'%>" alt="Treble">
+        <img src="<%= asset_path 'treble/pages/contact/map_bck.jpg'%>" alt="Treble">
     </div>
 </div>
 <!-- END PAGE | CONTACT -->
@@ -996,16 +996,18 @@
       *   Pull latest tweets from user.
       *   Configuration: /plugins/twitter/index.php
       */
-      $('#twitterfeed-slider').tweet({
+    if (false) {
+        $('#twitterfeed-slider').tweet({
           modpath: 'plugins/twitter/',
           username: 'TheGridelicious',
           count: 3
-      });
+        });
 
-      $('#twitterfeed-slider').tweetCarousel({
+        $('#twitterfeed-slider').tweetCarousel({
           interval: 7000,
           pause: "hover"
-      });
+        });
+    }
   });
 
 
