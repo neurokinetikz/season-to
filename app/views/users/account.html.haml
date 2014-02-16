@@ -9,9 +9,9 @@
 %div.tab-content
   %div#account.tab-pane
     %div.row
-      %div.col-xs-12.col-sm-6
+      %div.col-xs-12.col-sm-6.col-md-4.col-lg-4.col-sm-offset-0.col-md-offset-2
         %form{role: 'form'}
-          %div.panel.panel-warning
+          %div.panel.panel-success
             %div.panel-heading
               %h3.panel-title Personal Info
             %div.panel-body
@@ -31,9 +31,9 @@
                   %label{for: 'user_email'}
                   %button.btn.btn-primary.pull-right{type: 'submit', style: 'margin-top:0px;'} Update
 
-      %div.col-xs-12.col-sm-6
+      %div.col-xs-12.col-sm-6.col-md-4.col-lg-4
         %form{role: 'form'}
-          %div.panel.panel-warning
+          %div.panel.panel-success
             %div.panel-heading
               %h3.panel-title Change Password
             %div.panel-body
@@ -52,26 +52,31 @@
                 %div.form-group.col-xs-12
                   %button.btn.btn-primary.pull-right{type: 'submit', style: 'margin-top:0px;'} Update
   %div#subscription.active.tab-pane
-    - current_user.subscriptions.each do |s|
-      = render :partial => 'subscriptions/show', locals: {subscription: s}
+    %div.row
+      %div.col-xs-12.col-lg-10.col-lg-offset-1
+        - current_user.subscriptions.each do |s|
+          = render :partial => 'subscriptions/show', locals: {subscription: s}
   %div#payments.tab-pane
-    
-    %form{role: 'form'}
-      %div.panel.panel-warning
-        %div.panel-heading
-          %h3.panel-title Add A Card
-        %div.panel-body
-          = render :partial => 'credit_cards/form'
-    %div.panel.panel-warning
-      %div.panel-heading
-        %h3.panel-title Credit Cards
-      %div.panel-body
-        = render :partial => 'credit_cards/index'
-    %div.panel.panel-warning
-      %div.panel-heading
-        %h3.panel-title Transactions
-      %div.panel-body
-        = render :partial => 'credit_card_transactions/index'
+    %div.row
+      %div.col-xs-12.col-sm-6.col-sm-offset-0.col-md-5.col-md-offset-1
+        %form{role: 'form'}
+          %div.panel.panel-success
+            %div.panel-heading
+              %h3.panel-title Add A Card
+            %div.panel-body
+              = render :partial => 'credit_cards/form'
+        %div.panel.panel-success
+          %div.panel-heading
+            %h3.panel-title Credit Cards
+          %div.panel-body
+            = render :partial => 'credit_cards/index'
+      %div.col-xs-12.col-sm-6.col-sm-offset-0.col-md-5
+        
+        %div.panel.panel-success
+          %div.panel-heading
+            %h3.panel-title Transactions
+          %div.panel-body
+            = render :partial => 'credit_card_transactions/index'
       
 
 
