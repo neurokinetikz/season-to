@@ -59,17 +59,18 @@
   %div#payments.tab-pane
     %div.row
       %div.col-xs-12.col-sm-6.col-sm-offset-0.col-md-5.col-md-offset-1
+        
+        %div.panel.panel-success
+          %div.panel-heading
+            %h3.panel-title Credit Cards
+          %div.panel-body
+            = render :partial => 'credit_cards/index'
         %form{role: 'form'}
           %div.panel.panel-success
             %div.panel-heading
               %h3.panel-title Add A Card
             %div.panel-body
               = render :partial => 'credit_cards/form'
-        %div.panel.panel-success
-          %div.panel-heading
-            %h3.panel-title Credit Cards
-          %div.panel-body
-            = render :partial => 'credit_cards/index'
       %div.col-xs-12.col-sm-6.col-sm-offset-0.col-md-5
         
         %div.panel.panel-success
