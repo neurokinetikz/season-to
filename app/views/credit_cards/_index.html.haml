@@ -1,13 +1,14 @@
 %div.control-group
   %div.credit-cards-alerts
   %table.table.table-hover#credit-cards-table
-    %tr
-      %th
-        %div.text-center Default
-      %th{:colspan => 4}
-      
-    - current_user.credit_cards.order('id desc').each do |credit_card|
-      = render :partial => 'credit_cards/row', :locals => {:credit_card => credit_card}
+    %thead
+      %tr
+        %th
+          %div.text-center Default
+        %th{:colspan => 4}
+    %tbody
+      - current_user.credit_cards.order('id desc').each do |credit_card|
+        = render :partial => 'credit_cards/row', :locals => {:credit_card => credit_card}
 
 = content_for :javascript do
   :plain
