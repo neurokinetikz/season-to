@@ -10,29 +10,29 @@
   %div#account.tab-pane
     %div.row
       %div.col-xs-12.col-sm-6.col-md-4.col-lg-4.col-sm-offset-0.col-md-offset-2
-        %form{role: 'form'}
+        = form_for(current_user, :url => user_path(current_user), :html => { role: 'form', :method => :put, :id => 'user-form' }) do |f|
           %div.panel.panel-default
             %div.panel-heading
               %h3.panel-title Personal Info
             %div.panel-body
               %div.row
                 %div.form-group.col-xs-12
-                  %label{for: 'user_first_name'} First Name
-                  %input.form-control{type: 'text', id: 'user_first_name', placeholder: 'First Name', value: current_user.first_name}
+                  %label First Name
+                  %input.form-control.required.first_name{type: 'text', id: 'user_first_name', name: 'user[first_name]', placeholder: 'First Name', value: current_user.first_name}
 
                 %div.form-group.col-xs-12
-                  %label{for: 'user_last_name'} Last Name
-                  %input.form-control{type: 'text', id: 'user_last_name', placeholder: 'Last Name', value: current_user.last_name}
+                  %label Last Name
+                  %input.form-control.required.last_name{type: 'text', id: 'user_last_name', name: 'user[last_name]', placeholder: 'Last Name', value: current_user.last_name}
                 %div.form-group.col-xs-12
-                  %label{for: 'user_email'} Email
-                  %input.form-control{type: 'text', id: 'user_email', placeholder: 'Email', value: current_user.email}
+                  %label Email
+                  %input.form-control.required.email{type: 'text', id: 'user_email', name: 'user[email]', placeholder: 'Email', value: current_user.email}
 
                 %div.form-group.col-xs-12
                   %label{for: 'user_email'}
                   %button.btn.btn-primary.pull-right{type: 'submit', style: 'margin-top:0px;'} Update
 
       %div.col-xs-12.col-sm-6.col-md-4.col-lg-4
-        %form{role: 'form'}
+        = form_for(current_user, :url => user_path(current_user), :html => { role: 'form', :method => :put, :id => 'password-form' }) do |f|
           %div.panel.panel-default
             %div.panel-heading
               %h3.panel-title Change Password
@@ -40,14 +40,14 @@
               %div.row
                 %div.form-group.col-xs-12
                   %label Current Password
-                  %input.form-control{type: 'password', id: 'user_old_password', placeholder: 'Current Password'}
+                  %input.form-control.required.password{type: 'password', id: 'user_old_password', placeholder: 'Current Password'}
 
                 %div.form-group.col-xs-12
                   %label New Password
-                  %input.form-control{type: 'password', id: 'user_new_password', placeholder: 'New Password'}
+                  %input.form-control.required.new_password{type: 'password', id: 'user_password', name: 'user[password]', placeholder: 'New Password'}
                 %div.form-group.col-xs-12
                   %label Confirm Password
-                  %input.form-control{type: 'password', id: 'user_new_password_confirm', placeholder: 'Confirm New Password'}
+                  %input.form-control.required.user_password_confirmation{type: 'password', id: 'user_password_confirmation', name: 'user[password_confirmation]', placeholder: 'Confirm New Password'}
 
                 %div.form-group.col-xs-12
                   %button.btn.btn-primary.pull-right{type: 'submit', style: 'margin-top:0px;'} Update
@@ -65,7 +65,7 @@
             %h3.panel-title Credit Cards
           %div.panel-body
             = render :partial => 'credit_cards/index'
-        %form{role: 'form'}
+        = form_for(CreditCard.new, :url => credit_cards_path, :html => { :method => :post, :id => 'credit-card-form', :role => 'form' }) do |f|
           %div.panel.panel-default
             %div.panel-heading
               %h3.panel-title Add A Card
@@ -83,8 +83,11 @@
 
 = content_for :javascript do
   :plain
-    $("#credit-card-charge-form").validate();
-    $('#credit-card-charge-form').bind('ajax:beforeSend', function(xhr, settings) {$('#charge-button').button('loading');$('.errors').html('');})
-     .bind('ajax:success', function(xhr, data, status) {})
-     .bind('ajax:complete', function(xhr, status) {$('#charge-button').button('reset');})
-     .bind('ajax:error', function(xhr, data, status) {});
+    $("#user-form").validate();
+    $("#password-form").validate({
+      rules: {
+        "user[password_confirmation]": {
+          equalTo: "#user_password"
+        }
+      }
+    });

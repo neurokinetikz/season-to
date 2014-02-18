@@ -12,4 +12,4 @@
   %td
     = "#{credit_card.expiration_month}/#{credit_card.expiration_year}"
   %td
-    = link_to '', credit_card_path(credit_card), :method => :delete, :confirm => 'Are you sure?', :remote => true, :class => 'icon-remove'
+    = link_to 'x', credit_card_path(credit_card), :method => :delete, :confirm => 'Are you sure?', :remote => true, :class => 'icon-remove'

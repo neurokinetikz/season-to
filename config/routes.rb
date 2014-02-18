@@ -1,16 +1,11 @@
 SubscriptionService::Application.routes.draw do
-  devise_for :users, :controllers => { :omniauth_callbacks => "users/omniauth_callbacks", registrations: "users/registrations", passwords: 'users/passwords' }
+  devise_for :users, :controllers => { :omniauth_callbacks => "users/omniauth_callbacks", registrations: "users/registrations", passwords: 'users/passwords', confirmations: 'users/confirmations' }
   
   resources :users
   resources :subscriptions
   
-  resources :credit_cards do
-    collection do
-      post 'charge'
-    end
-  end
+  resources :credit_cards
   
-  get 'profile' => 'users#profile'
   get 'account' => 'users#account'
   
   get 'about' => 'home#about'

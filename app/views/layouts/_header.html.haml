@@ -1,4 +1,4 @@
-%nav.navbar.navbar-inverse{role: 'navigation', style: 'margin-bottom:30px;'}
+%nav.navbar.navbar-inverse{role: 'navigation', style: 'margin-bottom:15px;'}
   %div.container-fluid
     %div.navbar-header
       %button.navbar-toggle{type: 'button', 'data-toggle' => 'collapse', 'data-target' => '#thenav'}
@@ -17,3 +17,5 @@
         - else
           %li.active #{link_to 'Account', account_path}
           %li #{link_to 'Logout', destroy_user_session_path, method: :delete }
+
+= render partial: 'layouts/alerts'

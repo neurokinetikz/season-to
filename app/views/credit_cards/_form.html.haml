@@ -1,10 +1,10 @@
 %div.row
   %div.form-group.col-xs-12.col-sm-8
     %label Credit Card #
-    %input.required.form-control{type: 'text', placeholder: 'Number', id: 'credit_card_number', name: 'credit_card[number]'}
+    %input.required.form-control.number{type: 'text', placeholder: 'Number', id: 'credit_card_number', name: 'credit_card[number]'}
   %div.form-group.col-xs-12.col-sm-4
     %label CVV
-    %input.required.form-control{type: 'text', placeholder: 'CVV', id: 'credit_card_cvv', name: 'credit_card[cvv]'}
+    %input.required.form-control.cvv{type: 'text', placeholder: 'CVV', id: 'credit_card_cvv', name: 'credit_card[cvv]'}
 %div.row
   %div.form-group.col-xs-12.col-sm-8
     %label Expiration Date
@@ -23,11 +23,10 @@
   / %button.btn.btn-success.btn-block{:type => 'submit', :id => 'save-button', "data-loading-text" => "Saving..."} Add Card
 
 
--if false
-  = content_for :javascript do
-    :plain
-      $("#credit-card-form").validate();
-      $('#credit-card-form').bind('ajax:beforeSend', function(xhr, settings) {$('#save-button').button('loading');$('.errors').html('');})
-       .bind('ajax:success', function(xhr, data, status) {})
-       .bind('ajax:complete', function(xhr, status) {$('#save-button').button('reset');})
-       .bind('ajax:error', function(xhr, data, status) {});
+= content_for :javascript do
+  :plain
+    $("#credit-card-form").validate();
+    $('#credit-card-form').bind('ajax:beforeSend', function(xhr, settings) {$('#save-button').button('loading');$('.errors').html('');})
+     .bind('ajax:success', function(xhr, data, status) {})
+     .bind('ajax:complete', function(xhr, status) {$('#save-button').button('reset');})
+     .bind('ajax:error', function(xhr, data, status) {});

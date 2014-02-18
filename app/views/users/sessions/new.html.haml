@@ -1,29 +1,29 @@
 %div.row
-	%div.col-xs-12.col-sm-3
-	%div.col-xs-12.col-sm-6
-		= form_for(resource, :as => resource_name, :url => session_path(resource_name), :html => { role: 'form', :method => :post, :id => 'login-form', :class => 'form-signin' }) do |f|
-			%div.panel.panel-default
-				%div.panel-heading
-					%h3.panel-title Login Now!
-				%div.panel-body
-					%div.form-group
-						%a.btn.btn-primary{href: user_omniauth_authorize_path(:facebook), style: 'display:block'} 
-							%span{style: 'font-size:24px;font-weight:bold;background-color:#3B5998;padding:1px 10px;'} f |
-							%strong{style: 'padding:0px 1px;'} Connect with Facebook
-					%div.form-group.text-center
-						%label or
-					=render partial: 'layouts/alerts'
-					%div.form-group
-						= f.text_field :email, :class => 'form-control required email', :placeholder => 'Email', :autofocus => 'true'
-					%div.form-group
-						%input#user_password.form-control.required{:type => 'password', :name => 'user[password]', :placeholder => 'Password'}
-					%div.form-group
-						%button.btn.btn-lg.btn-success.btn-block{:type => 'submit'} Login
-					%div.form-group
-						/ %div.pull-left
-						/ 	= link_to "Not a member? Sign up now!", '#'
-						%div.pull-right
-							= link_to 'Forgot password?', new_user_password_path
+  %div.col-xs-12.col-sm-3
+  %div.col-xs-12.col-sm-6
+    = form_for(resource, :as => resource_name, :url => session_path(resource_name), :html => { role: 'form', :method => :post, :id => 'login-form', :class => 'form-signin' }) do |f|
+      %div.panel.panel-default
+        %div.panel-heading
+          %h3.panel-title Login Now!
+        %div.panel-body
+          %div.form-group
+            %a.btn.btn-primary{href: user_omniauth_authorize_path(:facebook), style: 'display:block'} 
+              %span{style: 'font-size:24px;font-weight:bold;background-color:#3B5998;padding:1px 10px;'} f |
+              %strong{style: 'padding:0px 1px;'} Connect with Facebook
+          %div.form-group.text-center
+            %label or
+          =render partial: 'layouts/alerts'
+          %div.form-group
+            = f.text_field :email, :class => 'form-control required email', :placeholder => 'Email', :autofocus => 'true'
+          %div.form-group
+            %input#user_password.form-control.required{:type => 'password', :name => 'user[password]', :placeholder => 'Password'}
+          %div.form-group
+            %button.btn.btn-lg.btn-success.btn-block{:type => 'submit'} Login
+          %div.form-group
+            %div.pull-left
+              = link_to "Resend confirmation email", new_user_confirmation_path
+            %div.pull-right
+              = link_to 'Forgot password?', new_user_password_path
 
 = content_for :javascript do
-	$("#login-form").validate();
+  $("#login-form").validate();

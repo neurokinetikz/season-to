@@ -2,8 +2,13 @@ class UsersController < ApplicationController
   before_filter :authenticate_user!
   
   def update
-    current_user.update_attributes(params[:user])
-    flash[:notice] = "Your profile was successfully updated"
-    redirect_to profile_path
+    if current_user.update(params[:user])
+      # Sign in the user by passing validation in case his password changed
+      sign_in current_user, :bypass => true
+      flash[:notice] = "Your account was successfully updated"
+      redirect_to account_path
+    else
+      render "edit"
+    end
   end
 end
