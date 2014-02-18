@@ -1,24 +1,22 @@
-%div.span2
+%div.row
+  %div.col-xs-0.col-sm-3
 
-%div.span8
-  = form_for(resource, :as => resource_name, :url => password_path(resource_name), :html => { :method => :post, :id => 'password-form', :class => 'form-horizontal' }) do |f|
-    = devise_error_messages!
-    %fieldset
-      %legend Forgot Your Password?
-      %div.control-group
-        %label.control-label{:for => 'user_email'} Email
-        %div.controls
-          %input#user_email.required.email{:type => 'text', :name => 'user[email]', :placeholder => 'Email', :autofocus => 'true'}
-          
-      %div.control-group
-        %div.controls
-          %button.btn{:type => 'submit'} Send me reset password instructions
-          
-      %div.control-group
-        %div.controls
-          = render "devise/shared/links"
-          
-%div.span2
-
+  %div.col-xs-12.col-sm-6
+    = form_for(resource, :as => resource_name, :url => password_path(resource_name), :html => { role: 'form', :method => :post, :id => 'password-form'}) do |f|
+      %div.panel.panel-default
+        %div.panel-heading
+          %h3.panel-title Reset Password
+        %div.panel-body
+          = render partial: 'layouts/alerts'
+          %div.form-group
+            %label Email
+            %input#user_email.required.email.form-control{:type => 'text', :name => 'user[email]', :placeholder => 'Email', :autofocus => 'true'}
+              
+          %div.form-group
+            %button.btn.btn-primary.form-control{:type => 'submit'} Send me reset password instructions
+              
+          / %div.form-group
+          /   = render "devise/shared/links"
+            
 = content_for :javascript do
   $("#password-form").validate();

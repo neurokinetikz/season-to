@@ -14,43 +14,13 @@
         
     %div.row
       %div.col-xs-12.col-sm-6
-        %div.panel.panel-warning
+
+        %div.panel.panel-default
           %div.panel-heading
             %h3.panel-title Last Shipment
           %div.panel-body
             = render partial: 'shipments/show', locals: {shipment: subscription.shipments.first}
-     
-      %div.col-xs-12.col-sm-6
-        %div.panel.panel-warning
-          %div.panel-heading
-            %h3.panel-title Next Delivery On
-          %div.panel-body
-            %strong #{subscription.shipments.first.scheduled_at.advance(months: 1).strftime('%B %-d, %Y')}
-        
-        %div.panel.panel-warning
-          %div.panel-heading
-            %div.row
-              %div.col-xs-9
-                %h3.panel-title Shipping To
-              %div.row.col-xs-3.text-right
-                %button.btn.btn-xs.btn-warning change
-            
-          %div.panel-body
-            %strong #{subscription.shipments.last.address.first_name} #{subscription.shipments.last.address.last_name}<br/>
-            #{subscription.shipments.last.address.address1} #{subscription.shipments.last.address.address2}<br/>
-            #{subscription.shipments.last.address.city}, #{subscription.shipments.last.address.state} #{subscription.shipments.last.address.zip}
-
-        %div.panel.panel-warning
-          %div.panel-heading
-            %div.row
-              %div.col-xs-9
-                %h3.panel-title Subscription Renewal
-              %div.row.col-xs-3.text-right
-                %button.btn.btn-xs.btn-warning change
-          %div.panel-body
-            $#{money_without_cents subscription.next_billing_period_amount} will be charged to your
-            #{subscription.credit_card.to_s} on #{subscription.next_billing_date.strftime('%B %-d, %Y')}
-        %div.panel.panel-warning
+        %div.panel.panel-default
           %div.panel-heading
             %h3.panel-title Past Shipments
           %div.panel-body
@@ -76,6 +46,37 @@
                     %img{src: 'http://static.planetminecraft.com/files/resource_media/screenshot/1151/salt%20and%20pepper_1064747.jpg', width: '75px'}
                   %td Naughty & Nice
                   %td November 14, 2013
+      %div.col-xs-12.col-sm-6
+        %div.panel.panel-default
+          %div.panel-heading
+            %h3.panel-title Next Delivery On
+          %div.panel-body
+            %strong #{subscription.shipments.first.scheduled_at.advance(months: 1).strftime('%B %-d, %Y')}
+        
+        %div.panel.panel-default
+          %div.panel-heading
+            %div.row
+              %div.col-xs-9
+                %h3.panel-title Shipping To
+              %div.row.col-xs-3.text-right
+                %button.btn.btn-xs.btn-warning change
+            
+          %div.panel-body
+            %strong #{subscription.shipments.last.address.first_name} #{subscription.shipments.last.address.last_name}<br/>
+            #{subscription.shipments.last.address.address1} #{subscription.shipments.last.address.address2}<br/>
+            #{subscription.shipments.last.address.city}, #{subscription.shipments.last.address.state} #{subscription.shipments.last.address.zip}
+
+        %div.panel.panel-default
+          %div.panel-heading
+            %div.row
+              %div.col-xs-9
+                %h3.panel-title Subscription Renewal
+              %div.row.col-xs-3.text-right
+                %button.btn.btn-xs.btn-warning change
+          %div.panel-body
+            $#{money_without_cents subscription.next_billing_period_amount} will be charged to your
+            #{subscription.credit_card.to_s} on #{subscription.next_billing_date.strftime('%B %-d, %Y')}
+        
 
     %div.row
       %div.col-xs-12.text-right

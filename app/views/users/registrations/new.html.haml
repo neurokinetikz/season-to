@@ -1,44 +1,41 @@
-%div.panel.panel-default
-  %div.panel-body
+%div.row
 
+  %div.col-xs-12.div-col-sm-6.col-md-4.col-md-offset-2
+    %div.panel.panel-default
+      %div.panel-heading
+        %h3.panel-title Connect with Facebook
+      %div.panel-body
+        %a.btn.btn-primary{href: user_omniauth_authorize_path(:facebook), style: 'display:block'} 
+          %span{style: 'font-size:24px;font-weight:bold;background-color:#3B5998;padding:1px 10px;'} f |
+          %strong{style: 'padding:0px 1px;'} Connect with Facebook
+  %div.col-xs-12.div-col-sm-6.col-md-4
     = form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :method => :post, :id => 'registration-form', role: 'form' }) do |f|
-      %div.container
-        / %div.row.text-center
-        /   %h1 Let's Get Started
-        %div.row
-          %div.col-sm-1
-          %div.col-sm-4
-            - unless user_signed_in?
-              %a.btn.btn-primary{href: user_omniauth_authorize_path(:facebook), style: 'display:block'} 
-                %span{style: 'font-size:24px;font-weight:bold;background-color:#3B5998;padding:1px 10px;'} f |
-                %strong{style: 'padding:0px 1px;'} Connect with Facebook
-          %div.col-sm-1.text-center
-            or
-          %div.col-sm-5
-            -# %div.panel.panel-default
-            -#           %div.panel-body
-            = devise_error_messages!
-            %div.form-group
-              = f.text_field :first_name, :class => 'form-control required first_name', :placeholder => 'First Name', :autofocus => 'true'
-            %div.form-group
-              = f.text_field :last_name, :class => 'form-control required last_name', :placeholder => 'Last Name'
-            %div.form-group
-              = f.text_field :email, :class => 'form-control required email', :placeholder => 'Email'
-            %div.form-group
-              %input#user_password_enter.form-control.required.user_password{:type => 'password', :name => 'user[password]', :placeholder => 'Password'}
-            %div.form-group
-              %input#user_password_confirmation.form-control.required.user_password_confirmation{:type => 'password', :name => 'user[password_confirmation]', :placeholder => 'Confirm Passsword'}
-    
-            %div.checkbox
-              %input.required.terms{'type' => 'checkbox', id: 'terms', name: 'terms'} I agree to the #{link_to 'terms & conditions', terms_path}
-        
-            %button.btn.btn-lg.btn-primary.btn-block{:type => 'submit'} Sign Up
-    
-  
-    
-    
-    
-    
+      %div.panel.panel-default
+        %div.panel-heading
+          %h3.panel-title Sign Up Now!
+        %div.panel-body
+          = devise_error_messages!
+          %div.form-group
+            = f.text_field :first_name, :class => 'form-control required first_name', :placeholder => 'First Name', :autofocus => 'true'
+          %div.form-group
+            = f.text_field :last_name, :class => 'form-control required last_name', :placeholder => 'Last Name'
+          %div.form-group
+            = f.text_field :email, :class => 'form-control required email', :placeholder => 'Email'
+          %div.form-group
+            %input#user_password_enter.form-control.required.user_password{:type => 'password', :name => 'user[password]', :placeholder => 'Password'}
+          %div.form-group
+            %input#user_password_confirmation.form-control.required.user_password_confirmation{:type => 'password', :name => 'user[password_confirmation]', :placeholder => 'Confirm Passsword'}
+
+          %div.checkbox
+            %input.required.terms{'type' => 'checkbox', id: 'terms', name: 'terms'} I agree to the #{link_to 'terms & conditions', terms_path}
+      
+          %button.btn.btn-lg.btn-primary.btn-block{:type => 'submit'} Sign Up
+
+
+
+
+
+
     
               
 

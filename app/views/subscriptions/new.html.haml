@@ -9,83 +9,134 @@
     %div.panel-heading
       %h3.panel-title Select a Product and Plan
     %div.panel-body
-      %table.table.plan-select
-        %tr
-          %th
-          %th 
-            Artisan<br/>
-            %img.img-responsive{src: asset_path('artisan.jpg'), style: 'width:140px;'}
-          %th
-            Flip Top<br/>
-            %img.img-responsive{src: asset_path('flip.jpg'), style: 'width:140px;'}
-          %th
-            Pouch<br/>
-            %img.img-responsive{src: asset_path('pouch.png'), style: 'width:140px;'}
-        %tr
-          %td 1 Month
-          %td
-            %div.plan-select
-              %div.btn-group.btn-block
-                %button.btn.btn-default.btn-block.active{type: 'button', value: 'SEASON-TO-1-MONTH-GOURMET', plan: 'Artisan', duration: 1, price: 29} $29
-          %td
-            %div.plan-select
-              %div.btn-group.btn-block
-                %button.btn.btn-default.btn-block{type: 'button', value: 'SEASON-TO-1-MONTH-FLIP', plan: 'Flip Top', duration: 1, price: 23} $23
-          %td
-            %div.plan-select
-              %div.btn-group.btn-block
-                %button.btn.btn-default.btn-block{type: 'button', value: 'SEASON-TO-1-MONTH-POUCH', plan: 'Pouch', duration: 1, price: 19} $19
-                
-        %tr
-          %td 3 Month
-          %td
-            %div.plan-select
-              %div.btn-group.btn-block
-                %button.btn.btn-default.btn-block{type: 'button', value: 'SEASON-TO-3-MONTH-GOURMET', plan: 'Gourmet', duration: 3, price: 84} $28
-          %td
-            %div.plan-select
-              %div.btn-group.btn-block
-                %button.btn.btn-default.btn-block{type: 'button', value: 'SEASON-TO-3-MONTH-FLIP', plan: 'Flip Top', duration: 3, price: 66} $22
-          %td
-            %div.plan-select
-              %div.btn-group.btn-block
-                %button.btn.btn-default.btn-block{type: 'button', value: 'SEASON-TO-3-MONTH-POUCH', plan: 'Pouch', duration: 3, price: 54} $18
-                
-        %tr
-          %td 6 Month
-          %td
-            %div.plan-select
-              %div.btn-group.btn-block
-                %button.btn.btn-default.btn-block{type: 'button', value: 'SEASON-TO-6-MONTH-GOURMET', plan: 'Gourmet', duration: 6, price: 162} $27
-          %td
-            %div.plan-select
-              %div.btn-group.btn-block
-                %button.btn.btn-default.btn-block{type: 'button', value: 'SEASON-TO-6-MONTH-FLIP', plan: 'Flip Top', duration: 6, price: 126} $21
-          %td
-            %div.plan-select
-              %div.btn-group.btn-block
-                %button.btn.btn-default.btn-block{type: 'button', value: 'SEASON-TO-6-MONTH-POUCH', plan: 'Pouch', duration: 6, price: 102} $17
-                
-        %tr
-          %td 12 Month
-          %td
-            %div.plan-select
-              %div.btn-group.btn-block
-                %button.btn.btn-default.btn-block{type: 'button', value: 'SEASON-TO-12-MONTH-GOURMET', plan: 'Gourmet', duration: 12, price: 312} $26
-          %td
-            %div.plan-select
-              %div.btn-group.btn-block
-                %button.btn.btn-default.btn-block{type: 'button', value: 'SEASON-TO-12-MONTH-FLIP', plan: 'Flip Top', duration: 12, price: 240} $20
-          %td
-            %div.plan-select
-              %div.btn-group.btn-block
-                %button.btn.btn-default.btn-block{type: 'button', value: 'SEASON-TO-12-MONTH-POUCH', plan: 'Pouch', duration: 12, price: 192} $16
-                
- 
+      %div.row
+        %div.col-xs-12.col-md-8
+          %table.table.plan-select
+            %tr
+              %th
+              %th 
+                Artisan<br/>
+                %img.img-responsive{src: asset_path('artisan.jpg'), style: 'width:140px;'}
+              %th
+                Flip Top<br/>
+                %img.img-responsive{src: asset_path('flip.jpg'), style: 'width:140px;'}
+              %th
+                Pouch<br/>
+                %img.img-responsive{src: asset_path('pouch.png'), style: 'width:140px;'}
+              %th
+            %tr
+              %td 1 Month
+              %td
+                %div.plan-select
+                  %div.btn-group.btn-block
+                    %button.btn.btn-default.btn-block.active{type: 'button', value: 'SEASON-TO-1-MONTH-GOURMET', plan: 'Artisan', duration: 1, price: 29} $29
+              %td
+                %div.plan-select
+                  %div.btn-group.btn-block
+                    %button.btn.btn-default.btn-block{type: 'button', value: 'SEASON-TO-1-MONTH-FLIP', plan: 'Flip Top', duration: 1, price: 23} $23
+              %td
+                %div.plan-select
+                  %div.btn-group.btn-block
+                    %button.btn.btn-default.btn-block{type: 'button', value: 'SEASON-TO-1-MONTH-POUCH', plan: 'Pouch', duration: 1, price: 19} $19
+              %td
+            %tr
+              %td 3 Month
+              %td
+                %div.plan-select
+                  %div.btn-group.btn-block
+                    %button.btn.btn-default.btn-block{type: 'button', value: 'SEASON-TO-3-MONTH-GOURMET', plan: 'Gourmet', duration: 3, price: 84} $28
+              %td
+                %div.plan-select
+                  %div.btn-group.btn-block
+                    %button.btn.btn-default.btn-block{type: 'button', value: 'SEASON-TO-3-MONTH-FLIP', plan: 'Flip Top', duration: 3, price: 66} $22
+              %td
+                %div.plan-select
+                  %div.btn-group.btn-block
+                    %button.btn.btn-default.btn-block{type: 'button', value: 'SEASON-TO-3-MONTH-POUCH', plan: 'Pouch', duration: 3, price: 54} $18
+                    
+            %tr
+              %td 6 Month
+              %td
+                %div.plan-select
+                  %div.btn-group.btn-block
+                    %button.btn.btn-default.btn-block{type: 'button', value: 'SEASON-TO-6-MONTH-GOURMET', plan: 'Gourmet', duration: 6, price: 162} $27
+              %td
+                %div.plan-select
+                  %div.btn-group.btn-block
+                    %button.btn.btn-default.btn-block{type: 'button', value: 'SEASON-TO-6-MONTH-FLIP', plan: 'Flip Top', duration: 6, price: 126} $21
+              %td
+                %div.plan-select
+                  %div.btn-group.btn-block
+                    %button.btn.btn-default.btn-block{type: 'button', value: 'SEASON-TO-6-MONTH-POUCH', plan: 'Pouch', duration: 6, price: 102} $17
+                    
+            %tr
+              %td 12 Month
+              %td
+                %div.plan-select
+                  %div.btn-group.btn-block
+                    %button.btn.btn-default.btn-block{type: 'button', value: 'SEASON-TO-12-MONTH-GOURMET', plan: 'Gourmet', duration: 12, price: 312} $26
+              %td
+                %div.plan-select
+                  %div.btn-group.btn-block
+                    %button.btn.btn-default.btn-block{type: 'button', value: 'SEASON-TO-12-MONTH-FLIP', plan: 'Flip Top', duration: 12, price: 240} $20
+              %td
+                %div.plan-select
+                  %div.btn-group.btn-block
+                    %button.btn.btn-default.btn-block{type: 'button', value: 'SEASON-TO-12-MONTH-POUCH', plan: 'Pouch', duration: 12, price: 192} $16
+        %div.col-xs-12.col-md-4
+          %div.panel.panel-default
+            %div.panel-heading
+              %h3.panel-title Subscription Details
+            %div.panel-body
+              %table.table
+                %tbody
+                  %tr
+                    %td Total # Shipments:
+                    %td
+                      %span#duration
+                  %tr
+                    %td First Shipment On:
+                    %td 
+                      %span#first
+                  %tr
+                    %td Last Shipment On:
+                    %td
+                      %span#last
+                  %tr
+                    %td Renews On:
+                    %td
+                      %span#renews
+                 
+                  
+
+          %div.panel.panel-default
+            %div.panel-heading
+              %h3.panel-title Order Summary
+            %div.panel-body
+              %table{style: 'width:100%'}
+                %tr
+                  %td
+                    %span#plan 1 Month Artisan Plan
+                  %td{style: 'text-align:right'}
+                    $
+                    %span#price 29.00
+                %tr
+                  %td Tax (NY only)
+                  %td{style: 'text-align:right'}
+                    $
+                    %span#tax 2.32
+                %tr{style: 'border-top:1px dotted gray'}
+                  %td
+                    %strong Total Due
+                  %td{style: 'text-align:right'}
+                    %strong
+                      $
+                      %span#total 31.32               
+     
   %input{type: 'hidden', id: 'plan_id', name: 'plan[id]', value: 'SEASON-TO-1-MONTH'}
   
   %div.row
-    %div.col-xs-12.col-sm-8
+    %div.col-xs-12.col-md-8
       %div.panel.panel-warning
         %div.panel-heading
           %h3.panel-title Enter Your Shipping Info
@@ -118,60 +169,12 @@
           %div.form-group.col-xs-12.col-sm-4
             = date_select :credit_card, :expires_at, {:discard_day => true, :user_short_month => true, :add_month_numbers => true, :start_year => Time.now.year, :end_year => Time.now.year + 10, :order => [:month, :year], :include_blank => false, :prompt => [:year => 'Expiration Year', :month => 'Expiration Month']}, {style: 'width:50%;', :class => 'form-control col-xs-1 required'}
           
-    %div.col-xs-12.col-sm-4
+    %div.col-xs-12.col-md-4
       %div.row
         %div.col-xs-12
-          -# %div.panel.panel-warning
-          -#             %div.panel-heading
-          -#               %h3.panel-title Subscription Details
-          -#             %div.panel-body
-          -#               %div.row
-          -#                 %div.col-xs-7.col-sm-12
-          -#                   %strong Total # Shipments:
-          -#                 %div.col-xs-5.col-sm-12.text-right
-          -#                   %span#duration
-          -#              
-          -#                 
-          -#               %div.row
-          -#                 %div.col-xs-7.col-sm-12
-          -#                   %strong First Shipment On:
-          -#                 %div.col-xs-5.col-sm-12.text-right
-          -#                   %span#first
-          -#                 
-          -#               %div.row
-          -#                 %div.col-xs-7.col-sm-12
-          -#                   %strong Last Shipment On: 
-          -#                 %div.col-xs-5.col-sm-12.text-right
-          -#                   %span#last
-          -#               %div.row
-          -#                 %div.col-xs-7.col-sm-12
-          -#                   %strong Renews On:
-          -#                 %div.col-xs-5.col-sm-12.text-right
-          -#                   %span#renews
+          
                     
-          %div.panel.panel-warning
-            %div.panel-heading
-              %h3.panel-title Order Summary
-            %div.panel-body
-              %table{style: 'width:100%'}
-                %tr
-                  %td
-                    %span#plan 1 Month Artisan Plan
-                  %td{style: 'text-align:right'}
-                    $
-                    %span#price 29.00
-                %tr
-                  %td Tax (NY only)
-                  %td{style: 'text-align:right'}
-                    $
-                    %span#tax 2.32
-                %tr{style: 'border-top:1px dotted gray'}
-                  %td
-                    %strong Total Due
-                  %td{style: 'text-align:right'}
-                    %strong
-                      $
-                      %span#total 31.32
+          
               
       %div.row   
         %div.col-xs-12

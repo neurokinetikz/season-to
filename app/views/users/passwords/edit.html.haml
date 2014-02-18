@@ -1,0 +1,32 @@
+%div.row
+  %div.col-xs-0.col-sm-3
+
+  %div.col-xs-12.col-sm-6
+    = form_for(resource, :as => resource_name, :url => password_path(resource_name), :html => { role: 'form', :method => :put, :id => 'password-form'}) do |f|
+      %div.panel.panel-default
+        %div.panel-heading
+          %h3.panel-title Reset Password
+        %div.panel-body
+          = f.hidden_field :reset_password_token
+          = render partial: 'layouts/alerts'
+          %div.form-group
+            %label New password
+            %input#user_password.required.password.form-control{:type => 'password', :name => 'user[password]', :placeholder => 'New Password', :autofocus => 'true'}
+          %div.form-group
+            %label Confirm new Password
+            %input#user_password_confirmation.required.password_confirmation.form-control{:type => 'password', :name => 'user[password_confirmation]', :placeholder => 'New Password Confirmation'}  
+          %div.form-group
+            %button.btn.btn-primary.form-control{:type => 'submit'} Change my password
+              
+          / %div.form-group
+          /   = render "devise/shared/links"
+            
+= content_for :javascript do
+  :plain
+    $("#password-form").validate({
+        rules: {
+          "user[password_confirmation]": {
+            equalTo: "#user_password"
+          }
+        }
+      });
