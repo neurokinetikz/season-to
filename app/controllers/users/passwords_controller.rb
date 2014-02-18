@@ -16,6 +16,7 @@ class Users::PasswordsController < Devise::PasswordsController
     if successfully_sent?(resource)
       respond_with({}, :location => after_sending_reset_password_instructions_path_for(resource_name))
     else
+      flash[:alert] = "Email address not found"
       respond_with(resource)
     end
   end
@@ -29,8 +30,7 @@ class Users::PasswordsController < Devise::PasswordsController
   # PUT /resource/password
   def update
     self.resource = resource_class.reset_password_by_token(params[:user])
-    logger.debug params[:user]
-    # self.resource = User.find_by_reset_password_token(params[:user][:reset_password_token])
+
     yield resource if block_given?
 
     if resource.errors.empty?
