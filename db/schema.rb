@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140204174527) do
+ActiveRecord::Schema.define(version: 20140220162913) do
 
   create_table "addresses", force: true do |t|
     t.string   "type"
@@ -219,6 +219,7 @@ ActiveRecord::Schema.define(version: 20140204174527) do
   create_table "subscriptions", force: true do |t|
     t.integer  "user_id"
     t.integer  "plan_id"
+    t.integer  "address_id"
     t.integer  "credit_card_id"
     t.string   "token"
     t.string   "status"
@@ -234,6 +235,7 @@ ActiveRecord::Schema.define(version: 20140204174527) do
     t.datetime "updated_at"
   end
 
+  add_index "subscriptions", ["address_id"], name: "index_subscriptions_on_address_id", using: :btree
   add_index "subscriptions", ["billing_day_of_month"], name: "index_subscriptions_on_billing_day_of_month", using: :btree
   add_index "subscriptions", ["credit_card_id"], name: "index_subscriptions_on_credit_card_id", using: :btree
   add_index "subscriptions", ["plan_id"], name: "index_subscriptions_on_plan_id", using: :btree

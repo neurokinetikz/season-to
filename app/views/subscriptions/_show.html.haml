@@ -59,12 +59,59 @@
               %div.col-xs-9
                 %h3.panel-title Shipping To
               %div.row.col-xs-3.text-right
-                %button.btn.btn-xs.btn-warning change
-            
-          %div.panel-body
-            %strong #{subscription.shipments.last.address.first_name} #{subscription.shipments.last.address.last_name}<br/>
-            #{subscription.shipments.last.address.address1} #{subscription.shipments.last.address.address2}<br/>
-            #{subscription.shipments.last.address.city}, #{subscription.shipments.last.address.state} #{subscription.shipments.last.address.zip}
+                %button.btn.btn-xs.btn-warning#change-address change
+          = form_for subscription, html: {role: 'form', id: "update-address"} do |f|
+            %input{type: 'hidden', name: 'subscription[address_attributes][addressable_type]', value: 'User'}
+            %input{type: 'hidden', name: 'subscription[address_attributes][addressable_id]', value: current_user.id }
+            %div.panel-body
+              %div.row
+                %div.form-group.col-xs-12#ship-to
+                  %strong #{subscription.address.first_name} #{subscription.address.last_name}<br/>
+                  #{subscription.address.address1} #{subscription.address.address2}<br/>
+                  #{subscription.address.city}, #{subscription.address.state} #{subscription.address.zip}
+              
+              %div.update-address{style: 'display:none;'}
+                %div.row
+                  %div.form-group.col-xs-12
+                    %table.table.table-hover
+                      %thead
+                        %tr
+                          %th{colspan: 2} Select an address ...
+                      %tbody
+                        - current_user.addresses.reverse.each do |address|
+                          %tr
+                            %td
+                              %input.shipping-address{type: 'radio', name: 'subscription[address_id]', subscription_id: subscription.id, address_id: address.id, checked: (address.id == subscription.address.id)}
+                            %td
+                              #{address.to_s}
+                %div.row
+                  %div.form-group.col-xs-12
+                    %table.table.table-hover
+                      %thead
+                        %tr
+                          %th ... or add a new one
+                      %tbody
+                        %tr
+                          %td
+                            %div.row
+                              %div.form-group.col-xs-12.col-md-6
+                                %input.form-control.required.first_name{type: 'text', name: 'subscription[address_attributes][first_name]', id: 'address_first_name', placeholder: 'First Name', autofocus: true}
+                              %div.form-group.col-xs-12.col-md-6
+                                %input.form-control.last_name{type: 'text', name: 'subscription[address_attributes][last_name]', id: 'address_last_name', placeholder: 'Last Name'}
+                              %div.form-group.col-xs-12.col-md-6
+                                %input.form-control.required.address1{type: 'text', name: 'subscription[address_attributes][address1]', id: 'address_address1', placeholder: 'Address'}
+                              %div.form-group.col-xs-12.col-md-6
+                                %input.form-control.address2{type: 'text', name: 'subscription[address_attributes][address2]', id: 'address_address2', placeholder: 'Address (cont.)'}
+                              
+                              %div.form-group.col-xs-8.col-md-6
+                                %input.form-control.required.city{type: 'text', name: 'subscription[address_attributes][city]', id: 'address_city', placeholder: 'City'}
+                              %div.form-group.col-xs-4.col-md-2
+                                %input.form-control.required.state{type: 'text', name: 'subscription[address_attributes][state]', id: 'address_state', placeholder: 'State'}
+                              %div.form-group.col-xs-12.col-md-4
+                                %input.form-control.required.zip{type: 'text', name: 'subscription[address_attributes][zip]', id: 'address_zip', placeholder: 'Zip Code'}
+                            %div.row
+                              %div.form-group.col-xs-12.text-right
+                                %button.btn.btn-xs.btn-primary Add Address
 
         %div.panel.panel-default
           %div.panel-heading
@@ -81,3 +128,24 @@
     %div.row
       %div.col-xs-12.text-right
         %button.btn.btn-xs.btn-danger{type: 'button'}  Cancel Subscription
+
+= content_for :javascript do
+  :plain
+    $('#update-address').validate();
+    $('#change-address').click(function(){$('.update-address').slideToggle();});
+
+    $('.shipping-address').change(function(){
+      $.ajax({
+        type: "PUT",
+        dataType: 'json',
+        url: "/subscriptions/" + $(this).attr('subscription_id'),
+        data: { 'subscription[address_id]': $(this).attr('address_id') }
+      }).done(function(data) {
+        $('#ship-to').html("<strong>" + data['address']['first_name'] + " " + data['address']['last_name'] + "</strong><br/>" + data['address']['address1'] + " " + data['address']['address2'] + "<br/>" + data['address']['city'] + ", " + data['address']['state'] + " " + data['address']['zip']);
+        $('.update-address').slideToggle();
+      });
+    });
+
+
+
+    data['address']['last_name']

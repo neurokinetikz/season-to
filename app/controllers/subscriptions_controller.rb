@@ -1,10 +1,23 @@
 class SubscriptionsController < ApplicationController
   before_filter :authenticate_user!
+  before_filter :load_subscription, only: [:update]
   
   def new
     @subscription = Subscription.new
   end
   
+  def update
+    @subscription.update_attributes! params[:subscription]
+
+    respond_to do |format|
+      format.js   { render :json => @subscription.as_json(include: :address), :status => 200 }
+      format.html {
+        flash[:notice] = 'Account successfully updated'
+        redirect_to account_path
+      }
+    end
+  end
+
   def create
     Subscription.transaction do
       # get the plan selected
@@ -86,6 +99,7 @@ class SubscriptionsController < ApplicationController
         @subscription = Subscription.create(
           user: current_user,
           plan: @plan,
+          address: @address,
           credit_card: @credit_card,
           token: result.subscription.id,
           status: result.subscription.status,
@@ -113,4 +127,9 @@ class SubscriptionsController < ApplicationController
     end
     
   end
+
+  protected
+    def load_subscription
+      @subscription = Subscription.find params[:id]
+    end
 end

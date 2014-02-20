@@ -196,7 +196,7 @@
   transition: all 0.3s ease-in-out;
   cursor: pointer;
   text-indent: -99999px;
-  background: url(asset-path("/treble/css/cls.png", image)) no-repeat center center;
+  background: url(asset-path("treble/css/cls.png", image)) no-repeat center center;
 }
 .portfolio-item-details .close-portfolio span:hover {
   opacity: 0.5;
@@ -981,7 +981,7 @@ footer {
   background-color: #ffffff;
 }
 .social-icons.bordered a:hover i {
-  background-image: url(asset-path("/treble/css/sicon-set.png", image));
+  background-image: url(asset-path("treble/css/sicon-set.png", image));
 }
 .social-icons.bordered-black {
   border-right: 2px solid #292929;
@@ -994,7 +994,7 @@ footer {
   background-color: #292929;
 }
 .social-icons.bordered-black a:hover i {
-  background-image: url(asset-path("/treble/css/sicon-set-white.png", image));
+  background-image: url(asset-path("treble/css/sicon-set-white.png", image));
 }
 /*
 *   Big social icons with hover background
@@ -1015,7 +1015,7 @@ footer {
   transition: all 0.3s ease-in-out;
 }
 .social-icons.hover-big a:hover i {
-  background-image: url(asset-path("/treble/css/sicon-set-white.png", image));
+  background-image: url(asset-path("treble/css/sicon-set-white.png", image));
 }
 .social-icons.hover-big .sicon-facebook:hover {
   background-color: #3b5998;
@@ -3228,7 +3228,7 @@ table th[class*="span"],
 .dropdown-submenu:focus > a > [class^="icon-"],
 .dropdown-submenu:hover > a > [class*=" icon-"],
 .dropdown-submenu:focus > a > [class*=" icon-"] {
-  background-image: url(asset-path("/treble/css/glyphicons-halflings-white.png", image));
+  background-image: url(asset-path("treble/css/glyphicons-halflings-white.png", image));
 }
 .icon-glass {
   background-position: 0      0;
