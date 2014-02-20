@@ -1,6 +1,6 @@
 class SubscriptionsController < ApplicationController
   before_filter :authenticate_user!
-  before_filter :load_subscription, only: [:update]
+  before_filter :load_subscription, only: [:update, :cancel]
   
   def new
     @subscription = Subscription.new
@@ -16,6 +16,12 @@ class SubscriptionsController < ApplicationController
         redirect_to account_path
       }
     end
+  end
+
+  def cancel
+    @subscription.cancel
+    flash[:alert] = 'Your subscription was canceled.'
+    redirect_to account_path
   end
 
   def create

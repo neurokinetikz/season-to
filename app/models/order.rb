@@ -7,6 +7,7 @@ class Order < ActiveRecord::Base
   
   has_many :line_items, as: :itemizable
   has_many :shipments
+  has_many :credit_card_transactions, as: :subject
   
   state_machine :state, :initial => :scheduled do
     

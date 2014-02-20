@@ -1,13 +1,16 @@
-%div.panel.panel-success
+
+%div.panel{class: (subscription.active? ? 'panel-success' : 'panel-warning') }
   %div.panel-heading
     %h1.panel-title
       %div.row
         %div.col-xs-8
-          %button.btn.btn-xs.btn-success{type: 'button'}  #{subscription.status}
+          - if subscription.state == 'active'
+            %button.btn.btn-xs.btn-success{type: 'button'}  Active
+          - else 
+            %button.btn.btn-xs.btn-warning{type: 'button'}  Canceled
           #{subscription.plan.name} Plan
         %div.col-xs-4.text-right
-          
-          %button.btn.btn-xs.btn-primary{type: 'button'} Upgrade
+          %button.btn.btn-xs.btn-primary{type: 'button'} #{subscription.shipments.count} Deliveries Remaining
   %div.panel-body
     %div.row
       %div.col-xs-12{}
@@ -113,50 +116,88 @@
                               %div.form-group.col-xs-12.text-right
                                 %button.btn.btn-xs.btn-primary Add Address
 
+        / %div.col-xs-12.col-sm-6
+        / %div.panel.panel-default
+        /   %div.panel-heading
+        /     %h3.panel-title Last Delivery On
+        /   %div.panel-body
+        /     %strong #{subscription.shipments.first.scheduled_at.advance(months: 11).strftime('%B %-d, %Y')}
+
+        - if subscription.active?
+          %div.panel.panel-default
+            %div.panel-heading
+              %div.row
+                %div.col-xs-9
+                  %h3.panel-title Subscription Renewal
+                %div.row.col-xs-3.text-right
+                  %button.btn.btn-xs.btn-warning#change-payment change
+            %div.panel-body
+              %div.row
+                %div.col-xs-12
+                  $#{money_without_cents subscription.next_billing_period_amount} will be charged to your
+                  %span#payment-info #{subscription.credit_card.to_s} 
+                  on #{subscription.next_billing_date.strftime('%B %-d, %Y')}
+                
+                %div.update-payment{style: 'display:none;'}
+                  %div.row
+                    %div.col-xs-12
+                      %div.control-group
+                        %div.credit-cards-alerts
+                        %table.table.table-hover#credit-cards-table
+                          %thead
+                            %tr
+                              %th{colspan: 5} Select a card ...
+                          %tbody
+                            - current_user.credit_cards.order('id desc').each do |credit_card|
+                              %tr{:id => "credit_card_#{credit_card.id}", :style => 'cursor:pointer;'}
+                                %td
+                                  %div.control-group
+                                    %div.controls.text-center
+                                      - h = {:type => "radio", :class=> 'subscription-credit-card', :name => "subscription_credit_card", :id => credit_card.id, :value => credit_card.id}
+                                      - h[:checked] = true if credit_card.is_default
+                                      %input{ h }
+                                %td
+                                  = credit_card.card_type
+                                %td
+                                  = "x-#{credit_card.last4}"
+                                %td
+                                  = "#{credit_card.expiration_month}/#{credit_card.expiration_year}"
+                                %td
+                                  = link_to 'x', credit_card_path(credit_card), :method => :delete, :confirm => 'Are you sure?', :remote => true, :class => 'icon-remove'
+                  %div.row
+                    %div.form-group.col-xs-12
+                      %table.table.table-hover
+                        %thead
+                          %tr
+                            %th ... or add a new one
+                        %tbody
+                          %tr
+                            %td
+                              = form_for(CreditCard.new, :url => credit_cards_path, :html => { :method => :post, :id => 'credit-card-form', :role => 'form' }) do |f|
+                                = render :partial => 'credit_cards/form'
+        
         %div.panel.panel-default
           %div.panel-heading
-            %div.row
-              %div.col-xs-9
-                %h3.panel-title Subscription Renewal
-              %div.row.col-xs-3.text-right
-                %button.btn.btn-xs.btn-warning#change-payment change
+            %h3.panel-title Payment History
           %div.panel-body
-            %div.row
-              %div.col-xs-12
-                $#{money_without_cents subscription.next_billing_period_amount} will be charged to your
-                %span#payment-info #{subscription.credit_card.to_s} 
-                on #{subscription.next_billing_date.strftime('%B %-d, %Y')}
-              %div.update-payment{style: 'display:none;'}
-                %div.col-xs-12
-                  %div.control-group
-                    %div.credit-cards-alerts
-                    %table.table.table-hover#credit-cards-table
-                      %thead
-                        %tr
-                          %th{colspan: 5} Select a card ...
-                      %tbody
-                        - current_user.credit_cards.order('id desc').each do |credit_card|
-                          %tr{:id => "credit_card_#{credit_card.id}", :style => 'cursor:pointer;'}
-                            %td
-                              %div.control-group
-                                %div.controls.text-center
-                                  - h = {:type => "radio", :class=> 'subscription-credit-card', :name => "subscription_credit_card", :id => credit_card.id, :value => credit_card.id}
-                                  - h[:checked] = true if credit_card.is_default
-                                  %input{ h }
-                            %td
-                              = credit_card.card_type
-                            %td
-                              = "x-#{credit_card.last4}"
-                            %td
-                              = "#{credit_card.expiration_month}/#{credit_card.expiration_year}"
-                            %td
-                              = link_to 'x', credit_card_path(credit_card), :method => :delete, :confirm => 'Are you sure?', :remote => true, :class => 'icon-remove'
+            = render :partial => 'credit_card_transactions/index', locals: {subscription: subscription}
 
-        
+    - if subscription.active?
+      %div.row
+        %div.col-xs-12.text-right
+          %button.btn.btn-xs.btn-danger{type: 'button', 'data-toggle' => 'modal', 'data-target' => '#cancel-modal'}  Cancel Subscription
 
-    %div.row
-      %div.col-xs-12.text-right
-        %button.btn.btn-xs.btn-danger{type: 'button'}  Cancel Subscription
+%div.modal.fade#cancel-modal{role: 'dialog'}
+  %div.modal-dialog
+    %div.modal-content
+      %div.modal-header
+        %button.close{type: 'button', 'data-dismiss' => 'modal'} &times;
+        %h4.modal-title Are you sure?
+      %div.modal-body
+        OMG, no!!!!!
+      %div.modal-footer
+        %button.btn.btn-default{type: 'button', 'data-dismiss' => 'modal'} Close
+        = link_to 'Confirm', cancel_subscription_path(subscription), method: :put, class: 'btn btn-danger'
 
 = content_for :javascript do
   :plain
@@ -183,7 +224,6 @@
         data: { 'credit_card[is_default]': "true" },
         beforeSend: function() {$('#credit-cards-table').fadeTo('slow', 0.33);}
       }).done(function( data ) {
-        console.log(data);
         $('#payment-info').html(data['card_type'] + " ending in " + data['last4']);
         $('#credit-cards-table').css({ opacity: 1.0 });
         $('.update-payment').slideToggle();

@@ -7,5 +7,5 @@
         %th Credit Card
         %th Date
       
-    - current_user.credit_card_transactions.order('id desc').each do |credit_card_transaction|
+    - subscription.credit_card_transactions.order('id desc').each do |credit_card_transaction|
       = render :partial => 'credit_card_transactions/row', :locals => {:credit_card_transaction => credit_card_transaction}

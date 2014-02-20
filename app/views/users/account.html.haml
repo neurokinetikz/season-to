@@ -3,8 +3,8 @@
     %a{href: '#account', 'data-toggle' => 'tab'} Account
   %li.active
     %a{href: '#subscription', 'data-toggle' => 'tab'} Subscription
-  %li
-    %a{href: '#payments', 'data-toggle' => 'tab'} Payment
+  / %li
+  /   %a{href: '#payments', 'data-toggle' => 'tab'} Payment
 
 %div.tab-content
   %div#account.tab-pane
@@ -56,28 +56,28 @@
       %div.col-xs-12.col-lg-10.col-lg-offset-1
         - current_user.subscriptions.each do |s|
           = render :partial => 'subscriptions/show', locals: {subscription: s}
-  %div#payments.tab-pane
-    %div.row
-      %div.col-xs-12.col-sm-6.col-sm-offset-0.col-md-5.col-md-offset-1
+  / %div#payments.tab-pane
+  /   %div.row
+  /     %div.col-xs-12.col-sm-6.col-sm-offset-0.col-md-5.col-md-offset-1
         
-        %div.panel.panel-default
-          %div.panel-heading
-            %h3.panel-title Credit Cards
-          %div.panel-body
-            = render :partial => 'credit_cards/index'
-        = form_for(CreditCard.new, :url => credit_cards_path, :html => { :method => :post, :id => 'credit-card-form', :role => 'form' }) do |f|
-          %div.panel.panel-default
-            %div.panel-heading
-              %h3.panel-title Add A Card
-            %div.panel-body
-              = render :partial => 'credit_cards/form'
-      %div.col-xs-12.col-sm-6.col-sm-offset-0.col-md-5
+  /       %div.panel.panel-default
+  /         %div.panel-heading
+  /           %h3.panel-title Credit Cards
+  /         %div.panel-body
+  /           = render :partial => 'credit_cards/index'
+  /       = form_for(CreditCard.new, :url => credit_cards_path, :html => { :method => :post, :id => 'credit-card-form', :role => 'form' }) do |f|
+  /         %div.panel.panel-default
+  /           %div.panel-heading
+  /             %h3.panel-title Add A Card
+  /           %div.panel-body
+  /             = render :partial => 'credit_cards/form'
+  /     %div.col-xs-12.col-sm-6.col-sm-offset-0.col-md-5
         
-        %div.panel.panel-default
-          %div.panel-heading
-            %h3.panel-title Transactions
-          %div.panel-body
-            = render :partial => 'credit_card_transactions/index'
+  /       %div.panel.panel-default
+  /         %div.panel-heading
+  /           %h3.panel-title Transactions
+  /         %div.panel-body
+  /           = render :partial => 'credit_card_transactions/index'
       
 
 

@@ -2,7 +2,11 @@ SubscriptionService::Application.routes.draw do
   devise_for :users, :controllers => { :omniauth_callbacks => "users/omniauth_callbacks", registrations: "users/registrations", passwords: 'users/passwords', confirmations: 'users/confirmations' }
   
   resources :users
-  resources :subscriptions
+  resources :subscriptions do
+    member do
+      put 'cancel'
+    end
+  end
   
   resources :credit_cards
   

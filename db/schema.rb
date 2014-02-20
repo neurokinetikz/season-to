@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140220162913) do
+ActiveRecord::Schema.define(version: 20140220210552) do
 
   create_table "addresses", force: true do |t|
     t.string   "type"
@@ -222,7 +222,7 @@ ActiveRecord::Schema.define(version: 20140220162913) do
     t.integer  "address_id"
     t.integer  "credit_card_id"
     t.string   "token"
-    t.string   "status"
+    t.string   "state"
     t.integer  "billing_day_of_month"
     t.datetime "first_billing_date"
     t.datetime "billing_period_start_date"
@@ -239,7 +239,7 @@ ActiveRecord::Schema.define(version: 20140220162913) do
   add_index "subscriptions", ["billing_day_of_month"], name: "index_subscriptions_on_billing_day_of_month", using: :btree
   add_index "subscriptions", ["credit_card_id"], name: "index_subscriptions_on_credit_card_id", using: :btree
   add_index "subscriptions", ["plan_id"], name: "index_subscriptions_on_plan_id", using: :btree
-  add_index "subscriptions", ["status"], name: "index_subscriptions_on_status", using: :btree
+  add_index "subscriptions", ["state"], name: "index_subscriptions_on_state", using: :btree
   add_index "subscriptions", ["token"], name: "index_subscriptions_on_token", using: :btree
   add_index "subscriptions", ["user_id"], name: "index_subscriptions_on_user_id", using: :btree
 
