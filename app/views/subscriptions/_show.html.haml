@@ -119,10 +119,39 @@
               %div.col-xs-9
                 %h3.panel-title Subscription Renewal
               %div.row.col-xs-3.text-right
-                %button.btn.btn-xs.btn-warning change
+                %button.btn.btn-xs.btn-warning#change-payment change
           %div.panel-body
-            $#{money_without_cents subscription.next_billing_period_amount} will be charged to your
-            #{subscription.credit_card.to_s} on #{subscription.next_billing_date.strftime('%B %-d, %Y')}
+            %div.row
+              %div.col-xs-12
+                $#{money_without_cents subscription.next_billing_period_amount} will be charged to your
+                %span#payment-info #{subscription.credit_card.to_s} 
+                on #{subscription.next_billing_date.strftime('%B %-d, %Y')}
+              %div.update-payment{style: 'display:none;'}
+                %div.col-xs-12
+                  %div.control-group
+                    %div.credit-cards-alerts
+                    %table.table.table-hover#credit-cards-table
+                      %thead
+                        %tr
+                          %th{colspan: 5} Select a card ...
+                      %tbody
+                        - current_user.credit_cards.order('id desc').each do |credit_card|
+                          %tr{:id => "credit_card_#{credit_card.id}", :style => 'cursor:pointer;'}
+                            %td
+                              %div.control-group
+                                %div.controls.text-center
+                                  - h = {:type => "radio", :class=> 'subscription-credit-card', :name => "subscription_credit_card", :id => credit_card.id, :value => credit_card.id}
+                                  - h[:checked] = true if credit_card.is_default
+                                  %input{ h }
+                            %td
+                              = credit_card.card_type
+                            %td
+                              = "x-#{credit_card.last4}"
+                            %td
+                              = "#{credit_card.expiration_month}/#{credit_card.expiration_year}"
+                            %td
+                              = link_to 'x', credit_card_path(credit_card), :method => :delete, :confirm => 'Are you sure?', :remote => true, :class => 'icon-remove'
+
         
 
     %div.row
@@ -133,6 +162,7 @@
   :plain
     $('#update-address').validate();
     $('#change-address').click(function(){$('.update-address').slideToggle();});
+    $('#change-payment').click(function(){$('.update-payment').slideToggle();});
 
     $('.shipping-address').change(function(){
       $.ajax({
@@ -146,6 +176,16 @@
       });
     });
 
-
-
-    data['address']['last_name']
+    $('.subscription-credit-card').change(function(){
+      $.ajax({
+        type: "PUT",
+        url: "/credit_cards/" + this.id,
+        data: { 'credit_card[is_default]': "true" },
+        beforeSend: function() {$('#credit-cards-table').fadeTo('slow', 0.33);}
+      }).done(function( data ) {
+        console.log(data);
+        $('#payment-info').html(data['card_type'] + " ending in " + data['last4']);
+        $('#credit-cards-table').css({ opacity: 1.0 });
+        $('.update-payment').slideToggle();
+      });
+    });

@@ -9,6 +9,7 @@ class CreditCard < ActiveRecord::Base
   belongs_to :user
 
   has_many :credit_card_transactions
+  has_many :subscriptions
 
   after_save :handle_default_card
 
@@ -42,13 +43,23 @@ class CreditCard < ActiveRecord::Base
   def handle_default_card
     CreditCard.transaction do
       if ((self.is_default_changed? && self.is_default) || (self.new_record? && self.user.credit_cards.empty?))
+        # update default card on braintree
         result = Braintree::CreditCard.update(
           self.token,
           :options => { :make_default => true }
         )
       
-        throw Exception.new "Could not set default credit card on braintree" unless result.success?
+        throw Exception.new "Could not set default credit card" unless result.success?
         
+        # update linked subscriptions
+        self.user.subscriptions.each do |sub|
+          result =  Braintree::Subscription.update(sub.token, payment_method_token: self.token)
+          throw Exception.new "Could not update subscription credit card" unless result.success?
+          sub.update_attribute(:credit_card, self)
+        end
+
+        
+
         self.user.credit_cards.where("id <> ?", self.id).update_all(:is_default => false)
       end
     end

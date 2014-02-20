@@ -42,7 +42,7 @@ class CreditCardsController < ApplicationController
   
   def update
     @credit_card.update_attributes(params[:credit_card])
-    render :json => {:success => true}, :status => 200
+    render :json => @credit_card, :status => 200
   end
   
   def charge
