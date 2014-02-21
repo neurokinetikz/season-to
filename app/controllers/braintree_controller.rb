@@ -64,8 +64,7 @@ class BraintreeController < ApplicationController
             @invoice.mark_paid
 
             # update the subscription
-            @subscription.update_attributes {
-              billing_period_start_date: webhook_notification.subscription.billing_period_start_date,
+            @subscription.update_attributes { billing_period_start_date: webhook_notification.subscription.billing_period_start_date,
               billing_period_end_date: webhook_notification.subscription.billing_period_end_date,
               next_billing_date: webhook_notification.subscription.next_billing_date,
               next_billing_period_amount: webhook_notification.subscription.next_billing_period_amount,
