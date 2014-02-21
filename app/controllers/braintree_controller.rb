@@ -23,6 +23,3 @@ class BraintreeController < ApplicationController
     render nothing: true, status: 200
   end
 end
-
-signature, payload = Braintree::WebhookTesting.sample_notification(Braintree::WebhookNotification::Kind::SubscriptionChargedSuccessfully, 'c88ysr')
-y Braintree::WebhookNotification.parse(signature, payload)
