@@ -10,7 +10,11 @@ SubscriptionService::Application.routes.draw do
   
   resources :credit_cards
 
-  get 'braintree' => 'braintree#challenge'
+  get 'braintree' do
+    challenge = request.params["bt_challenge"]
+    challenge_response = Braintree::WebhookNotification.verify(challenge)
+    return [200, challenge_response]
+  end
   post 'braintree' => 'braintree#webhook'
   
   get 'account' => 'users#account'
