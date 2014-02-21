@@ -56,7 +56,6 @@ class SubscriptionsController < ApplicationController
           :is_default => result.credit_card.default?
         ) 
         current_user.credit_cards << @credit_card
-        flash[:notice] = 'Credit card saved'
       else
         throw Exception.new result.message
       end
