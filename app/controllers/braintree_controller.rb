@@ -8,7 +8,8 @@ class BraintreeController < ApplicationController
   def webhook
   	webhook_notification = Braintree::WebhookNotification.parse(params[:bt_signature], params[:bt_payload])
     puts "[Webhook Received #{webhook_notification.timestamp}] Kind: #{webhook_notification.kind} | Subscription: #{webhook_notification.subscription.id}"
-    puts "#{webhook_notification}"
+    puts "#{webhook_notification.subscription}"
+    puts "#{webhook_notification.subscription.transactions}"
 
     case webhook_notification.kind
     when 'subscription_charged_successfully'
