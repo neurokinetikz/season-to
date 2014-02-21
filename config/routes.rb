@@ -9,6 +9,9 @@ SubscriptionService::Application.routes.draw do
   end
   
   resources :credit_cards
+
+  get 'braintree' => 'braintree#challenge'
+  post 'braintree' => 'braintree#webhook'
   
   get 'account' => 'users#account'
   

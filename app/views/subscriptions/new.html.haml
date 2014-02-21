@@ -141,21 +141,38 @@
         %div.panel-heading
           %h3.panel-title Enter Your Shipping Info
         %div.panel-body
-          %div.form-group.col-xs-12.col-sm-6
-            %input.form-control.required.first_name{type: 'text', name: 'address[first_name]', id: 'address_first_name', placeholder: 'First Name', autofocus: true}
-          %div.form-group.col-xs-12.col-sm-6
-            %input.form-control.last_name{type: 'text', name: 'address[last_name]', id: 'address_last_name', placeholder: 'Last Name'}
-          %div.form-group.col-xs-12.col-sm-6
-            %input.form-control.required.address1{type: 'text', name: 'address[address1]', id: 'address_address1', placeholder: 'Address'}
-          %div.form-group.col-xs-12.col-sm-6
-            %input.form-control.address2{type: 'text', name: 'address[address2]', id: 'address_address2', placeholder: 'Address (cont.)'}
-          
-          %div.form-group.col-xs-8.col-sm-6
-            %input.form-control.required.city{type: 'text', name: 'address[city]', id: 'address_city', placeholder: 'City'}
-          %div.form-group.col-xs-4.col-sm-2
-            %input.form-control.required.state{type: 'text', name: 'address[state]', id: 'address_state', placeholder: 'State'}
-          %div.form-group.col-xs-12.col-sm-4
-            %input.form-control.required.zip{type: 'text', name: 'address[zip]', id: 'address_zip', placeholder: 'Zip Code'}
+          %div.row
+            %div.update-address.col-xs-12{}
+              %table.table.table-hover
+                %thead
+                  %tr
+                    %th.text-left Select an address ...
+                %tbody
+                  - current_user.addresses.reverse.each do |address|
+                    %tr
+                      %td
+                        %div.row
+                          %div.col-xs-1
+                            %input.shipping-address{type: 'radio', name: 'address_id'}
+                          %div.col-xs-11
+                            #{address.to_s}
+                        
+          %div.row
+            %div.form-group.col-xs-12.col-sm-6
+              %input.form-control.required.first_name{type: 'text', name: 'address[first_name]', id: 'address_first_name', placeholder: 'First Name', autofocus: true}
+            %div.form-group.col-xs-12.col-sm-6
+              %input.form-control.last_name{type: 'text', name: 'address[last_name]', id: 'address_last_name', placeholder: 'Last Name'}
+            %div.form-group.col-xs-12.col-sm-6
+              %input.form-control.required.address1{type: 'text', name: 'address[address1]', id: 'address_address1', placeholder: 'Address'}
+            %div.form-group.col-xs-12.col-sm-6
+              %input.form-control.address2{type: 'text', name: 'address[address2]', id: 'address_address2', placeholder: 'Address (cont.)'}
+            
+            %div.form-group.col-xs-8.col-sm-6
+              %input.form-control.required.city{type: 'text', name: 'address[city]', id: 'address_city', placeholder: 'City'}
+            %div.form-group.col-xs-4.col-sm-2
+              %input.form-control.required.state{type: 'text', name: 'address[state]', id: 'address_state', placeholder: 'State'}
+            %div.form-group.col-xs-12.col-sm-4
+              %input.form-control.required.zip{type: 'text', name: 'address[zip]', id: 'address_zip', placeholder: 'Zip Code'}
               
               
       %div.panel.panel-warning
