@@ -8,6 +8,6 @@ class BraintreeController < ApplicationController
   def webhook
   	webhook_notification = Braintree::WebhookNotification.parse(params[:bt_signature], params[:bt_payload])
     puts "[Webhook Received #{webhook_notification.timestamp}] Kind: #{webhook_notification.kind} | Subscription: #{webhook_notification.subscription.id}"
-    render status: 200
+    render nothing: true, status: 200
   end
 end
