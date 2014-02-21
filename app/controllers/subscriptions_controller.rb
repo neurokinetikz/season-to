@@ -84,7 +84,7 @@ class SubscriptionsController < ApplicationController
           :user => current_user,
           :credit_card => @credit_card,
           :transaction_type => txn.type,
-          :transaction_id => txn.id,
+          :token => txn.id,
           :amount => txn.amount,
           :status => txn.status,
           :avs_error_response_code => txn.avs_error_response_code,

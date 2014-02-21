@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140220210552) do
+ActiveRecord::Schema.define(version: 20140221174531) do
 
   create_table "addresses", force: true do |t|
     t.string   "type"
@@ -40,7 +40,7 @@ ActiveRecord::Schema.define(version: 20140220210552) do
     t.string   "subject_type"
     t.integer  "subject_id"
     t.string   "transaction_type"
-    t.string   "transaction_id"
+    t.string   "token"
     t.integer  "amount_cents"
     t.string   "status"
     t.string   "avs_error_response_code"
@@ -59,7 +59,7 @@ ActiveRecord::Schema.define(version: 20140220210552) do
   add_index "credit_card_transactions", ["source_type", "source_id"], name: "index_credit_card_transactions_on_source_type_and_source_id", using: :btree
   add_index "credit_card_transactions", ["status"], name: "index_credit_card_transactions_on_status", using: :btree
   add_index "credit_card_transactions", ["subject_type", "subject_id"], name: "index_credit_card_transactions_on_subject_type_and_subject_id", using: :btree
-  add_index "credit_card_transactions", ["transaction_id"], name: "index_credit_card_transactions_on_transaction_id", using: :btree
+  add_index "credit_card_transactions", ["token"], name: "index_credit_card_transactions_on_token", using: :btree
   add_index "credit_card_transactions", ["transaction_type"], name: "index_credit_card_transactions_on_transaction_type", using: :btree
   add_index "credit_card_transactions", ["user_id"], name: "index_credit_card_transactions_on_user_id", using: :btree
 

@@ -52,7 +52,7 @@ class CreditCardsController < ApplicationController
       :credit_card => @credit_card,
       :credit_card_description => @credit_card.to_s,
       :transaction_type => @result.transaction.type,
-      :transaction_id => @result.transaction.id,
+      :token => @result.transaction.id,
       :amount => @result.transaction.amount,
       :status => @result.transaction.status,
       :avs_error_response_code => @result.transaction.avs_error_response_code,
