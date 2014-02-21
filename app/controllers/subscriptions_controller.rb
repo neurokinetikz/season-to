@@ -108,7 +108,7 @@ class SubscriptionsController < ApplicationController
           address: @address,
           credit_card: @credit_card,
           token: result.subscription.id,
-          status: result.subscription.status,
+          # status: result.subscription.status,
           billing_day_of_month: result.subscription.billing_day_of_month,
           billing_period_start_date: result.subscription.billing_period_start_date,
           billing_period_end_date: result.subscription.billing_period_end_date,
