@@ -33,7 +33,7 @@ class BraintreeController < ApplicationController
         cct = CreditCardTransaction.find_by_token(txn.id)
 
         # if not, create a new record
-        if true #cct.nil?
+        if cct.nil?
           Subscription.transaction do
             # get the credit card
             @credit_card = CreditCard.find_by_token(txn.credit_card_details.token)
