@@ -132,6 +132,7 @@ class SubscriptionsController < ApplicationController
       end
     end
     
+    redirect_to account_path
   end
 
   protected
