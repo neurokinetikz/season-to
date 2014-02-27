@@ -11,7 +11,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140221174531) do
+ActiveRecord::Schema.define(version: 20140227160708) do
+
+  create_table "active_admin_comments", force: true do |t|
+    t.string   "namespace"
+    t.text     "body"
+    t.string   "resource_id",   null: false
+    t.string   "resource_type", null: false
+    t.integer  "author_id"
+    t.string   "author_type"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "active_admin_comments", ["author_type", "author_id"], name: "index_active_admin_comments_on_author_type_and_author_id", using: :btree
+  add_index "active_admin_comments", ["namespace"], name: "index_active_admin_comments_on_namespace", using: :btree
+  add_index "active_admin_comments", ["resource_type", "resource_id"], name: "index_active_admin_comments_on_resource_type_and_resource_id", using: :btree
 
   create_table "addresses", force: true do |t|
     t.string   "type"
@@ -31,6 +46,24 @@ ActiveRecord::Schema.define(version: 20140221174531) do
 
   add_index "addresses", ["addressable_type", "addressable_id"], name: "index_addresses_on_addressable_type_and_addressable_id", using: :btree
   add_index "addresses", ["type"], name: "index_addresses_on_type", using: :btree
+
+  create_table "admin_users", force: true do |t|
+    t.string   "email",                  default: "", null: false
+    t.string   "encrypted_password",     default: "", null: false
+    t.string   "reset_password_token"
+    t.datetime "reset_password_sent_at"
+    t.datetime "remember_created_at"
+    t.integer  "sign_in_count",          default: 0,  null: false
+    t.datetime "current_sign_in_at"
+    t.datetime "last_sign_in_at"
+    t.string   "current_sign_in_ip"
+    t.string   "last_sign_in_ip"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "admin_users", ["email"], name: "index_admin_users_on_email", unique: true, using: :btree
+  add_index "admin_users", ["reset_password_token"], name: "index_admin_users_on_reset_password_token", unique: true, using: :btree
 
   create_table "credit_card_transactions", force: true do |t|
     t.integer  "user_id"
@@ -93,6 +126,20 @@ ActiveRecord::Schema.define(version: 20140221174531) do
   end
 
   add_index "delayed_jobs", ["priority", "run_at"], name: "delayed_jobs_priority", using: :btree
+
+  create_table "images", force: true do |t|
+    t.string   "attachable_type"
+    t.integer  "attachable_id"
+    t.boolean  "is_default"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "file_file_name"
+    t.string   "file_content_type"
+    t.integer  "file_file_size"
+    t.datetime "file_updated_at"
+  end
+
+  add_index "images", ["attachable_type", "attachable_id", "is_default"], name: "index_images_on_attachable_type_and_attachable_id_and_is_default", using: :btree
 
   create_table "invoices", force: true do |t|
     t.integer  "order_id"
@@ -204,7 +251,10 @@ ActiveRecord::Schema.define(version: 20140221174531) do
   add_index "shipments", ["user_id"], name: "index_shipments_on_user_id", using: :btree
 
   create_table "skus", force: true do |t|
+    t.string   "type"
     t.integer  "product_id"
+    t.string   "upc"
+    t.string   "vendor_code"
     t.string   "code"
     t.string   "name"
     t.text     "description"
@@ -215,6 +265,9 @@ ActiveRecord::Schema.define(version: 20140221174531) do
 
   add_index "skus", ["code"], name: "index_skus_on_code", using: :btree
   add_index "skus", ["product_id"], name: "index_skus_on_product_id", using: :btree
+  add_index "skus", ["type"], name: "index_skus_on_type", using: :btree
+  add_index "skus", ["upc"], name: "index_skus_on_upc", using: :btree
+  add_index "skus", ["vendor_code"], name: "index_skus_on_vendor_code", using: :btree
 
   create_table "subscriptions", force: true do |t|
     t.integer  "user_id"
@@ -283,6 +336,8 @@ ActiveRecord::Schema.define(version: 20140221174531) do
   create_table "vendors", force: true do |t|
     t.string   "name"
     t.text     "description"
+    t.string   "url"
+    t.string   "phone"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

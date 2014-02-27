@@ -10,7 +10,7 @@
             %button.btn.btn-xs.btn-warning{type: 'button'}  Canceled
           #{subscription.plan.name} Plan
         %div.col-xs-4.text-right
-          %button.btn.btn-xs.btn-primary{type: 'button'} #{subscription.shipments.count} Deliveries Remaining
+          %button.btn.btn-xs.btn-primary{type: 'button'} #{subscription.shipments.with_state(:pending).count} Deliveries Remaining
   %div.panel-body
     %div.row
       %div.col-xs-12{}
@@ -22,7 +22,7 @@
           %div.panel-heading
             %h3.panel-title Last Shipment
           %div.panel-body
-            = render partial: 'shipments/show', locals: {shipment: subscription.shipments.first}
+            = render partial: 'shipments/show', locals: {shipment: subscription.shipments.with_state(:shipped).order('shipped_at desc').first}
         %div.panel.panel-default
           %div.panel-heading
             %h3.panel-title Past Shipments
@@ -34,21 +34,12 @@
                   %th Name
                   %th Shipped On
               %tbody
-                %tr
-                  %td
-                    %img{src: 'http://www.techvert.com/wp-content/uploads/2010/09/16/salt-and-pepper-robots/saltandpepperrobots.jpg', width: '75px'}
-                  %td Robots
-                  %td January 14, 2014
-                %tr
-                  %td
-                    %img{src: 'http://www.photo-dictionary.com/photofiles/list/1589/2124salt_and_pepper.jpg', width: '75px'}
-                  %td Table Salt
-                  %td December 14, 2013
-                %tr
-                  %td
-                    %img{src: 'http://static.planetminecraft.com/files/resource_media/screenshot/1151/salt%20and%20pepper_1064747.jpg', width: '75px'}
-                  %td Naughty & Nice
-                  %td November 14, 2013
+                - subscription.shipments.with_state(:shipped).order('shipped_at desc').each do |shipment|
+                  %tr
+                    %td
+                      = image_tag shipment.line_items.first.sku.images.first.url(:thumb)
+                    %td #{shipment.line_items.first.sku.name}
+                    %td #{shipment.shipped_at.strftime('%b %-d, %Y')}
       %div.col-xs-12.col-sm-6
         %div.panel.panel-default
           %div.panel-heading

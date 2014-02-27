@@ -32,7 +32,9 @@ gem 'delayed_job_active_record'
 gem "mailchimp-api", "~> 2.0.4"
 gem 'mandrill-api'
 # gem 'zendesk_api'
-
+gem 'activeadmin', github: 'gregbell/active_admin'
+# gem "meta_search", '>= 1.1.0.pre'
+# gem 'mws-connect'
 
 
 # Use SCSS for stylesheets
