@@ -1,0 +1,137 @@
+- plan_id = params[:plan][:id] unless params[:plan].nil?
+- plan_id = 'SEASON-TO-1-MONTH-GIFT' if params[:plan].nil?
+
+= form_for Gift.new, url: {action: "create"}, html: {id: "gift-form", role: 'form'} do |f|
+  
+
+  %input{type: 'hidden', id: 'plan_id', name: 'plan[id]', value: "#{plan_id}"}
+
+  %div.row
+    %div.col-xs-6
+      
+
+      %div.panel.panel-default
+        %div.panel-heading
+          %h1.panel-title 2. Select a Gift
+        %div.panel-body
+          %div.row
+            %div.col-xs-12
+              %table.table.plan-select
+                %tr
+                  %td
+                    %div.plan-select
+                      %div.btn-group.btn-block
+                        %button.btn.btn-default.btn-block{type: 'button', value: 'SEASON-TO-1-MONTH-GIFT', plan: 'Plan', duration: 1, price: 19}
+                          %strong 1 Month
+                          <br/>$19<br/>
+                          %img.img-responsive{src: asset_path('flip.jpg')}
+                  
+                  %td
+                    %div.plan-select
+                      %div.btn-group.btn-block
+                        %button.btn.btn-default.btn-block{type: 'button', value: 'SEASON-TO-3-MONTH-GIFT', plan: 'Plan', duration: 3, price: 54}
+                          %strong 3 Months
+                          <br/>$54<br/>
+                          %img.img-responsive{src: asset_path('flip.jpg')}
+               
+                  %td
+                    %div.plan-select
+                      %div.btn-group.btn-block
+                        %button.btn.btn-default.btn-block{type: 'button', value: 'SEASON-TO-6-MONTH-GIFT', plan: 'Plan', duration: 6, price: 102}
+                          %strong 6 Months
+                          <br/>$102<br/>
+                          %img.img-responsive{src: asset_path('flip.jpg') }
+                        
+                  %td
+                    %div.plan-select
+                      %div.btn-group.btn-block
+                        %button.btn.btn-default.btn-block{type: 'button', value: 'SEASON-TO-12-MONTH-GIFT', plan: 'Plan', duration: 12, price: 192}
+                          %strong 12 Months
+                          <br/>$192<br/>
+                          %img.img-responsive{src: asset_path('flip.jpg')}
+
+      %div.panel.panel-default
+        %div.panel-heading
+          %h1.panel-title 1. Enter Recipient Info
+        %div.panel-body
+          %div.row
+            %div.col-xs-6
+              %div.form-group
+                %input.form-control.required.first_name{type: 'text', placeholder: 'First Name', name: 'recipient[first_name]', value: @recipient.nil? ? '' : @recipient.first_name}
+            %div.col-xs-6
+              %div.form-group
+                %input.form-control{type: 'text', placeholder: 'Last Name', name: 'recipient[last_name]', value: @recipient.nil? ? '' : @recipient.last_name}
+          %div.row
+            %div.col-xs-12
+              %div.form-group
+                %input.form-control.required.email{type: 'text', name: 'email', placeholder: 'Email Address', name: 'recipient[email]', value: @recipient.nil? ? '' : @recipient.email}
+          %div.row
+            %div.col-xs-12
+              %div.form-group
+                %label Message
+                %textarea.form-control{name: 'recipient[message]'} #{@recipient.nil? ? '' : @recipient.message}
+
+    %div.col-xs-6
+      %div.panel.panel-default
+        %div.panel-heading
+          %h3.panel-title Order Summary
+        %div.panel-body
+          %table{style: 'width:100%'}
+            %tr
+              %td
+                %span#plan 1 Month  Plan
+              %td{style: 'text-align:right'}
+                $
+                %span#price 19.00
+            / %tr
+            /   %td Tax (NY only)
+            /   %td{style: 'text-align:right'}
+            /     $
+            /     %span#tax 2.32
+            %tr{style: 'border-top:1px dotted gray'}
+              %td
+                %strong Total Due
+              %td{style: 'text-align:right'}
+                %strong
+                  $
+                  %span#total 19.00
+      %div.panel.panel-default
+        %div.panel-heading
+          %h3.panel-title Payment Info
+        %div.panel-body
+          = render partial: 'credit_cards/payment'
+
+      %div.row
+        %div.col-xs-12
+          %button.btn.btn-success.btn-block Buy Now!
+
+= content_for :javascript do
+  :plain
+    var today = new Date();
+    var last = new Date(today.getFullYear(),today.getMonth(),today.getDate());
+    
+    $('div.plan-select button').click(
+      function(){
+        $('#price').html(($(this).attr('price')*1.0).toFixed(2));
+        $('#total').html( (($(this).attr('price')*1.0)).toFixed(2));
+        $('#plan').html($(this).attr('duration') + ' Month ' + $(this).attr('plan'));
+      }
+    );
+    $('#gift-form').validate();
+    $('div.plan-select div.btn-group.btn-block button').click(function(){
+      $('div.plan-select div.btn-group.btn-block button').removeClass('active');
+      $(this).addClass('active');
+      $('#plan_id').val($(this).val());
+      //event.preventDefault();
+    });
+
+    var num_buttons = $('div.plan-select div.btn-group.btn-block button').size();
+    for(i = 0; i < num_buttons; i++) {
+      var button = $('div.plan-select div.btn-group.btn-block button')[i];
+      if($(button).val() == '#{plan_id}') {
+        $(button).addClass('active');
+        $('#price').html(($(button).attr('price')*1.0).toFixed(2));
+        $('#total').html( (($(button).attr('price')*1.0)).toFixed(2));
+        $('#plan').html($(button).attr('duration') + ' Month ' + $(button).attr('plan'));
+      }
+    }

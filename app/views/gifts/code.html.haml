@@ -1,0 +1,23 @@
+= form_for @gift, url: redeem_gift_path(@gift), html: {id: "new_gift_form", role: 'form'} do |f|
+  %div.row
+    %div.col-xs-12.col-sm-6
+      %div.panel.panel-default
+        %div.panel-heading
+          %h1.panel-title Congratulations!
+        %div.panel-body
+          %p 
+            %strong #{@recipient.user.name} 
+            sent you a #{@recipient.gift.plan.billing_cycle}-Month Season To Gift Subscription.
+
+      %div.panel.panel-default
+        %div.panel-heading
+          %h1.panel-title Enter Your Shipping Address
+        %div.panel-body
+          = render partial: 'addresses/shipping'
+
+    %div.col-xs-12.col-sm-6
+      %h1 Let's Get Started!
+
+      %p Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.
+
+      %button.btn.btn-success.btn-block Redeem

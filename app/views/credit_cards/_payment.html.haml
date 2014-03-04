@@ -1,0 +1,26 @@
+- unless current_user.credit_cards.empty?
+  %div.row
+    %div.col-xs-6
+      %div.radio
+        %label
+          %input#select-card{type: 'radio', name: 'card_type', checked: true, value: 'existing-card' }
+            %strong Select a card
+    %div.col-xs-6
+      %div.radio
+        %label
+          %input#add-card{type: 'radio', name: 'card_type', value: 'new-card' }
+            %strong ... or use a new one
+
+
+%div.row
+  %div.form-group.col-xs-12
+    = render partial: 'credit_cards/select' unless current_user.credit_cards.empty?
+    = render partial: 'credit_cards/form'
+
+= content_for :javascript do
+  :plain
+    $("#credit-card-form").validate();
+    $('#credit-card-form').bind('ajax:beforeSend', function(xhr, settings) {$('#save-button').button('loading');$('.errors').html('');})
+     .bind('ajax:success', function(xhr, data, status) {})
+     .bind('ajax:complete', function(xhr, status) {$('#save-button').button('reset');})
+     .bind('ajax:error', function(xhr, data, status) {});

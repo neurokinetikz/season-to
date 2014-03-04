@@ -11,7 +11,22 @@ SubscriptionService::Application.routes.draw do
     end
   end
   
+  get 'gift/:code', to: 'gifts#code'
+
+
   resources :credit_cards
+  resources :bundles
+  resources :gifts do
+    member do
+      get 'confirmation'
+    end
+    member do
+      patch 'redeem', to: 'gifts#redeem'
+    end
+    member do
+      get 'resend'
+    end
+  end
 
   get 'braintree' => 'braintree#challenge'
   post 'braintree' => 'braintree#webhook'

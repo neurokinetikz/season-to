@@ -1,0 +1,17 @@
+%h1 #{@bundle.name}
+
+%div.row
+  %div.col-xs-6
+    
+    = image_tag @bundle.images.first.url(:large), class: 'img-responsive img-thumbnail'
+  %div.col-xs-6
+    %p.lead #{@bundle.description}
+    %div.row.text-center
+      - @bundle.line_items.each do |li|
+        %div.col-xs-6
+          = image_tag li.sku.images.first.url(:medium), class: 'img-responsive'
+
+%div.row
+  
+
+

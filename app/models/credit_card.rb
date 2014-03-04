@@ -1,10 +1,10 @@
 class CreditCard < ActiveRecord::Base
   acts_as_paranoid
   
-  attr_accessor :number, :cvv, :cardholder_name, :billing_address
+  attr_accessor :number, :cvv, :cardholder_name, :billing_address, :expires_at
   
   attr_accessible :number, :cvv, :cardholder_name, :billing_address
-  attr_accessible :token, :card_type, :last4, :expires_at, :expiration_month, :expiration_year, :is_default
+  attr_accessible :token, :card_type, :last4,  :expiration_month, :expiration_year, :is_default
   
   belongs_to :user
 

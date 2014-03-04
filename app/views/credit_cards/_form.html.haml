@@ -1,32 +1,23 @@
-%div.row
-  %div.form-group.col-xs-12.col-sm-8
-    %label Credit Card #
-    %input.required.form-control.number{type: 'text', placeholder: 'Number', id: 'credit_card_number', name: 'credit_card[number]'}
-  %div.form-group.col-xs-12.col-sm-4
-    %label CVV
-    %input.required.form-control.cvv{type: 'text', placeholder: 'CVV', id: 'credit_card_cvv', name: 'credit_card[cvv]'}
-%div.row
-  %div.form-group.col-xs-12.col-sm-8
-    %label Expiration Date
-    %div.clearfix
-    = date_select :credit_card, :expires_at, {:discard_day => true, :user_short_month => true, :add_month_numbers => true, :start_year => Time.now.year, :end_year => Time.now.year + 10, :order => [:month, :year], :include_blank => false, :prompt => [:year => 'Expiration Year', :month => 'Expiration Month']}, {:class => 'form-control required col-xs-3', style: 'width:50%;'}
-  %div.form-group.col-xs-12.col-sm-4
-    %label
-    %input.btn.btn-primary.form-control{type: 'submit', value: 'Add Card'}
-  / %div.form-group.col-xs-12.col-sm-4
-  /   %label
-  /   %div.checkbox
-  /     %label
-  /       %input{type: 'checkbox', id: 'credit_card_is_default', name: 'credit_card[is_default]'}
-  /         %strong Default
-%div.row
-  / %button.btn.btn-success.btn-block{:type => 'submit', :id => 'save-button', "data-loading-text" => "Saving..."} Add Card
+%table.table.table-hover{style: 'margin:0px 0px 0px;'}
+  %tbody#card-form{style: "#{!current_user.credit_cards.empty? ? 'display:none;' : ''} "}
+    %tr
+      %td
+        / = form_for(CreditCard.new, :url => credit_cards_path, :html => { :method => :post, :id => 'credit-card-form', :role => 'form' }) do |f|
+        - @credit_card ||= CreditCard.new
+        %div.row
+          %div.form-group.col-xs-12.col-sm-6
+            %label Credit Card #
+            %input.required.form-control.number{type: 'text', placeholder: 'Number', id: 'credit_card_number', name: 'credit_card[number]'}
+          %div.form-group.col-xs-12.col-sm-6
+            %label CVV
+            %input.required.form-control.cvv{type: 'text', placeholder: 'CVV', id: 'credit_card_cvv', name: 'credit_card[cvv]'}
+        %div.row
+          %div.form-group.col-xs-12
+            %label Expiration Date
+            %div.clearfix
+            = date_select :credit_card, :expires_at, {:discard_day => true, :user_short_month => true, :add_month_numbers => true, :start_year => Time.now.year, :end_year => Time.now.year + 10, :order => [:month, :year], :include_blank => false, :prompt => [:year => 'Expiration Year', :month => 'Expiration Month']}, {:class => 'form-control required col-xs-3', style: 'width:50%;'}
+            / %div.form-group.col-xs-12.col-sm-4
+            /   %label
+            /   %input.btn.btn-primary.form-control{type: 'submit', value: 'Add Card'}
 
 
-= content_for :javascript do
-  :plain
-    $("#credit-card-form").validate();
-    $('#credit-card-form').bind('ajax:beforeSend', function(xhr, settings) {$('#save-button').button('loading');$('.errors').html('');})
-     .bind('ajax:success', function(xhr, data, status) {})
-     .bind('ajax:complete', function(xhr, status) {$('#save-button').button('reset');})
-     .bind('ajax:error', function(xhr, data, status) {});

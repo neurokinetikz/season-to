@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140227160708) do
+ActiveRecord::Schema.define(version: 20140304154820) do
 
   create_table "active_admin_comments", force: true do |t|
     t.string   "namespace"
@@ -64,6 +64,18 @@ ActiveRecord::Schema.define(version: 20140227160708) do
 
   add_index "admin_users", ["email"], name: "index_admin_users_on_email", unique: true, using: :btree
   add_index "admin_users", ["reset_password_token"], name: "index_admin_users_on_reset_password_token", unique: true, using: :btree
+
+  create_table "comments", force: true do |t|
+    t.string   "commentable_type"
+    t.integer  "commentable_id"
+    t.integer  "user_id"
+    t.text     "text"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "comments", ["commentable_type", "commentable_id"], name: "index_comments_on_commentable_type_and_commentable_id", using: :btree
+  add_index "comments", ["user_id"], name: "index_comments_on_user_id", using: :btree
 
   create_table "credit_card_transactions", force: true do |t|
     t.integer  "user_id"
@@ -126,6 +138,28 @@ ActiveRecord::Schema.define(version: 20140227160708) do
   end
 
   add_index "delayed_jobs", ["priority", "run_at"], name: "delayed_jobs_priority", using: :btree
+
+  create_table "gift_recipients", force: true do |t|
+    t.string   "code"
+    t.integer  "gift_id"
+    t.integer  "user_id"
+    t.string   "first_name"
+    t.string   "last_name"
+    t.string   "email"
+    t.text     "message"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.datetime "redeemed_at"
+  end
+
+  add_index "gift_recipients", ["code"], name: "index_gift_recipients_on_code", using: :btree
+  add_index "gift_recipients", ["gift_id"], name: "index_gift_recipients_on_gift_id", using: :btree
+  add_index "gift_recipients", ["user_id"], name: "index_gift_recipients_on_user_id", using: :btree
+
+  create_table "gifts", force: true do |t|
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "images", force: true do |t|
     t.string   "attachable_type"
@@ -191,7 +225,6 @@ ActiveRecord::Schema.define(version: 20140227160708) do
   create_table "orders", force: true do |t|
     t.integer  "user_id"
     t.integer  "address_id"
-    t.integer  "invoice_id"
     t.integer  "subscription_id"
     t.string   "state"
     t.datetime "created_at"
@@ -199,7 +232,6 @@ ActiveRecord::Schema.define(version: 20140227160708) do
   end
 
   add_index "orders", ["address_id"], name: "index_orders_on_address_id", using: :btree
-  add_index "orders", ["invoice_id"], name: "index_orders_on_invoice_id", using: :btree
   add_index "orders", ["state"], name: "index_orders_on_state", using: :btree
   add_index "orders", ["subscription_id"], name: "index_orders_on_subscription_id", using: :btree
   add_index "orders", ["user_id"], name: "index_orders_on_user_id", using: :btree
@@ -270,6 +302,7 @@ ActiveRecord::Schema.define(version: 20140227160708) do
   add_index "skus", ["vendor_code"], name: "index_skus_on_vendor_code", using: :btree
 
   create_table "subscriptions", force: true do |t|
+    t.string   "type"
     t.integer  "user_id"
     t.integer  "plan_id"
     t.integer  "address_id"
@@ -294,6 +327,7 @@ ActiveRecord::Schema.define(version: 20140227160708) do
   add_index "subscriptions", ["plan_id"], name: "index_subscriptions_on_plan_id", using: :btree
   add_index "subscriptions", ["state"], name: "index_subscriptions_on_state", using: :btree
   add_index "subscriptions", ["token"], name: "index_subscriptions_on_token", using: :btree
+  add_index "subscriptions", ["type"], name: "index_subscriptions_on_type", using: :btree
   add_index "subscriptions", ["user_id"], name: "index_subscriptions_on_user_id", using: :btree
 
   create_table "users", force: true do |t|

@@ -1,0 +1,18 @@
+- unless current_user.addresses.empty?
+  %div.row
+    %div.col-xs-6
+      %div.radio
+        %label
+          %input#select-address{type: 'radio', name: 'address_type', checked: true, value: 'existing-address' }
+            %strong Select an address
+    %div.col-xs-6
+      %div.radio
+        %label
+          %input#add-address{type: 'radio', name: 'address_type', value: 'new-address' }
+            %strong ... or use a new one
+
+
+%div.row
+  %div.form-group.col-xs-12
+    = render partial: 'addresses/select' unless current_user.addresses.empty?
+    = render partial: 'addresses/form'

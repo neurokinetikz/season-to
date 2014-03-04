@@ -1,0 +1,15 @@
+-if signed_in? && !current_user.addresses.empty?
+  %table.table.table-hover#addresses-table{style: 'margin:10px 0px 0px;'}
+    %tbody#addresses
+      - current_user.addresses.order('id desc').each do |address|
+        %tr
+          %td
+            %input.shipping-address{type: 'radio', name: 'subscription[address_id]', value: address.id, checked: false}
+          %td
+            #{address.to_s}
+
+
+= content_for :javascript do
+  :plain
+    $('#select-address').click(function(){$('#address-form').hide();$('#addresses').show();});
+    $('#add-address').click(function(){$('#addresses').hide();$('#address-form').show();});

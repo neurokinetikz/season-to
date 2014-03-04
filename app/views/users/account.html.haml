@@ -3,6 +3,8 @@
     %a{href: '#account', 'data-toggle' => 'tab'} Account
   %li.active
     %a{href: '#subscription', 'data-toggle' => 'tab'} Subscription
+  %li
+    %a{href: '#gifts', 'data-toggle' => 'tab'} Gifts
   / %li
   /   %a{href: '#payments', 'data-toggle' => 'tab'} Payment
 
@@ -56,6 +58,34 @@
       %div.col-xs-12.col-lg-10.col-lg-offset-1
         - current_user.subscriptions.each do |s|
           = render :partial => 'subscriptions/show', locals: {subscription: s}
+  %div#gifts.tab-pane
+    %div.row
+    - current_user.gift_recipients.reverse.each do |gr|
+      - unless gr.gift.nil?
+        %div.col-xs-12.col-sm-6.col-md-3
+          %div.panel.panel-default
+
+            %div.panel-heading
+              %div.row
+                %div.col-xs-8
+                  %h3.panel-title #{gr.first_name} #{gr.last_name}
+                %div.col-xs-4.text-right
+                  - if gr.gift.state == 'purchased'
+                    %button.btn.btn-xs.btn-primary{type: 'button'}  Purchased
+                  - else 
+                    %button.btn.btn-xs.btn-success{type: 'button'}  Active
+            %div.panel-body
+              %img.img-responsive{src: 'http://img1.etsystatic.com/000/0/6059226/il_fullxfull.275770327.jpg', style: 'padding:0px 0px 10px;'}
+              <p>You sent <b>#{gr.first_name} #{gr.last_name}</b> a #{gr.gift.plan.name} on #{gr.created_at.strftime("%B %-d, %Y")}</b></p>
+              
+              - unless gr.gift.orders.first.nil?
+                - cct = gr.gift.orders.first.credit_card_transactions.first
+                <p><b>$#{cct.amount}</b> was charged to your #{cct.credit_card}</p>
+                - unless gr.gift.active?
+                  %p.text-right
+                    %a{href: "#{resend_gift_path(gr.gift)}"} resend notification
+                
+
   / %div#payments.tab-pane
   /   %div.row
   /     %div.col-xs-12.col-sm-6.col-sm-offset-0.col-md-5.col-md-offset-1
@@ -80,6 +110,7 @@
   /           = render :partial => 'credit_card_transactions/index'
       
 
+%div.clearfix
 
 = content_for :javascript do
   :plain

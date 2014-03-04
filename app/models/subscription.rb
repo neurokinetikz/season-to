@@ -13,7 +13,7 @@ class Subscription < ActiveRecord::Base
 
   has_many :credit_card_transactions, through: :orders
   
-  monetize :next_billing_period_amount_cents
+  monetize :next_billing_period_amount_cents, :allow_nil => true
 
   accepts_nested_attributes_for :address
   

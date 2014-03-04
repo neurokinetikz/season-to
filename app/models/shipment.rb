@@ -31,6 +31,7 @@ class Shipment < ActiveRecord::Base
     end
 
     def do_ship
+      self.update_attribute(:shipped_at, Time.now)
     end
 
     def do_deliver

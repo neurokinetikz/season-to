@@ -21,6 +21,7 @@ class Invoice < ActiveRecord::Base
   
   protected
   def do_paid
+    self.order.mark_paid
     self.update_attribute(:paid_at, Time.now)
   end
 end

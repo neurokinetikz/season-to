@@ -1,13 +1,12 @@
-
-%div.panel{class: (subscription.active? ? 'panel-success' : 'panel-warning') }
+%div.panel{class: (subscription.canceled? ? 'panel-warning' : 'panel-success') }
   %div.panel-heading
     %h1.panel-title
       %div.row
         %div.col-xs-8
-          - if subscription.state == 'active'
-            %button.btn.btn-xs.btn-success{type: 'button'}  Active
-          - else 
+          - if subscription.state == 'canceled'
             %button.btn.btn-xs.btn-warning{type: 'button'}  Canceled
+          - else 
+            %button.btn.btn-xs.btn-success{type: 'button'}  Active
           #{subscription.plan.name} Plan
         %div.col-xs-4.text-right
           %button.btn.btn-xs.btn-primary{type: 'button'} #{subscription.shipments.with_state(:pending).count} Deliveries Remaining
@@ -19,28 +18,27 @@
       %div.col-xs-12.col-sm-6
 
         %div.panel.panel-default
-          %div.panel-heading
-            %h3.panel-title Last Shipment
-          %div.panel-body
+          / %div.panel-heading
+          /   %h3.panel-title Last Shipment
+          %div.panel-body#last-shipment
             = render partial: 'shipments/show', locals: {shipment: subscription.shipments.with_state(:shipped).order('shipped_at desc').first}
-        %div.panel.panel-default
-          %div.panel-heading
-            %h3.panel-title Past Shipments
-          %div.panel-body
+            %h4 Past Shipments
             %table.table.table-hover
-              %thead
-                %tr
-                  %th Image
-                  %th Name
-                  %th Shipped On
               %tbody
                 - subscription.shipments.with_state(:shipped).order('shipped_at desc').each do |shipment|
                   %tr
                     %td
-                      = image_tag shipment.line_items.first.sku.images.first.url(:thumb)
+                      = image_tag shipment.line_items.first.sku.images.first.url(:small)
                     %td #{shipment.line_items.first.sku.name}
                     %td #{shipment.shipped_at.strftime('%b %-d, %Y')}
       %div.col-xs-12.col-sm-6
+        - if subscription.is_a?(Gift)  
+          %div.panel.panel-default
+            %div.panel-heading
+              %h3.panel-title Gift From
+            %div.panel-body
+              %strong #{subscription.gift_recipient.user.name}
+
         %div.panel.panel-default
           %div.panel-heading
             %h3.panel-title Next Delivery On
@@ -53,18 +51,18 @@
               %div.col-xs-9
                 %h3.panel-title Shipping To
               %div.row.col-xs-3.text-right
-                %button.btn.btn-xs.btn-warning#change-address change
-          = form_for subscription, html: {role: 'form', id: "update-address"} do |f|
+                %button.btn.btn-xs.btn-warning{id: "change-address-#{subscription.id}"} change
+          = form_for subscription, html: {role: 'form', id: "update-address-#{subscription.id}"} do |f|
             %input{type: 'hidden', name: 'subscription[address_attributes][addressable_type]', value: 'User'}
             %input{type: 'hidden', name: 'subscription[address_attributes][addressable_id]', value: current_user.id }
             %div.panel-body
               %div.row
-                %div.form-group.col-xs-12#ship-to
+                %div.form-group.col-xs-12{id: "ship-to-#{subscription.id}"}
                   %strong #{subscription.address.first_name} #{subscription.address.last_name}<br/>
                   #{subscription.address.address1} #{subscription.address.address2}<br/>
                   #{subscription.address.city}, #{subscription.address.state} #{subscription.address.zip}
               
-              %div.update-address{style: 'display:none;'}
+              %div{style: 'display:none;', class: "update-address-#{subscription.id}"}
                 %div.row
                   %div.form-group.col-xs-12
                     %table.table.table-hover
@@ -75,7 +73,7 @@
                         - current_user.addresses.reverse.each do |address|
                           %tr
                             %td
-                              %input.shipping-address{type: 'radio', name: 'subscription[address_id]', subscription_id: subscription.id, address_id: address.id, checked: (address.id == subscription.address.id)}
+                              %input{class: "shipping-address-#{subscription.id}", type: 'radio', name: 'subscription[address_id]', subscription_id: subscription.id, address_id: address.id, checked: (address.id == subscription.address.id)}
                             %td
                               #{address.to_s}
                 %div.row
@@ -114,14 +112,14 @@
         /   %div.panel-body
         /     %strong #{subscription.shipments.first.scheduled_at.advance(months: 11).strftime('%B %-d, %Y')}
 
-        - if subscription.active?
+        - if subscription.active? && !subscription.is_a?(Gift)
           %div.panel.panel-default
             %div.panel-heading
               %div.row
                 %div.col-xs-9
                   %h3.panel-title Subscription Renewal
                 %div.row.col-xs-3.text-right
-                  %button.btn.btn-xs.btn-warning#change-payment change
+                  %button.btn.btn-xs.btn-warning{id: "change-payment-#{subscription.id}"} change
             %div.panel-body
               %div.row
                 %div.col-xs-12
@@ -129,7 +127,7 @@
                   %span#payment-info #{subscription.credit_card.to_s} 
                   on #{subscription.next_billing_date.strftime('%B %-d, %Y')}
                 
-                %div.update-payment{style: 'display:none;'}
+                %div{class: "update-payment-#{subscription.id}", style: 'display:none;'}
                   %div.row
                     %div.col-xs-12
                       %div.control-group
@@ -167,13 +165,14 @@
                               = form_for(CreditCard.new, :url => credit_cards_path, :html => { :method => :post, :id => 'credit-card-form', :role => 'form' }) do |f|
                                 = render :partial => 'credit_cards/form'
         
-        %div.panel.panel-default
-          %div.panel-heading
-            %h3.panel-title Payment History
-          %div.panel-body
-            = render :partial => 'credit_card_transactions/index', locals: {subscription: subscription}
+        - unless subscription.is_a?(Gift)
+          %div.panel.panel-default
+            %div.panel-heading
+              %h3.panel-title Payment History
+            %div.panel-body
+              = render :partial => 'credit_card_transactions/index', locals: {subscription: subscription}
 
-    - if subscription.active?
+    - if subscription.active? && !subscription.is_a?(Gift)
       %div.row
         %div.col-xs-12.text-right
           %button.btn.btn-xs.btn-danger{type: 'button', 'data-toggle' => 'modal', 'data-target' => '#cancel-modal'}  Cancel Subscription
@@ -190,20 +189,24 @@
         %button.btn.btn-default{type: 'button', 'data-dismiss' => 'modal'} Close
         = link_to 'Confirm', cancel_subscription_path(subscription), method: :put, class: 'btn btn-danger'
 
+
+= content_for :javascript do
+  $("#update-address-#{subscription.id}").validate();
+
 = content_for :javascript do
   :plain
-    $('#update-address').validate();
-    $('#change-address').click(function(){$('.update-address').slideToggle();});
-    $('#change-payment').click(function(){$('.update-payment').slideToggle();});
+    
+    $("#change-address-#{subscription.id}").click(function(){$(".update-address-#{subscription.id}").slideToggle();});
+    $("#change-payment-#{subscription.id}").click(function(){$(".update-payment-#{subscription.id}").slideToggle();});
 
-    $('.shipping-address').change(function(){
+    $('.shipping-address-#{subscription.id}').change(function(){
       $.ajax({
         type: "PUT",
         dataType: 'json',
         url: "/subscriptions/" + $(this).attr('subscription_id'),
         data: { 'subscription[address_id]': $(this).attr('address_id') }
       }).done(function(data) {
-        $('#ship-to').html("<strong>" + data['address']['first_name'] + " " + data['address']['last_name'] + "</strong><br/>" + data['address']['address1'] + " " + data['address']['address2'] + "<br/>" + data['address']['city'] + ", " + data['address']['state'] + " " + data['address']['zip']);
+        $("#ship-to-#{subscription.id}").html("<strong>" + data['address']['first_name'] + " " + data['address']['last_name'] + "</strong><br/>" + data['address']['address1'] + " " + data['address']['address2'] + "<br/>" + data['address']['city'] + ", " + data['address']['state'] + " " + data['address']['zip']);
         $('.update-address').slideToggle();
       });
     });
@@ -217,6 +220,6 @@
       }).done(function( data ) {
         $('#payment-info').html(data['card_type'] + " ending in " + data['last4']);
         $('#credit-cards-table').css({ opacity: 1.0 });
-        $('.update-payment').slideToggle();
+        $('.update-payment-<%=subscription.id%>').slideToggle();
       });
     });

@@ -1,0 +1,31 @@
+-if signed_in? && !current_user.credit_cards.empty?
+  %table.table.table-hover#credit-cards-table{style: 'margin:10px 0px 0px;'}
+    / %thead
+    /   %tr
+    /     %th{colspan: 4}
+    /       %div.radio
+    /         %label
+    /           %input#select-card{type: 'radio', name: 'card-type', checked: true }
+    /             %strong Select a card
+    %tbody#credit-cards{}
+      - current_user.credit_cards.order('id desc').each do |credit_card|
+        %tr{:id => "credit_card_#{credit_card.id}", :style => 'cursor:pointer;'}
+          %td
+            %div.control-group
+              %div.controls.text-center
+                - h = {:type => "radio", :name => "credit_card[id]", :id => credit_card.id, :value => credit_card.id}
+                - h[:checked] = true if credit_card.is_default
+                %input{ h }
+          %td
+            = credit_card.card_type
+          %td
+            = "x-#{credit_card.last4}"
+          %td
+            = "#{credit_card.expiration_month}/#{credit_card.expiration_year}"
+          / %td
+          /   = link_to 'x', credit_card_path(credit_card), :method => :delete, :confirm => 'Are you sure?', :remote => true, :class => 'icon-remove'
+
+= content_for :javascript do
+  :plain
+    $('#select-card').click(function(){$('#card-form').hide();$('#credit-cards').show();});
+    $('#add-card').click(function(){$('#credit-cards').hide();$('#card-form').show();});

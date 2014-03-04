@@ -1,0 +1,20 @@
+%table.table.table-hover{style: 'margin:0px 0px 0px;'}
+  %tbody#address-form{style: "#{!current_user.addresses.empty? ? 'display:none;' : ''} "}
+    %tr
+      %td
+        %div.row
+          %div.form-group.col-xs-12.col-md-6
+            %input.form-control.required.first_name{type: 'text', name: 'subscription[address_attributes][first_name]', id: 'address_first_name', placeholder: 'First Name', autofocus: true}
+          %div.form-group.col-xs-12.col-md-6
+            %input.form-control.last_name{type: 'text', name: 'subscription[address_attributes][last_name]', id: 'address_last_name', placeholder: 'Last Name'}
+          %div.form-group.col-xs-12.col-md-6
+            %input.form-control.required.address1{type: 'text', name: 'subscription[address_attributes][address1]', id: 'address_address1', placeholder: 'Address'}
+          %div.form-group.col-xs-12.col-md-6
+            %input.form-control.address2{type: 'text', name: 'subscription[address_attributes][address2]', id: 'address_address2', placeholder: 'Address (cont.)'}
+          
+          %div.form-group.col-xs-8.col-md-6
+            %input.form-control.required.city{type: 'text', name: 'subscription[address_attributes][city]', id: 'address_city', placeholder: 'City'}
+          %div.form-group.col-xs-4.col-md-2
+            %input.form-control.required.state{type: 'text', name: 'subscription[address_attributes][state]', id: 'address_state', placeholder: 'State'}
+          %div.form-group.col-xs-12.col-md-4
+            %input.form-control.required.zip{type: 'text', name: 'subscription[address_attributes][zip]', id: 'address_zip', placeholder: 'Zip Code'}

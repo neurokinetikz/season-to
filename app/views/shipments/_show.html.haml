@@ -1,16 +1,17 @@
-- shipment.line_items.each do |line_item|
-  - if line_item.sku.is_a?(Bundle)
-    - bundle = line_item.sku
-    %div.row
-      %div.col-xs-12
-        %h3{style: 'margin-top:0px;'} #{line_item.sku.name}
-      %div.col-xs-12.col-sm-9
-        #{link_to image_tag(bundle.images.first.url(:large), class: 'img-thumbnail img-responsive'), '#'}
-      %div.col-xs-12.col-sm-3
-        %div.row
-          - bundle.line_items.each do |li|
-            %div.col-xs-6.col-sm-12 #{image_tag(li.sku.images.first.url(:small), class: 'img-responsive', style: 'margin:5px;')}
-    %div.row
-      %div.col-xs-12{style: 'margin-top:10px;'}
-        %p #{line_item.sku.description}
-        %p.text-muted.pull-right Shipped on #{shipment.shipped_at.strftime('%B %-d, %Y')}
+- unless shipment.nil?
+  - shipment.line_items.each do |line_item|
+    - if line_item.sku.is_a?(Bundle)
+      - bundle = line_item.sku
+      %div.row
+        %div.col-xs-12
+          %h3{style: 'margin-top:0px;'} #{line_item.sku.name}
+        %div.col-xs-12.col-sm-9
+          #{link_to image_tag(bundle.images.first.url(:large), class: 'img-thumbnail img-responsive'), bundle_path(bundle)}
+        %div.col-xs-12.col-sm-3
+          %div.row
+            - bundle.line_items.each do |li|
+              %div.col-xs-6.col-sm-12 #{image_tag(li.sku.images.first.url(:small), class: 'img-responsive', style: 'margin:5px;')}
+      %div.row
+        %div.col-xs-12{style: 'margin-top:10px;'}
+          %p #{line_item.sku.description}
+          %p.text-muted.pull-right Shipped on #{shipment.shipped_at.strftime('%B %-d, %Y')}

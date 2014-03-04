@@ -20,6 +20,7 @@ class User < ActiveRecord::Base
   has_many :addresses, as: :addressable
   
   has_many :omniauths
+  has_many :gift_recipients
   
   has_attached_file :image, 
     :styles => {
@@ -101,7 +102,7 @@ class User < ActiveRecord::Base
       throw Exception.new "Error creating Braintree customer"
     end
   end
-  handle_asynchronously :create_braintree_customer
+  #handle_asynchronously :create_braintree_customer
   
   def send_welcome_email
     mandrill = Mandrill::API.new 'wiogzUeHpLTaZz9vSORNxw'
