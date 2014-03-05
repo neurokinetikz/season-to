@@ -66,7 +66,7 @@ class SubscriptionsController < ApplicationController
             ) 
             current_user.credit_cards << @credit_card
           else
-            flash[:notice] = result.message
+            flash[:alert] = result.message
             throw Exception.new 
           end
         end
@@ -137,7 +137,7 @@ class SubscriptionsController < ApplicationController
           
         else
 
-          flash[:notice] = result.message
+          flash[:alert] = result.message
           throw Exception.new result.message
         end
       end

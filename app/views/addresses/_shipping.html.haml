@@ -1,4 +1,4 @@
-- unless current_user.addresses.empty?
+- unless current_user.addresses.reload.empty?
   %div.row
     %div.col-xs-6
       %div.radio

@@ -4,17 +4,17 @@
       %td
         %div.row
           %div.form-group.col-xs-12.col-md-6
-            %input.form-control.required.first_name{type: 'text', name: 'subscription[address_attributes][first_name]', id: 'address_first_name', placeholder: 'First Name', autofocus: true}
+            %input.form-control.required.first_name{type: 'text', name: 'subscription[address_attributes][first_name]', id: 'address_first_name', placeholder: 'First Name', autofocus: true, value: @address.nil? ? '' : @address.first_name}
           %div.form-group.col-xs-12.col-md-6
-            %input.form-control.last_name{type: 'text', name: 'subscription[address_attributes][last_name]', id: 'address_last_name', placeholder: 'Last Name'}
+            %input.form-control.last_name{type: 'text', name: 'subscription[address_attributes][last_name]', id: 'address_last_name', placeholder: 'Last Name', value: @address.nil? ? '' : @address.last_name}
           %div.form-group.col-xs-12.col-md-6
-            %input.form-control.required.address1{type: 'text', name: 'subscription[address_attributes][address1]', id: 'address_address1', placeholder: 'Address'}
+            %input.form-control.required.address1{type: 'text', name: 'subscription[address_attributes][address1]', id: 'address_address1', placeholder: 'Address', value: @address.nil? ? '' : @address.address1}
           %div.form-group.col-xs-12.col-md-6
-            %input.form-control.address2{type: 'text', name: 'subscription[address_attributes][address2]', id: 'address_address2', placeholder: 'Address (cont.)'}
+            %input.form-control.address2{type: 'text', name: 'subscription[address_attributes][address2]', id: 'address_address2', placeholder: 'Address (cont.)', value: @address.nil? ? '' : @address.address2}
           
           %div.form-group.col-xs-8.col-md-6
-            %input.form-control.required.city{type: 'text', name: 'subscription[address_attributes][city]', id: 'address_city', placeholder: 'City'}
+            %input.form-control.required.city{type: 'text', name: 'subscription[address_attributes][city]', id: 'address_city', placeholder: 'City', value: @address.nil? ? '' : @address.city}
           %div.form-group.col-xs-4.col-md-2
-            %input.form-control.required.state{type: 'text', name: 'subscription[address_attributes][state]', id: 'address_state', placeholder: 'State'}
+            %input.form-control.required.state{type: 'text', name: 'subscription[address_attributes][state]', id: 'address_state', placeholder: 'State', value: @address.nil? ? '' : @address.state}
           %div.form-group.col-xs-12.col-md-4
-            %input.form-control.required.zip{type: 'text', name: 'subscription[address_attributes][zip]', id: 'address_zip', placeholder: 'Zip Code'}
+            %input.form-control.required.zip{type: 'text', name: 'subscription[address_attributes][zip]', id: 'address_zip', placeholder: 'Zip Code', value: @address.nil? ? '' : @address.zip}

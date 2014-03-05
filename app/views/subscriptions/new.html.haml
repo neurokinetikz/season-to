@@ -2,6 +2,8 @@
   th { text-align:center;width:25%;}
   td { margin:auto;}
 - @subscription ||= Subscription.new
+- plan_id = params[:plan][:id] unless params[:plan].nil?
+- plan_id = 'SEASON-TO-1-MONTH-SUB' if params[:plan].nil?
 = form_for @subscription, url: {action: "create"}, html: {id: "new_subscription_form", role: 'form'} do |f|
 
   / %h1 Hi #{current_user.first_name}, let's get started ...
@@ -150,7 +152,7 @@
 
               %button.btn.btn-lg.btn-success.btn-block{type: 'submit', id: 'purchase_button'} Buy Now! 
      
-  %input{type: 'hidden', id: 'plan_id', name: 'plan[id]', value: 'SEASON-TO-1-MONTH-ARTISAN'}
+  %input{type: 'hidden', id: 'plan_id', name: 'plan[id]', value: 'SEASON-TO-1-MONTH-SUB'}
   
   %div.row
     %div.col-xs-12.col-md-8
@@ -208,3 +210,21 @@
       $('#plan_id').val($(this).val());
       //event.preventDefault();
     });
+    var num_buttons = $('div.plan-select div.btn-group.btn-block button').size();
+    for(i = 0; i < num_buttons; i++) {
+      var button = $('div.plan-select div.btn-group.btn-block button')[i];
+      if($(button).val() == '#{plan_id}') {
+        $(button).addClass('active');
+        $('#price').html(($(button).attr('price')*1.0).toFixed(2));
+        $('#total').html( (($(button).attr('price')*1.0)).toFixed(2));
+        $('#plan').html($(button).attr('duration') + ' Month ' + $(button).attr('plan'));
+        $('#duration').html($(button).attr('duration'));
+        
+        last = new Date(today.getFullYear(),today.getMonth()+parseInt($(button).attr('duration'))-1,today.getDate());
+        $('#last').html($.datepicker.formatDate('M d, yy', last));
+        
+        renews = new Date(today.getFullYear(),today.getMonth()+parseInt($(button).attr('duration')),today.getDate());
+        $('#renews').html($.datepicker.formatDate('M d, yy', renews));
+        $('#plan_id').val($(button).val());
+      }
+    }
