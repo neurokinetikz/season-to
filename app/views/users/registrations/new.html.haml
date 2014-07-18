@@ -26,22 +26,12 @@
           %div.form-group
             %input#user_password_confirmation.form-control.required.user_password_confirmation{:type => 'password', :name => 'user[password_confirmation]', :placeholder => 'Confirm Passsword'}
 
+          
           %div.checkbox
-            %input.required.terms{'type' => 'checkbox', id: 'terms', name: 'terms'} I agree to the #{link_to 'terms & conditions', terms_path}
+            %label
+              %input.required.terms{'type' => 'checkbox', id: 'terms', name: 'terms'} I agree to the #{link_to 'terms & conditions', terms_path}
       
           %button.btn.btn-lg.btn-success.btn-block{:type => 'submit'} Sign Up
-
-
-
-
-
-
-    
-              
-
-
-    
-
 
 = content_for :javascript do
   :plain

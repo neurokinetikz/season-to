@@ -7,168 +7,143 @@
 = form_for @subscription, url: {action: "create"}, html: {id: "new_subscription_form", role: 'form'} do |f|
 
   / %h1 Hi #{current_user.first_name}, let's get started ...
-  %div.panel.panel-warning
-    %div.panel-heading
-      %h3.panel-title New Subscription
-    %div.panel-body
-      %div.row
-        %div.col-xs-12.col-md-7
-          %div.panel.panel-default
-            %div.panel-heading
-              %h3.panel-title Select a Plan
-            %div.panel-body
-              %table.table.plan-select
-                %tr
-                  %td
-                    %div.plan-select
-                      %div.btn-group.btn-block
-                        %button.btn.btn-default.btn-block{style: 'height:200px;', type: 'button', value: 'SEASON-TO-1-MONTH-SUB', plan: 'Plan', duration: 1, price: 19}
-                          $19<br/>
-                          1 Month<br/>
-                          %img.img-responsive.img-thumbnail{src: asset_path('artisan.jpg'), style: 'width:140px;'}
-                  
-                  %td
-                    %div.plan-select
-                      %div.btn-group.btn-block
-                        %button.btn.btn-default.btn-block{style: 'height:200px', type: 'button', value: 'SEASON-TO-3-MONTH-SUB', plan: 'Plan', duration: 3, price: 54} 
-                          $18<br/>
-                          3 Month<br/>
-                          %img.img-responsive.img-thumbnail{src: asset_path('flip.jpg'), style: 'width:140px;'}
-               
-                  %td
-                    %div.plan-select
-                      %div.btn-group.btn-block
-                        %button.btn.btn-default.btn-block{style: 'height:200px', type: 'button', value: 'SEASON-TO-6-MONTH-SUB', plan: 'Plan', duration: 6, price: 102} 
-                          $17<br/>
-                          6 Month<br/>
-                          %img.img-responsive.img-thumbnail{src: asset_path('artisan.jpg'), style: 'width:140px;' }
-                        
-                  %td
-                    %div.plan-select
-                      %div.btn-group.btn-block
-                        %button.btn.btn-default.btn-block{style: 'height:200px;', type: 'button', value: 'SEASON-TO-12-MONTH-SUB', plan: 'Plan', duration: 12, price: 192} 
-                          $16<br/>
-                          12 Month<br/>
-                          %img.img-responsive.img-thumbnail{src: asset_path('flip.jpg'), style: 'width:140px;'}
-
-          %div.panel.panel-default
-            %div.panel-heading
-              %h1.panel-title Enter Your Shipping Address
-            %div.panel-body
-              = render partial: 'addresses/shipping'
-          / %div.panel.panel-warning
-          /   %div.panel-heading
-          /     %h3.panel-title Enter Your Shipping Info
-          /   %div.panel-body
-          /     %div.row
-          /       %div.update-address.col-xs-12{}
-          /         %table.table.table-hover
-          /           %thead
-          /             %tr
-          /               %th.text-left Select an address ...
-          /           %tbody
-          /             - current_user.addresses.reverse.each do |address|
-          /               %tr
-          /                 %td
-          /                   %div.row
-          /                     %div.col-xs-1
-          /                       %input.shipping-address{type: 'radio', name: 'address_id'}
-          /                     %div.col-xs-11
-          /                       #{address.to_s}
-                            
-          /     %div.row
-          /       %div.form-group.col-xs-12.col-sm-6
-          /         %input.form-control.required.first_name{type: 'text', name: 'address[first_name]', id: 'address_first_name', placeholder: 'First Name', autofocus: true}
-          /       %div.form-group.col-xs-12.col-sm-6
-          /         %input.form-control.last_name{type: 'text', name: 'address[last_name]', id: 'address_last_name', placeholder: 'Last Name'}
-          /       %div.form-group.col-xs-12.col-sm-6
-          /         %input.form-control.required.address1{type: 'text', name: 'address[address1]', id: 'address_address1', placeholder: 'Address'}
-          /       %div.form-group.col-xs-12.col-sm-6
-          /         %input.form-control.address2{type: 'text', name: 'address[address2]', id: 'address_address2', placeholder: 'Address (cont.)'}
-                
-          /       %div.form-group.col-xs-8.col-sm-6
-          /         %input.form-control.required.city{type: 'text', name: 'address[city]', id: 'address_city', placeholder: 'City'}
-          /       %div.form-group.col-xs-4.col-sm-2
-          /         %input.form-control.required.state{type: 'text', name: 'address[state]', id: 'address_state', placeholder: 'State'}
-          /       %div.form-group.col-xs-12.col-sm-4
-          /         %input.form-control.required.zip{type: 'text', name: 'address[zip]', id: 'address_zip', placeholder: 'Zip Code'}
-
-
-        %div.col-xs-12.col-md-5
-          %div.panel.panel-default
-            %div.panel-heading
-              %h3.panel-title Subscription Details
-            %div.panel-body
-              %table.table
-                %tbody
-                  %tr
-                    %td Total # Shipments:
-                    %td
-                      %span#duration
-                  %tr
-                    %td First Shipment On:
-                    %td 
-                      %span#first
-                  %tr
-                    %td Last Shipment On:
-                    %td
-                      %span#last
-                  %tr
-                    %td Renews On:
-                    %td
-                      %span#renews
-                 
-                  
-
-          %div.panel.panel-default
-            %div.panel-heading
-              %h3.panel-title Order Summary
-            %div.panel-body
-              %table{style: 'width:100%'}
-                %tr
-                  %td
-                    %span#plan 1 Month Artisan Plan
-                  %td{style: 'text-align:right'}
-                    $
-                    %span#price 29.00
-                %tr
-                  %td Tax (NY only)
-                  %td{style: 'text-align:right'}
-                    $
-                    %span#tax 2.32
-                %tr{style: 'border-top:1px dotted gray'}
-                  %td
-                    %strong Total Due
-                  %td{style: 'text-align:right'}
-                    %strong
-                      $
-                      %span#total 31.32
-
-          %div.panel.panel-default
-            %div.panel-heading
-              %h1.panel-title Payment Info
-            %div.panel-body
-              = render partial: 'credit_cards/payment'
-
-              %button.btn.btn-lg.btn-success.btn-block{type: 'submit', id: 'purchase_button'} Buy Now! 
-     
-  %input{type: 'hidden', id: 'plan_id', name: 'plan[id]', value: 'SEASON-TO-1-MONTH-SUB'}
   
-  %div.row
-    %div.col-xs-12.col-md-8
+  %div.panel.panel-default
+    %div.panel-heading
+      %h3.panel-title Select a Plan
+    %div.panel-body
+      %table.table.plan-select
+        %tr
+          %td
+            %div.plan-select
+              %div.btn-group.btn-block
+                %button.btn.btn-default.btn-block{style: 'height:66px;', type: 'button', value: 'SEASON-TO-1-MONTH-SUB', plan: 'Plan', duration: 1, price: 19}
+                  %div.pull-right 
+                    %b Monthly
+                    %p $21/month
+                  %img.img-responsive.img-thumbnail{src: asset_path('artisan.jpg'), style: 'width:35px;'}
+        %tr  
+          %td
+            %div.plan-select
+              %div.btn-group.btn-block
+                %button.btn.btn-default.btn-block{style: 'height:66px', type: 'button', value: 'SEASON-TO-3-MONTH-SUB', plan: 'Plan', duration: 3, price: 54} 
+                  %div.pull-right 
                     
-              
+                    %p 
+                      $59
+                      %br $19/month
+                  %b 3 Months<br/>
+                  %img.img-responsive.img-thumbnail{src: asset_path('flip.jpg'), style: 'width:35px;'}
+                  %img.img-responsive.img-thumbnail{src: asset_path('flip.jpg'), style: 'width:35px;'}
+                  
+        %tr
+          %td
+            %div.plan-select
+              %div.btn-group.btn-block
+                %button.btn.btn-default.btn-block{style: 'height:50px', type: 'button', value: 'SEASON-TO-6-MONTH-SUB', plan: 'Plan', duration: 6, price: 102} 
+                  %div.pull-right 
+                    %b 6 Months
+                    %p $115
+                    %br $18/month
+                  %img.img-responsive.img-thumbnail{src: asset_path('artisan.jpg'), style: 'width:35px;' }
+                  %img.img-responsive.img-thumbnail{src: asset_path('artisan.jpg'), style: 'width:35px;' }
+                  %img.img-responsive.img-thumbnail{src: asset_path('artisan.jpg'), style: 'width:35px;' }
+        %tr        
+          %td
+            %div.plan-select
+              %div.btn-group.btn-block
+                %button.btn.btn-default.btn-block{style: 'height:50px;', type: 'button', value: 'SEASON-TO-12-MONTH-SUB', plan: 'Plan', duration: 12, price: 192} 
+                  %div.pull-right 
+                    %b 12 Months
+                    %br
+                    %p $215
+                    %p $17/month
+                  %img.img-responsive.img-thumbnail{src: asset_path('flip.jpg'), style: 'width:35px;'}
+                  %img.img-responsive.img-thumbnail{src: asset_path('flip.jpg'), style: 'width:35px;'}
+                  %img.img-responsive.img-thumbnail{src: asset_path('flip.jpg'), style: 'width:35px;'}
+                  %img.img-responsive.img-thumbnail{src: asset_path('flip.jpg'), style: 'width:35px;'}
+
+  %div.panel.panel-default
+    %div.panel-heading
+      %h1.panel-title Enter Your Shipping Address
+    %div.panel-body
+      = render partial: 'addresses/shipping'
+  
+  %div.col-xs-12.col-md-5
+    %div.panel.panel-default
+      %div.panel-heading
+        %h3.panel-title Subscription Details
+      %div.panel-body
+        %table.table
+          %tbody
+            %tr
+              %td Total # Shipments:
+              %td
+                %span#duration
+            %tr
+              %td First Shipment On:
+              %td 
+                %span#first
+            %tr
+              %td Last Shipment On:
+              %td
+                %span#last
+            %tr
+              %td Renews On:
+              %td
+                %span#renews
+           
+            
+
+    %div.panel.panel-default
+      %div.panel-heading
+        %h3.panel-title Order Summary
+      %div.panel-body
+        %table{style: 'width:100%'}
+          %tr
+            %td
+              %span#plan 1 Month Artisan Plan
+            %td{style: 'text-align:right'}
+              $
+              %span#price 29.00
+          %tr
+            %td Tax (NY only)
+            %td{style: 'text-align:right'}
+              $
+              %span#tax 2.32
+          %tr{style: 'border-top:1px dotted gray'}
+            %td
+              %strong Total Due
+            %td{style: 'text-align:right'}
+              %strong
+                $
+                %span#total 31.32
+
+    %div.panel.panel-default
+      %div.panel-heading
+        %h1.panel-title Payment Info
+      %div.panel-body
+        = render partial: 'credit_cards/payment'
+
+        %button.btn.btn-lg.btn-success.btn-block{type: 'submit', id: 'purchase_button'} Buy Now! 
+       
+    %input{type: 'hidden', id: 'plan_id', name: 'plan[id]', value: 'SEASON-TO-1-MONTH-SUB'}
     
-          
-    %div.col-xs-12.col-md-4
-      %div.row
-        %div.col-xs-12
-          
-                    
-          
-              
-      %div.row   
-        %div.col-xs-12
+    %div.row
+      %div.col-xs-12.col-md-8
+                      
+                
+      
+            
+      %div.col-xs-12.col-md-4
+        %div.row
+          %div.col-xs-12
+            
+                      
+            
+                
+        %div.row   
+          %div.col-xs-12
           
 
   -# %h2 Enter payment info

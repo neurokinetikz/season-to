@@ -1,0 +1,113 @@
+%div.jumbotron
+  %div.container
+    %div.row
+      %div.col-xs-12
+        %h1 Season To
+        %p.lead A gourmet salt and pepper subscription service.
+    %div.row#jumbo-buttons
+      %div.col-xs-12.col-sm-4
+        %a.btn.btn-block.btn-success{href: '#mission'} Learn More
+      %div.col-xs-12.col-sm-4
+        %a.btn.btn-block.btn-primary{href: '#signup'} Sign Up
+      %div.col-xs-12.col-sm-4
+        %a.btn.btn-block.btn-info{href: '#gift'} Buy a Gift
+
+%div.container
+  %div.row.section#mission
+    %div.col-xs-12
+      %div.page-header
+        %h1.text-center Our Mission
+    
+    %div.col-xs-12.col-sm-5
+      %img.img-responsive.img-circle{src: "#{asset_path 'spoons.png'}", style: 'margin-bottom:20px;'}
+
+    %div.col-xs-12.col-sm-7
+      %p.lead Salt and pepper are two of the most widely consumed foods on the planet.  But despite their widespread use, they are also two of the least commonly changed.
+      %p Our mission is to change that.
+      %p In delievering salt and pepper products that both delight and surprise, we hope to create an experience that redefines what it means to "season to taste."
+    
+  %div.section#how
+    %div.row
+      %div.col-xs-12
+        %div.page-header
+          %h1.text-center.section-header How it Works
+    %div.row#how-steps
+      %div.col-xs-12.col-sm-4
+        %h3 1. Sign Up Today!
+        %img.img-responsive{src: 'http://www.seasaltsuperstore.com/Userfiles/4oz/4oz-cont-new-cropped.jpg'}
+        <br/>
+        %p It's easy to get started.  Simply select a plan (as low as $16/month) and submit your payment and shipping information.
+        %p And then each month we'll send you a handpicked selection of 2-4 gourmet salts and pepper from around the world delivered right to your doorstep.
+        %p You can cancel at anytime*
+      %div.col-xs-12.col-sm-4
+        %h3 2. Expand Your Taste
+        %img.img-responsive.img-rounded{src: "http://wholespice.com/blog/wp-content/uploads/2013/10/Gourmet-Salt-Slideshow-1.jpg"}
+        <br/>
+        %p Expand your taste by learning about the origin, tastes, and suggested uses for a variety of gourmet and artisanal salt and pepper products.  
+        %p Experiment with them on your own. And mix it up.  
+        %p Variety, they say, is the spice of life.  
+      %div.col-xs-12.col-sm-4
+        %h3 3. Share With Others
+        %img.img-responsive.img-rounded{src: "http://www.innovationmanagement.se/wp-content/uploads/2013/04/Exchange-of-ideas.png"}
+        <br/>
+        %p Trade your ideas and experiences.  Explore tastes together. Learn from others.
+
+  - unless user_signed_in?
+    %div.section.row#signup
+      %div.col-xs-12
+        %div.page-header
+          %h1.text-center Sign Up
+    %div.row
+      %div.col-xs-12.div-col-sm-6.col-md-4.col-md-offset-2
+        %div.panel.panel-default
+          %div.panel-heading
+            %h3.panel-title Connect with Facebook
+          %div.panel-body
+            %a.btn.btn-primary{href: user_omniauth_authorize_path(:facebook), style: 'display:block'} 
+              %span{style: 'font-size:24px;font-weight:bold;background-color:#3B5998;padding:1px 10px;'} f |
+              %strong{style: 'padding:0px 1px;'} Connect with Facebook
+      %div.col-xs-12.div-col-sm-6.col-md-4
+        - resource = User.new
+        - resource_name = 'user'
+        = form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :method => :post, :id => 'registration-form', role: 'form' }) do |f|
+          %div.panel.panel-default
+            %div.panel-heading
+              %h3.panel-title Sign Up Now!
+            %div.panel-body
+              %div.form-group
+                = f.text_field :first_name, :class => 'form-control required first_name', :placeholder => 'First Name', :autofocus => 'true'
+              %div.form-group
+                = f.text_field :last_name, :class => 'form-control required last_name', :placeholder => 'Last Name'
+              %div.form-group
+                = f.text_field :email, :class => 'form-control required email', :placeholder => 'Email'
+              %div.form-group
+                %input#user_password_enter.form-control.required.user_password{:type => 'password', :name => 'user[password]', :placeholder => 'Password'}
+              %div.form-group
+                %input#user_password_confirmation.form-control.required.user_password_confirmation{:type => 'password', :name => 'user[password_confirmation]', :placeholder => 'Confirm Passsword'}
+
+              %div.checkbox
+                %label
+                  %input.required.terms{'type' => 'checkbox', id: 'terms', name: 'terms'} I agree to the #{link_to 'terms & conditions', terms_path}
+          
+              %button.btn.btn-lg.btn-success.btn-block{:type => 'submit'} Sign Up
+  %div.section.row#gift
+    %div.col-xs-12
+      %div.page-header
+        %h1.text-center Buy a Gift
+      %p A Season To subscription makes a great gift!  Pick from a 3, 6, or 12-month plan and have it sent immediately.  You can also include a customized message to the recipient.  
+      %p To get started, do below:
+
+- content_for :javascript do
+  $('.btn-block').on('click', function(event) {
+  $("html, body").animate({ scrollTop: $(event.target.getAttribute('href')).offset().top - 30 }, 300); return false;
+  });
+
+= content_for :javascript do
+  :plain
+    $("#registration-form").validate({
+      rules: {
+        "user[password_confirmation]": {
+          equalTo: "#user_password_enter"
+        }
+      }
+    });
