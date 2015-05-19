@@ -3,6 +3,7 @@
 <head>
   <title>Season To</title>
   <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
@@ -12,57 +13,44 @@
   <link rel="apple-touch-icon-precomposed" sizes="114x114" href='<%= asset_path("ico/apple-touch-icon-114-precomposed.png")%>'>
   <link rel="apple-touch-icon-precomposed" sizes="72x72" href='<%= asset_path("ico/apple-touch-icon-72-precomposed.png")%>'>
   <link rel="apple-touch-icon-precomposed" href='<%= asset_path("ico/apple-touch-icon-57-precomposed.png") %>'>
-  <link rel="shortcut icon" href='<%= asset_path("ico/favicon.png")%>'>
+  <!-- <link rel="shortcut icon" href='<%= asset_path("ico/favicon.png")%>'> -->
   
   <!-- GOOGLE WEB FONTS -->
-  <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,700,600,300,800' rel='stylesheet' type='text/css'>
+  <link href='http://fonts.googleapis.com/css?family=Sanchez' rel='stylesheet' type='text/css'>
   
-  <% if params[:controller] == 'home' and params[:action] == 'index' %>
-    <%= stylesheet_link_tag    "treble", media: "all", "data-turbolinks-track" => true %>
-  <% else %>
-    <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
-  <% end %>
-  <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
-  <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
-  <!--[if lt IE 9]>
-  <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-  <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-  <![endif]-->
+ <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
+
+  <!-- Latest compiled and minified CSS -->
+  <!-- <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"> -->
+
+  <!-- Optional theme -->
+  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+
+
+
+  
   <%= csrf_meta_tags %>
 </head>
 
-<body>
-  <% if params[:controller] == 'home' and params[:action] == 'index' %>
-    <%= yield %>
-  <% else %>
-    <div class="container">
-      <%= render :partial => 'layouts/header' %>
+<body id="home" data-spy="scroll" data-target=".navbar-collapse" data-offset="40">
+  <%= render partial: 'layouts/nav' %>
+  <%= render partial: 'layouts/alerts' %>
 
-      <%= yield %>
+  <% unless params[:controller] == 'home' && params[:action] == 'index'%> <div class="container"><% end %>
+  <%= yield %>
+  <% unless params[:controller] == 'home' && params[:action] == 'index'%> </div><% end %>
 
-      <div class="footer">
-        <p class='pull-left'>&copy; neurokinetikz, inc. 2014</p>
-        <p class='pull-right'>
-          <%= link_to 'about us', '#' %>
-          | <%= link_to 'terms of service', '#' %>
-          | <%= link_to 'privacy policy', '#' %>
-          | <%= link_to 'contact', '#' %>
-        </p>
-      </div>
-    </div>
-  <% end %>
-
-
-<% if false %>
-<div id="wrap">
-
-<%= render :partial => 'layouts/nav_bar' %>
-<%= yield %>
-</div>
-<%= render :partial => 'layouts/footer' if false %>
-<% end %>
+  <%= render partial: 'layouts/footer' %>
 
 <%= render :partial => 'layouts/facebook' %>
+<%= javascript_include_tag "application", "data-turbolinks-track" => true %>
+<!-- <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script> -->
+
+<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!--[if lt IE 9]>
+<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
 <%= render :partial => 'layouts/javascript' %>
 </body>
 </html>

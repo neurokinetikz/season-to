@@ -10,13 +10,4 @@
  *
  *= require_self
  *= require_tree .
- *= stub treble
- *= stub flat-ui
- *= stub flat-uibootstrapped
- *= stub active_admin
  */
-
-label.error {
-	color: rgba(255,0,0,0.7);
-}
-

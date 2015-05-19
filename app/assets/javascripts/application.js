@@ -12,15 +12,10 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require jquery-ui.min
-//= require underscore
-//= require backbone
-//= require backbone-relational
-//= require_tree .
 //= require turbolinks
-//= stub flatui-checkbox
-//= stub flatui-fileinput
-//= stub flatui-radio
+//= require bootstrap.min
+//= require bootstrap-datepicker
+//= require_tree .
 
 // Some general UI pack related JS
 // Extend JS String with repeat method

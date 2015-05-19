@@ -1,0 +1,36 @@
+%nav.navbar.navbar-default.navbar-fixed-top{role: 'navigation'}
+  %div.container
+    %div.navbar-header
+      %button.navbar-toggle{type: 'button', 'data-toggle' => 'collapse', 'data-target' => '.navbar-collapse'}
+        %span.sr-only Toggle navigation
+        %span.icon-bar
+        %span.icon-bar
+        %span.icon-bar
+      %a.navbar-brand{href: '/'} Season To
+    %div.navbar-collapse.collapse
+      %ul.nav.navbar-nav.scroll
+        - unless user_signed_in?
+          %li
+            %a{href: '#mission'} Our Mission
+          %li
+            %a{href: '#how'} How it Works
+
+          %li
+            %a{href: '#signup'} Sign Up
+          %li
+            %a{href: '#gift'} Buy a Gift
+        - else
+          %li
+            %a{href: "#{new_gift_path}"} Buy a Gift
+      %ul.nav.navbar-nav.navbar-right
+        - if user_signed_in?
+          %li #{link_to 'Account', account_path}
+          %li #{link_to 'Logout', destroy_user_session_path, method: :delete }
+        - else
+          %li #{link_to 'Login', new_user_session_path}
+        
+- unless user_signed_in?
+  - content_for :javascript do
+    $('ul.nav.scroll li a').on('click', function(event) {
+    $("html, body").animate({ scrollTop: $(event.target.getAttribute('href')).offset().top - 30 }, 300); return false;
+    });
